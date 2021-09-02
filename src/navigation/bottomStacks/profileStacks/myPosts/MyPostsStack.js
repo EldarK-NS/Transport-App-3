@@ -1,9 +1,9 @@
 import React from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import InProgress from '../../../screens/profileScreen/myPosts/InProgress';
-import InArchive from '../../../screens/profileScreen/myPosts/InArchive';
-import MySuggestions from '../../../screens/profileScreen/myPosts/MySuggestions';
-import {MyTheme} from '../../../components/layout/theme';
+import InArchive from '../../../../screens/profileScreen/myPosts/InArchive';
+import MySuggestions from '../../../../screens/profileScreen/myPosts/MySuggestions';
+import {MyTheme} from '../../../../components/layout/theme';
+import InProgress from '../../../../screens/profileScreen/myPosts/InProgress/InProgress';
 const TopTab = createMaterialTopTabNavigator();
 
 export default function MyPostsStack() {

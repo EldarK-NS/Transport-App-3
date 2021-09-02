@@ -56,11 +56,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   widgetsTitle: {
-    height: 60,
+    height: 45,
     // fontFamily: 'IBM-Regular',
     color: '#A2A9B2',
     fontSize: 12,
     justifyContent: 'flex-end',
+    marginTop: 20,
+    marginLeft: 16,
   },
   widgets: {
     backgroundColor: 'white',
