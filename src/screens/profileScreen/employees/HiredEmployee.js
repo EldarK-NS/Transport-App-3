@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 15,
     marginBottom: 30,
+    borderRadius: 10,
   },
   input: {
     marginLeft: 25,
