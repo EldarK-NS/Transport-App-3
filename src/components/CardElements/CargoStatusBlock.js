@@ -12,12 +12,23 @@ import {
 import {MyTheme} from '../layout/theme';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 
-export default function CargoStatusBlock() {
-  //   const data = {status: 1};
+export default function CargoStatusBlock({
+  startDate,
+  loadingAddress,
+  noteLoading,
+  distance,
+  distanceTime,
+  lat,
+  lng,
+  loadingTime,
+  factTimeTravel,
+}) {
+  //   const {status} = data;
+  const data = {status: 1};
   //   const data = {status: 2};
-  const data = {status: 3};
+  //   const data = {status: 3};
   return (
-    <ScrollView>
+    <View>
       {data.status === 1 ? (
         <View style={styles.mainContainer}>
           <View style={styles.firstStatus}>
@@ -30,7 +41,6 @@ export default function CargoStatusBlock() {
             <Text style={styles.smallGreyText}>Дата погрузки:</Text>
             <View style={styles.time}>
               <Text style={styles.blackMiddletext}>14 июня</Text>
-              <Text style={styles.blackMiddletext}> в 12:30</Text>
             </View>
 
             <Text style={styles.smallGreyText}>Адрес:</Text>
@@ -183,7 +193,7 @@ export default function CargoStatusBlock() {
           </View>
         </View>
       )}
-    </ScrollView>
+    </View>
   );
 }
 
@@ -191,8 +201,6 @@ const styles = StyleSheet.create({
   mainContainer: {
     width: Dimensions.get('window').width - 30,
     borderBottomColor: MyTheme.grey,
-    borderWidth: 1,
-    borderColor: 'black',
     paddingVertical: 20,
   },
   firstStatus: {
@@ -206,9 +214,9 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
   },
-  iconText: {
+  iconTitle: {
     color: MyTheme.blue,
     // fontFamily: 'IBM-SemiBold',
     fontWeight: 'bold',
