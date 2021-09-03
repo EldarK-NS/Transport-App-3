@@ -1,10 +1,10 @@
 export const funcList = [
-  {id: '1', title: 'Мои объявления'},
-  {id: '2', title: 'Профиль компании'},
-  {id: '3', title: 'Уведомления'},
-  {id: '4', title: 'Настройки'},
-  {id: '5', title: 'Сотрудники'},
-  {id: '6', title: 'Баланс и статус'},
+  {id: '1', title: 'Мои объявления', navPath: 'MyPosts'},
+  {id: '2', title: 'Профиль компании', navPath: 'MyPosts'},
+  {id: '3', title: 'Уведомления', navPath: 'MyPosts'},
+  {id: '4', title: 'Настройки', navPath: 'MyEmployees'},
+  {id: '5', title: 'Сотрудники', navPath: 'MyEmployees'},
+  {id: '6', title: 'Баланс и статус', navPath: 'MyEmployees'},
 ];
 
 export const messages = [

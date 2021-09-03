@@ -6,6 +6,7 @@ import MainProfileScreen from '../../../screens/profileScreen/MainProfileScreen'
 import MyPostsStack from './myPosts/MyPostsStack';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import InProgressCardScreen from '../../../screens/profileScreen/myPosts/InProgress/InProgressCardScreen';
+import EmployeesStack from './employees/EmployeesStack';
 
 const Stack = createStackNavigator();
 
@@ -50,6 +51,26 @@ export default function MainProfileStack() {
         })}
       />
       <Stack.Screen
+        name="MyEmployees"
+        component={EmployeesStack}
+        options={({navigation, route}) => ({
+          headerTitle: 'Выберите водителя',
+          headerTitleStyle: {
+            fontSize: 17,
+            fontWeight: 'bold',
+            color: 'white',
+          },
+          headerLeft: () => (
+            <Pressable
+              style={styles.leftButton}
+              onPress={() => navigation.goBack()}>
+              <AntDesign name="left" size={24} color="white" />
+              <Text style={styles.buttonText}>Назад</Text>
+            </Pressable>
+          ),
+        })}
+      />
+      <Stack.Screen
         name="InProgressCard"
         component={InProgressCardScreen}
         options={({navigation, route}) => ({
@@ -73,7 +94,7 @@ export default function MainProfileStack() {
     </Stack.Navigator>
   );
 }
-
+//! InProgressCard - это отдельный скрин который не вошел в основной стек объявлеий и его пришлось вынести за пределы MyPosts
 const styles = StyleSheet.create({
   leftButton: {
     flexDirection: 'row',

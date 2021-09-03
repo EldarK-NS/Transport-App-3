@@ -54,7 +54,7 @@ export default function MainProfileScreen() {
         <FlatList
           data={funcList}
           renderItem={({item}) => (
-            <SearchElementSimple title={item.title} navPath="MyPosts" />
+            <SearchElementSimple title={item.title} navPath={item.navPath} />
           )}
           keyExtractor={item => item.id}
         />
