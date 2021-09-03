@@ -1,4 +1,3 @@
-
 import 'react-native-gesture-handler';
 import React from 'react';
 import {
@@ -9,10 +8,10 @@ import {
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { NavigationContainer } from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import RootNavigator from './src/navigation/RootNavigation';
-import { MyTheme } from './src/components/layout/theme';
-
+import {MyTheme} from './src/components/layout/theme';
+import AuthNavigator from './src/navigation/AuthNavigation';
 
 const App = () => {
   if (Platform.OS == 'ios') {
@@ -23,7 +22,8 @@ const App = () => {
     <NavigationContainer>
       <SafeAreaView style={styles.container} backgroundColor={MyTheme.blue}>
         <StatusBar barStyle={'light-content'} />
-        <RootNavigator />
+        <AuthNavigator />
+        {/* <RootNavigator /> */}
       </SafeAreaView>
     </NavigationContainer>
   );
@@ -31,7 +31,7 @@ const App = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
 });
 
