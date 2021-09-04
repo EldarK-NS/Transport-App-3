@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -14,6 +14,9 @@ import {MyTheme} from './src/components/layout/theme';
 import AuthNavigator from './src/navigation/AuthNavigation';
 
 const App = () => {
+  const [isAuth, setIsAuth] = useState(false);
+  const [token, setToken] = useState(null);
+
   if (Platform.OS == 'ios') {
     StatusBar.setBarStyle('light-content', true);
   }

@@ -6,6 +6,8 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  ScrollView,
+  KeyboardAvoidingView,
 } from 'react-native';
 import {MyTheme} from '../../components/layout/theme';
 import {useNavigation} from '@react-navigation/core';
@@ -15,44 +17,51 @@ export default function CompanySecond() {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.container}>
-      <View style={styles.Block}>
-        <Text style={styles.title}>Регистрация. 2 шаг</Text>
-        <Text style={styles.subTitle}>Введите данные контактного лица</Text>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : null}
+      style={{flex: 1}}
+      keyboardVerticalOffset={50}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.container}>
+          <View style={styles.Block}>
+            <Text style={styles.title}>Регистрация. 2 шаг</Text>
+            <Text style={styles.subTitle}>Введите данные контактного лица</Text>
 
-        <Text style={styles.inputLabel}>Контакное лицо</Text>
-        <TextInput placeholder="ФИО" style={styles.input} />
-        <TextInput placeholder="Эл. адрес" style={styles.input} />
-        <TextInput placeholder="Номер телефона" style={styles.input} />
+            <Text style={styles.inputLabel}>Контакное лицо</Text>
+            <TextInput placeholder="ФИО" style={styles.input} />
+            <TextInput placeholder="Эл. адрес" style={styles.input} />
+            <TextInput placeholder="Номер телефона" style={styles.input} />
 
-        <Text style={styles.inputLabel}>Пароль</Text>
-        <TextInput placeholder="Введите пароль" style={styles.input} />
-        <TextInput placeholder="Повторите пароль" style={styles.input} />
+            <Text style={styles.inputLabel}>Пароль</Text>
+            <TextInput placeholder="Введите пароль" style={styles.input} />
+            <TextInput placeholder="Повторите пароль" style={styles.input} />
 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('CompanySecond')}>
-          <Text style={styles.buttonText}>Регистрация</Text>
-        </TouchableOpacity>
-        <View style={styles.questionBlock}>
-          <Text style={styles.question}>Зарегистрированны? </Text>
-          <Pressable onPress={() => navigation.navigate('Login')}>
-            <Text style={styles.link}> Войти</Text>
-          </Pressable>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => navigation.navigate('CompanySecond')}>
+              <Text style={styles.buttonText}>Регистрация</Text>
+            </TouchableOpacity>
+            <View style={styles.questionBlock}>
+              <Text style={styles.question}>Зарегистрированны? </Text>
+              <Pressable onPress={() => navigation.navigate('Login')}>
+                <Text style={styles.link}> Войти</Text>
+              </Pressable>
+            </View>
+          </View>
+          <View style={styles.Block}>
+            <View style={styles.line} />
+
+            <Text style={styles.rules}>
+              Авторизируясь вы автоматически соглашаетесь с
+              <Text style={styles.link}>
+                правилами сервиса и пользовательским соглашением сервиса
+              </Text>{' '}
+              Bliz.kz
+            </Text>
+          </View>
         </View>
-      </View>
-      <View style={styles.Block}>
-        <View style={styles.line} />
-
-        <Text style={styles.rules}>
-          Авторизируясь вы автоматически соглашаетесь с
-          <Text style={styles.link}>
-            правилами сервиса и пользовательским соглашением сервиса
-          </Text>{' '}
-          Bliz.kz
-        </Text>
-      </View>
-    </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -124,6 +133,7 @@ const styles = StyleSheet.create({
   },
   questionBlock: {
     flexDirection: 'row',
+    marginBottom: 30,
   },
   question: {
     //   fontFamily:'IBM-Regular',

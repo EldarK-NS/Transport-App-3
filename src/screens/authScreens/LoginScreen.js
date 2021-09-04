@@ -37,7 +37,11 @@ export default function LoginScreen() {
           </Pressable>
         </View>
 
-        <TextInput placeholder="Номер телефона" style={styles.input} />
+        <TextInput
+          placeholder="Номер телефона"
+          style={styles.input}
+          keyboardType={'numeric'}
+        />
         <TextInput placeholder="Пароль" style={styles.input} />
         <Pressable style={styles.forget}>
           <Text style={styles.forgetPassword}>Забыли пароль?</Text>

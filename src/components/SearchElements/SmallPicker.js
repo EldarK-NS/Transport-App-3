@@ -112,10 +112,10 @@ const styles = StyleSheet.create({
     color: 'blue',
   },
   visibleContainer: {
-    width: 100,
+    width: 112,
     height: 45,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
     borderColor: MyTheme.grey,
     borderWidth: 0.5,
     // marginVertical: 10
@@ -147,7 +147,6 @@ const styles = StyleSheet.create({
     lineHeight: 16,
     color: MyTheme.grey,
   },
-
   placeholderLabelAndr: {
     alignSelf: 'flex-start',
     marginLeft: 10,
