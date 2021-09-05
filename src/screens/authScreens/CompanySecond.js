@@ -13,26 +13,29 @@ import {
 } from 'react-native';
 import {MyTheme} from '../../components/layout/theme';
 import {useNavigation} from '@react-navigation/core';
+import {useDispatch, useSelector} from 'react-redux';
+import {companySignup} from '../../redux/actions/auth';
 
 export default function CompanySecond({route}) {
   const navigation = useNavigation();
-  const data1 = route.params;
-  console.log(data1);
+  const {companyTypeId, companyTypeStr, companyName, bin} = route.params;
+  const dispatch = useDispatch();
 
   //!Validation
   const [error, setError] = useState(null);
 
   //!Registartion Data
-  const [userName, setUserName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [password, setPassword] = useState('');
-  const [password2, setPassword2] = useState('');
+  const [userName, setUserName] = useState('Eldar');
+  const [email, setEmail] = useState('first@first.com');
+  const [phoneNumber, setPhoneNumber] = useState('77077774455');
+  const [password, setPassword] = useState('123456');
+  const [password2, setPassword2] = useState('123456');
 
   const isValidEmail = value => {
     const regx = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
     return regx.test(value);
   };
+  const userData = useSelector(state => state.auth);
   const handleRegistration = () => {
     if (userName.trim().length < 3 || userName.length > 25) {
       return setError('Имя должно быть не менее 3-х букв');
@@ -47,7 +50,16 @@ export default function CompanySecond({route}) {
     } else if (password.trim() !== password2.trim()) {
       return setError('Пароли не совпадают!');
     }
-    console.log('ok');
+    const data = {
+      phone: phoneNumber,
+      fullName: userName,
+      email,
+      password,
+      companyName,
+      companyType: companyTypeId,
+      bin,
+    };
+    dispatch(companySignup(data));
   };
 
   if (error) {

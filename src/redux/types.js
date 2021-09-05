@@ -1,13 +1,15 @@
 //AUTH
 
-export const USER_LOADED = 'USER_LOADED';
+// export const USER_LOADED = 'USER_LOADED';
 export const LOGIN_SUCCES = 'LOGIN_SUCCES';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
-export const LOGOUT = ' LOGOUT';
-export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
-export const SIGN_UP_FAIL = 'SIGN_UP_FAIL';
-export const LOAD_USER = 'LOAD_USER';
-export const LOAD_USER_ERROR = 'LOAD_USER_ERROR';
+export const COMPANY_SIGN_UP_SUCCESS = 'COMPANY_SIGN_UP_SUCCESS';
+export const COMPANY_SIGN_UP_FAIL = 'COMPANY_SIGN_UP_FAIL';
+// export const LOGOUT = ' LOGOUT';
+// export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
+// export const SIGN_UP_FAIL = 'SIGN_UP_FAIL';
+// export const LOAD_USER = 'LOAD_USER';
+// export const LOAD_USER_ERROR = 'LOAD_USER_ERROR';
 
 //Additional data
 export const GET_COMPANY_TYPES_SUCCESS = 'GET_COMPANY_TYPES_SUCCESS';

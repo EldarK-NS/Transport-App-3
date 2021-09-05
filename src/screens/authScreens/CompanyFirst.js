@@ -30,8 +30,8 @@ export default function CompanyFirst() {
   const [companyTypeString, setCompanyTypeString] = useState(null);
 
   //!Company name
-  const [companyName, setCompanyName] = useState('');
-  const [bin, setBin] = useState('');
+  const [companyName, setCompanyName] = useState('FirstTestCompany');
+  const [bin, setBin] = useState('111000999888');
 
   const handleSwitch = () => {
     setPersonLogin(!personLogin);
@@ -57,7 +57,7 @@ export default function CompanyFirst() {
       return setError('Введите корректный БИН компании');
     }
     navigation.navigate('CompanySecond', {
-      companyId: companyId,
+      companyTypeId: companyId,
       companyTypeStr: companyTypeString,
       companyName: companyName,
       bin: bin,
@@ -73,8 +73,6 @@ export default function CompanyFirst() {
       },
     ]);
   }
-
-  console.log(error);
 
   return (
     <View style={styles.container}>

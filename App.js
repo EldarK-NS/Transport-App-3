@@ -16,20 +16,20 @@ import {MyTheme} from './src/components/layout/theme';
 const App = () => {
   const [token, setToken] = useState(null);
 
-  // const getToken = async () => {
-  //   try {
-  //     const value = await AsyncStorage.getItem('blizToken');
-  //     if (value !== null) {
-  //       setToken(value);
-  //     }
-  //     return;
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
-  // useEffect(() => {
-  //   getToken();
-  // }, []);
+  const getToken = async () => {
+    try {
+      const value = await AsyncStorage.getItem('blizToken');
+      if (value !== null) {
+        setToken(value);
+      }
+      return;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(() => {
+    getToken();
+  }, []);
 
   if (Platform.OS == 'ios') {
     StatusBar.setBarStyle('light-content', true);
@@ -39,8 +39,7 @@ const App = () => {
       <NavigationContainer>
         <SafeAreaView style={styles.container} backgroundColor={MyTheme.blue}>
           <StatusBar barStyle={'light-content'} />
-          {/* {!token ? <AuthNavigator /> : <RootNavigator />} */}
-          <AuthNavigator />
+          {!token ? <AuthNavigator /> : <RootNavigator />}
         </SafeAreaView>
       </NavigationContainer>
     </Provider>

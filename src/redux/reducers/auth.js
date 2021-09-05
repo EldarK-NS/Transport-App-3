@@ -1,12 +1,14 @@
 import {
-  USER_LOADED,
+  // USER_LOADED,
   LOGIN_SUCCES,
   LOGIN_FAIL,
-  LOGOUT,
-  SIGN_UP_SUCCESS,
-  SIGN_UP_FAIL,
-  LOAD_USER,
-  LOAD_USER_ERROR,
+  COMPANY_SIGN_UP_SUCCESS,
+  COMPANY_SIGN_UP_FAIL,
+  // LOGOUT,
+  // SIGN_UP_SUCCESS,
+  // SIGN_UP_FAIL,
+  // LOAD_USER,
+  // LOAD_USER_ERROR,
 } from '../types';
 const initialState = {
   isAuthenticated: false,
@@ -20,6 +22,7 @@ export const authReducer = (state = initialState, action) => {
   switch (action.type) {
     // case SIGN_UP_SUCCESS:
     case LOGIN_SUCCES:
+    case COMPANY_SIGN_UP_SUCCESS:
       return {
         ...state,
         isAuthenticated: true,
@@ -29,9 +32,7 @@ export const authReducer = (state = initialState, action) => {
         message: null,
       };
     case LOGIN_FAIL:
-      // case SIGN_UP_FAIL:
-      // case LOGOUT:
-      // case USER_LOADING_FAIL:
+    case COMPANY_SIGN_UP_FAIL:
       return {
         state,
         isAuthenticated: false,
