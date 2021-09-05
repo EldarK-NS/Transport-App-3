@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Pressable,
   StyleSheet,
@@ -6,26 +6,75 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Alert,
 } from 'react-native';
 import {MyTheme} from '../../components/layout/theme';
 import {useNavigation} from '@react-navigation/core';
 import SmallPicker from '../../components/SearchElements/SmallPicker';
+import {useDispatch, useSelector} from 'react-redux';
+import {getCompanyTypes} from '../../redux/actions/additionalData';
 
 export default function CompanyFirst() {
-  const [personLogin, setPersonLogin] = useState(true);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  //!Switcher
+  const [personLogin, setPersonLogin] = useState(true);
+
+  //!Validation
+  const [error, setError] = useState(null);
+
+  // !Company types
+  const [pickerModal, setPickerModal] = useState(false);
+  const [companyId, setCompanyId] = useState(null);
+  const [companyTypeString, setCompanyTypeString] = useState(null);
+
+  //!Company name
+  const [companyName, setCompanyName] = useState('');
+  const [bin, setBin] = useState('');
+
   const handleSwitch = () => {
     setPersonLogin(!personLogin);
   };
 
-  const [pickerModal, setPickerModal] = useState(false);
-  const statusList = [
-    {title: 'ИП', id: '1'},
-    {title: 'ТОО', id: '2'},
-    {title: 'АО', id: '3'},
-  ];
-  const [status, setStatus] = useState(statusList[0].id);
-  const [statusString, setStatusString] = useState(statusList[0].title);
+  useEffect(() => {
+    dispatch(getCompanyTypes());
+  }, []);
+
+  const additionalData = useSelector(state => state.additionalData);
+
+  useEffect(() => {
+    if (additionalData.companyTypes.length) {
+      setCompanyId(additionalData.companyTypes[0].id);
+      setCompanyTypeString(additionalData.companyTypes[0].name);
+    }
+  }, [additionalData]);
+
+  const nextStepRegistartion = () => {
+    if (companyName.trim().length < 3) {
+      return setError('Название компании не меньше 3-х символов');
+    } else if (bin.trim().length !== 12) {
+      return setError('Введите корректный БИН компании');
+    }
+    navigation.navigate('CompanySecond', {
+      companyId: companyId,
+      companyTypeStr: companyTypeString,
+      companyName: companyName,
+      bin: bin,
+    });
+  };
+
+  if (error) {
+    Alert.alert('Ошибка', error, [
+      {
+        text: 'OK',
+        onPress: () => setError(null),
+        style: 'cancel',
+      },
+    ]);
+  }
+
+  console.log(error);
 
   return (
     <View style={styles.container}>
@@ -61,23 +110,29 @@ export default function CompanyFirst() {
             style={styles.picker}
             modalOpen={pickerModal}
             setModalOpen={setPickerModal}
-            value={status}
-            setValue={setStatus}
-            data={statusList}
-            valueString={statusString}
-            setValueString={setStatusString}
+            value={companyId}
+            setValue={setCompanyId}
+            data={additionalData.companyTypes}
+            valueString={companyTypeString}
+            setValueString={setCompanyTypeString}
             // placeholder="Oткуда"
           />
-          <TextInput placeholder="Название компании" style={styles.inputName} />
+          <TextInput
+            placeholder="Название компании"
+            style={styles.inputName}
+            value={companyName}
+            onChangeText={setCompanyName}
+          />
         </View>
         <TextInput
           placeholder="Налоговый номер компании/БИН"
           style={styles.input}
+          keyboardType="numeric"
+          value={bin}
+          onChangeText={setBin}
         />
 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('CompanySecond')}>
+        <TouchableOpacity style={styles.button} onPress={nextStepRegistartion}>
           <Text style={styles.buttonText}>Перейти на второй шаг</Text>
         </TouchableOpacity>
         <View style={styles.questionBlock}>

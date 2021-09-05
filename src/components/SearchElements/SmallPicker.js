@@ -7,6 +7,7 @@ import {
   Platform,
   Dimensions,
   Pressable,
+  ActivityIndicator,
 } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import {MyTheme} from '../layout/theme';
@@ -27,7 +28,7 @@ export default function SmallPicker({
     return (
       items?.length > 0 &&
       items.map((val, idx) => (
-        <Picker.Item label={val.title} value={val.id} key={val.id} />
+        <Picker.Item label={val.name} value={val.id} key={val.id} />
       ))
     );
   };
@@ -59,7 +60,10 @@ export default function SmallPicker({
               <View style={styles.pickerContainer}>
                 <TouchableOpacity
                   onPress={() => setModalOpen(!modalOpen)}
-                  style={{justifyContent: 'center', alignItems: 'center'}}>
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
                   <Text style={styles.closeButton}>ВЫБРАТЬ</Text>
                 </TouchableOpacity>
                 <Picker
@@ -67,7 +71,7 @@ export default function SmallPicker({
                   style={{height: 50, width: '100%'}}
                   onValueChange={itemValue => {
                     const valString = data.find(item => item.id === itemValue);
-                    return setValue(itemValue), setValueString(valString.title);
+                    return setValue(itemValue), setValueString(valString.name);
                   }}>
                   {pickerData(data)}
                 </Picker>
@@ -87,7 +91,7 @@ export default function SmallPicker({
           // height={}
           onValueChange={itemValue => {
             const valString = data.find(item => item.id === itemValue);
-            return setValue(itemValue), setValueString(valString.title);
+            return setValue(itemValue), setValueString(valString.name);
           }}>
           {pickerData(data)}
         </Picker>

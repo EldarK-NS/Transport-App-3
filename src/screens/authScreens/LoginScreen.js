@@ -1,14 +1,53 @@
-import React, {useState} from 'react';
-import {Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
-import {MyTheme} from '../../components/layout/theme';
+import React, {useState, useEffect} from 'react';
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Alert,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
+import {useDispatch, useSelector} from 'react-redux';
+import {MyTheme} from '../../components/layout/theme';
+import {login} from '../../redux/actions/auth';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 export default function LoginScreen() {
   const [personLogin, setPersonLogin] = useState(true);
+  const [hidePassword, setHidePassword] = useState(true);
+  const [error, setError] = useState(null);
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+
+  const user = useSelector(state => state.auth);
+
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const handleSubmit = () => {
+    dispatch(login(phone, password));
+  };
+  useEffect(() => {
+    if (user.message) {
+      setError(user.message);
+    }
+  }, [user]);
+  useEffect(() => {
+    if (error) {
+      Alert.alert(error, [{text: 'OK', onPress: () => console.log(error)}]);
+    }
+    setError(null);
+  }, [error]);
+
   const handleSwitch = () => {
     setPersonLogin(!personLogin);
   };
+
+  const showPassword = () => {
+    setHidePassword(!hidePassword);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.Block}>
@@ -41,15 +80,31 @@ export default function LoginScreen() {
           placeholder="Номер телефона"
           style={styles.input}
           keyboardType={'numeric'}
+          value={phone}
+          onChangeText={setPhone}
         />
-        <TextInput placeholder="Пароль" style={styles.input} />
+        <View style={styles.passwordBlock}>
+          <TextInput
+            style={styles.passwordInput}
+            placeholder="Пароль"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry={hidePassword}
+          />
+          <Entypo
+            name="eye"
+            size={24}
+            color={MyTheme.black}
+            onPress={showPassword}
+          />
+        </View>
         <Pressable style={styles.forget}>
           <Text style={styles.forgetPassword}>Забыли пароль?</Text>
         </Pressable>
 
-        <View style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
           <Text style={styles.buttonText}>Войти в аккаунт</Text>
-        </View>
+        </TouchableOpacity>
         <View style={styles.questionBlock}>
           <Text style={styles.question}>Нет аккаунта?</Text>
           <Pressable onPress={() => navigation.navigate('CompanyFirst')}>
@@ -85,20 +140,20 @@ const styles = StyleSheet.create({
     //   fontFamily:'IBM-Medium',
     fontSize: 29,
     lineHeight: 48,
-    color: MyTheme.black,
     marginTop: 70,
     marginBottom: 5,
+    color: MyTheme.black,
   },
   subTitle: {
     //   fontFamily:'IBM-Regular',
     fontSize: 14,
     lineHeight: 20,
-    color: MyTheme.grey,
     marginBottom: 28,
+    color: MyTheme.grey,
   },
   switcherBlock: {
-    flexDirection: 'row',
     marginBottom: 45,
+    flexDirection: 'row',
   },
   switcherBlue: {
     width: 150,
@@ -111,9 +166,9 @@ const styles = StyleSheet.create({
     width: 150,
     height: 45,
     borderWidth: 1,
-    borderColor: MyTheme.grey,
     alignItems: 'center',
     justifyContent: 'center',
+    borderColor: MyTheme.grey,
   },
   switherTextBlack: {
     //   fontFamily:'IBM-Regular',
@@ -128,15 +183,30 @@ const styles = StyleSheet.create({
   input: {
     width: 300,
     height: 45,
+    padding: 10,
+    marginBottom: 20,
     borderWidth: 0.5,
     borderColor: MyTheme.grey,
-    marginBottom: 20,
+  },
+  passwordBlock: {
+    width: 300,
+    height: 45,
     padding: 10,
+    marginBottom: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderWidth: 0.5,
+    borderColor: MyTheme.grey,
+  },
+  passwordInput: {
+    width: '90%',
+    height: 45,
   },
   forget: {
     width: '75%',
-    alignItems: 'flex-end',
     marginBottom: 25,
+    alignItems: 'flex-end',
   },
   forgetText: {
     //   fontFamily:'IBM-Medium',
@@ -147,23 +217,23 @@ const styles = StyleSheet.create({
   button: {
     width: 300,
     height: 45,
+    marginBottom: 25,
+    borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: MyTheme.blue,
-    borderRadius: 5,
-    marginBottom: 25,
   },
   buttonText: {
-    //   fontFamily:'IBM-Bold',
     fontSize: 16,
+    //   fontFamily:'IBM-Bold',
     color: 'white',
   },
   questionBlock: {
     flexDirection: 'row',
   },
   question: {
-    //   fontFamily:'IBM-Regular',
     fontSize: 14,
+    //   fontFamily:'IBM-Regular',
   },
   link: {
     //   fontFamily:'IBM-Regular',
@@ -173,14 +243,14 @@ const styles = StyleSheet.create({
   line: {
     width: '95%',
     height: 0.5,
-    backgroundColor: MyTheme.grey,
     marginBottom: 15,
+    backgroundColor: MyTheme.grey,
   },
   rules: {
     //   fontFamily:'IBM-Regular',
     fontSize: 14,
+    marginBottom: 25,
     width: '90%',
     textAlign: 'center',
-    marginBottom: 25,
   },
 });

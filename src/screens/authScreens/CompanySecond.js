@@ -8,13 +8,57 @@ import {
   View,
   ScrollView,
   KeyboardAvoidingView,
+  Alert,
+  ActivityIndicator,
 } from 'react-native';
 import {MyTheme} from '../../components/layout/theme';
 import {useNavigation} from '@react-navigation/core';
-import SmallPicker from '../../components/SearchElements/SmallPicker';
 
-export default function CompanySecond() {
+export default function CompanySecond({route}) {
   const navigation = useNavigation();
+  const data1 = route.params;
+  console.log(data1);
+
+  //!Validation
+  const [error, setError] = useState(null);
+
+  //!Registartion Data
+  const [userName, setUserName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [password, setPassword] = useState('');
+  const [password2, setPassword2] = useState('');
+
+  const isValidEmail = value => {
+    const regx = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    return regx.test(value);
+  };
+  const handleRegistration = () => {
+    if (userName.trim().length < 3 || userName.length > 25) {
+      return setError('Имя должно быть не менее 3-х букв');
+    } else if (!email.trim()) {
+      return setError('Введите корректный электронный адрес');
+    } else if (isValidEmail(email) === false) {
+      return setError('Введите корректный электронный адрес');
+    } else if (phoneNumber.trim().length !== 11) {
+      return setError('Введите корректный номер телефона');
+    } else if (password.trim() < 6) {
+      return setError('Минимальная длина пароля 6 символов');
+    } else if (password.trim() !== password2.trim()) {
+      return setError('Пароли не совпадают!');
+    }
+    console.log('ok');
+  };
+
+  if (error) {
+    Alert.alert('Ошибка', error, [
+      {
+        text: 'OK',
+        onPress: () => setError(null),
+        style: 'cancel',
+      },
+    ]);
+  }
 
   return (
     <KeyboardAvoidingView
@@ -28,17 +72,50 @@ export default function CompanySecond() {
             <Text style={styles.subTitle}>Введите данные контактного лица</Text>
 
             <Text style={styles.inputLabel}>Контакное лицо</Text>
-            <TextInput placeholder="ФИО" style={styles.input} />
-            <TextInput placeholder="Эл. адрес" style={styles.input} />
-            <TextInput placeholder="Номер телефона" style={styles.input} />
+            <TextInput
+              placeholder="ФИО"
+              style={styles.input}
+              value={userName}
+              onChangeText={setUserName}
+              autoCapitalize={'words'}
+            />
+            <TextInput
+              placeholder="Эл. адрес"
+              style={styles.input}
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+              textContentType={'emailAddress'}
+              autoCapitalize={'none'}
+            />
+            <TextInput
+              placeholder="Номер телефона 7 (XXX) XXX XX XX"
+              style={styles.input}
+              value={phoneNumber}
+              onChangeText={setPhoneNumber}
+              textContentType={'telephoneNumber'}
+              keyboardType="numeric"
+            />
 
             <Text style={styles.inputLabel}>Пароль</Text>
-            <TextInput placeholder="Введите пароль" style={styles.input} />
-            <TextInput placeholder="Повторите пароль" style={styles.input} />
+            <TextInput
+              placeholder="Введите пароль"
+              style={styles.input}
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
+            />
+            <TextInput
+              placeholder="Повторите пароль"
+              style={styles.input}
+              value={password2}
+              onChangeText={setPassword2}
+              secureTextEntry
+            />
 
             <TouchableOpacity
               style={styles.button}
-              onPress={() => navigation.navigate('CompanySecond')}>
+              onPress={handleRegistration}>
               <Text style={styles.buttonText}>Регистрация</Text>
             </TouchableOpacity>
             <View style={styles.questionBlock}>
