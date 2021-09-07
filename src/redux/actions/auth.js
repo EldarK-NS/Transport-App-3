@@ -5,7 +5,7 @@ import {
   LOGIN_FAIL,
   COMPANY_SIGN_UP_SUCCESS,
   COMPANY_SIGN_UP_FAIL,
-  // LOGOUT,
+  LOGOUT,
   // SIGN_UP_SUCCESS,
   // SIGN_UP_FAIL,
   // LOAD_USER,
@@ -13,16 +13,16 @@ import {
 } from '../types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const getToken = async token => {
-  try {
-    const value = await AsyncStorage.getItem('blizToken');
-    if (value !== null) {
-      console.log(value);
-    } else console.log('no token');
-  } catch (e) {
-    console.log(e);
-  }
-};
+// const getToken = async token => {
+//   try {
+//     const value = await AsyncStorage.getItem('token');
+//     if (value !== null) {
+//       console.log(value);
+//     } else console.log('no token');
+//   } catch (e) {
+//     console.log(e);
+//   }
+// };
 
 //! Log-In
 
@@ -44,11 +44,11 @@ export function login(phone, password) {
         });
         return;
       }
-      const token = await AsyncStorage.setItem('blizToken', res.data.token);
+      await AsyncStorage.setItem('token', res.data.token);
       dispatch({
         type: LOGIN_SUCCES,
         payload: res.data,
-        payloadToken: token,
+        payloadToken: res.data.token,
       });
     } catch (error) {
       console.log(error);
@@ -79,9 +79,6 @@ export function companySignup(data) {
           bin,
         },
       });
-      console.log('1', res.data.token);
-      console.log('2', res.data);
-      console.log('3', res);
       if (!res.data.success) {
         dispatch({
           type: COMPANY_SIGN_UP_FAIL,
@@ -89,7 +86,7 @@ export function companySignup(data) {
         });
         return;
       }
-      const token = await AsyncStorage.setItem('blizToken', res.data.token);
+      const token = await AsyncStorage.setItem('token', res.data.token);
       dispatch({
         type: COMPANY_SIGN_UP_SUCCESS,
         payload: res.data,
@@ -99,6 +96,23 @@ export function companySignup(data) {
       console.log('Error-Redux', error);
       dispatch({
         type: COMPANY_SIGN_UP_FAIL,
+      });
+    }
+  };
+}
+
+//!Logout
+export function Logout() {
+  return async dispatch => {
+    try {
+      await AsyncStorage.removeItem('token');
+      dispatch({
+        type: LOGOUT,
+      });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: LOGOUT,
       });
     }
   };

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Text,
   ScrollView,
@@ -11,11 +11,21 @@ import {
 import {MyTheme} from '../../../components/layout/theme';
 import InputDouble from '../../../components/SearchElements/InputDouble';
 import MyPicker from '../../../components/SearchElements/MyPicker';
+import MyDatePicker from '../../../components/SearchElements/MyDatePicker';
 import {useNavigation} from '@react-navigation/core';
+import {useDispatch, useSelector} from 'react-redux';
+import {getTransportTypes} from '../../../redux/actions/additionalData';
 
 export default function CargoFilterScreen() {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [sportModal, setSportModal] = useState(false);
+  const additionalData = useSelector(state => state.additionalData);
+
+  useEffect(() => {
+    dispatch(getTransportTypes());
+  }, []);
+
   const sports = [
     {title: 'Football11', id: '1'},
     {title: 'Football2', id: '2'},
@@ -28,12 +38,41 @@ export default function CargoFilterScreen() {
   const [sport, setSport] = useState(sports[0].id);
   const [sportString, setSportString] = useState(sports[0].title);
 
+  //!transport
+  const transportPickerData = () => {
+    const newData = [
+      ...additionalData.transportTypes,
+      {id: null, name: 'Любой'},
+    ];
+    return newData;
+  };
+  const [transportModal, setTransportModal] = useState(false);
+  const [transportId, setTransportId] = useState(null);
+  const [transportString, setTransportString] = useState('Любой');
+  // console.log(transportId, transportString);
+
+  //! Set Loading Date
+  const [isLoadingDateVisible, setIsLoadingDateVisibility] = useState(false);
+  const [loadingDate, setLoadingDate] = useState(null);
+  const [loadingDatePlaceholder, setLoadingDatePlaceholder] =
+    useState('Выберите дату');
+
+  //! Set Unloading Date
+  const [isUnloadingDateVisible, setIsUnloadingDateVisibility] =
+    useState(false);
+  const [unloadingDate, setUnloadingDate] = useState(null);
+  const [unloadingDatePlaceholder, setUnloadingDatePlaceholder] =
+    useState('Выберите дату');
+
+  console.log(loadingDate, unloadingDate);
+
   const [inputFrom, setInputFrom] = useState('');
   const [inputTo, setInputTo] = useState('');
 
   const getSearchResults = () => {
     navigation.navigate('MainCargo', {screen: 'CargoResults'});
   };
+
   return (
     <ScrollView showsVerticalScrollIndicator={false} endFillColor={'white'}>
       <KeyboardAvoidingView
@@ -60,20 +99,20 @@ export default function CargoFilterScreen() {
               data={sports}
               valueString={sportString}
               setValueString={setSportString}
-              placeholder="Oткуда"
+              placeholder="Куда"
             />
           </View>
           <View style={styles.formBlock}>
             <View>
               <MyPicker
-                modalOpen={sportModal}
-                setModalOpen={setSportModal}
-                value={sport}
-                setValue={setSport}
-                data={sports}
-                valueString={sportString}
-                setValueString={setSportString}
-                placeholder="Oткуда"
+                modalOpen={transportModal}
+                setModalOpen={setTransportModal}
+                value={transportId}
+                setValue={setTransportId}
+                data={transportPickerData()}
+                valueString={transportString}
+                setValueString={setTransportString}
+                placeholder="Транспорт"
               />
               <View style={styles.inputBlock}>
                 <InputDouble
@@ -88,22 +127,30 @@ export default function CargoFilterScreen() {
                   inputTo={inputTo}
                   setInputFrom={setInputFrom}
                   setInputTo={setInputTo}
-                  label="Вес, тн"
+                  label="Объем, м3"
                 />
               </View>
             </View>
           </View>
           <View style={styles.formBlock}>
             <View>
-              <MyPicker
-                modalOpen={sportModal}
-                setModalOpen={setSportModal}
-                value={sport}
-                setValue={setSport}
-                data={sports}
-                valueString={sportString}
-                setValueString={setSportString}
-                placeholder="Oткуда"
+              <MyDatePicker
+                visibility={isLoadingDateVisible}
+                setVisible={setIsLoadingDateVisibility}
+                setDate={setLoadingDate}
+                setTitle={setLoadingDatePlaceholder}
+                placeholder={loadingDatePlaceholder}
+                title={'Дата погрузки'}
+              />
+            </View>
+            <View>
+              <MyDatePicker
+                visibility={isUnloadingDateVisible}
+                setVisible={setIsUnloadingDateVisibility}
+                setDate={setUnloadingDate}
+                setTitle={setUnloadingDatePlaceholder}
+                placeholder={unloadingDatePlaceholder}
+                title={'Дата выгрузки'}
               />
             </View>
           </View>
@@ -117,7 +164,7 @@ export default function CargoFilterScreen() {
                 data={sports}
                 valueString={sportString}
                 setValueString={setSportString}
-                placeholder="Oткуда"
+                placeholder="Форма оплаты"
               />
             </View>
             <View style={styles.inputBlock}>
@@ -126,7 +173,7 @@ export default function CargoFilterScreen() {
                 inputTo={inputTo}
                 setInputFrom={setInputFrom}
                 setInputTo={setInputTo}
-                label="Вес, тн"
+                label="Стоимость перевозки, тг "
               />
             </View>
           </View>

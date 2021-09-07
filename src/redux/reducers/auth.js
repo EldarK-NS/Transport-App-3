@@ -4,7 +4,7 @@ import {
   LOGIN_FAIL,
   COMPANY_SIGN_UP_SUCCESS,
   COMPANY_SIGN_UP_FAIL,
-  // LOGOUT,
+  LOGOUT,
   // SIGN_UP_SUCCESS,
   // SIGN_UP_FAIL,
   // LOAD_USER,
@@ -31,10 +31,11 @@ export const authReducer = (state = initialState, action) => {
         token: action.payloadToken,
         message: null,
       };
+    case LOGOUT:
     case LOGIN_FAIL:
     case COMPANY_SIGN_UP_FAIL:
       return {
-        state,
+        ...state,
         isAuthenticated: false,
         loading: false,
         user: null,

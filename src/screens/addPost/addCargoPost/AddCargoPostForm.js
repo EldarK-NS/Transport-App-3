@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Text,
   Platform,
@@ -13,9 +13,20 @@ import MyPicker from '../../../components/SearchElements/MyPicker';
 import {useNavigation} from '@react-navigation/core';
 import {ScrollView} from 'react-native-gesture-handler';
 import MyDatePicker from '../../../components/SearchElements/MyDatePicker';
+import {useDispatch, useSelector} from 'react-redux';
+import {getAllCountries} from '../../../redux/actions/additionalData';
 
 export default function AddCargoPostForm() {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllCountries());
+  }, []);
+
+  const additionalData = useSelector(state => state.additionalData);
+  console.log('Data on Screen--', additionalData);
+
   const [sportModal, setSportModal] = useState(false);
   const sports = [
     {title: 'Football11', id: '1'},

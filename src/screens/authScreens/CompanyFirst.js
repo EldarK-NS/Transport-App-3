@@ -30,8 +30,8 @@ export default function CompanyFirst() {
   const [companyTypeString, setCompanyTypeString] = useState(null);
 
   //!Company name
-  const [companyName, setCompanyName] = useState('FirstTestCompany');
-  const [bin, setBin] = useState('111000999888');
+  const [companyName, setCompanyName] = useState('');
+  const [bin, setBin] = useState('');
 
   const handleSwitch = () => {
     setPersonLogin(!personLogin);

@@ -25,11 +25,11 @@ export default function CompanySecond({route}) {
   const [error, setError] = useState(null);
 
   //!Registartion Data
-  const [userName, setUserName] = useState('Eldar');
-  const [email, setEmail] = useState('first@first.com');
-  const [phoneNumber, setPhoneNumber] = useState('77077774455');
-  const [password, setPassword] = useState('123456');
-  const [password2, setPassword2] = useState('123456');
+  const [userName, setUserName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [password, setPassword] = useState('');
+  const [password2, setPassword2] = useState('');
 
   const isValidEmail = value => {
     const regx = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;

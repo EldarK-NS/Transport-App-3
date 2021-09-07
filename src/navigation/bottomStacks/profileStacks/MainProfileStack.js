@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, Pressable, StyleSheet} from 'react-native';
+import {Text, Pressable, StyleSheet, View} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {MyTheme} from '../../../components/layout/theme';
 import MainProfileScreen from '../../../screens/profileScreen/MainProfileScreen';
@@ -7,10 +7,18 @@ import MyPostsStack from './myPosts/MyPostsStack';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import InProgressCardScreen from '../../../screens/profileScreen/myPosts/InProgress/InProgressCardScreen';
 import EmployeesStack from './employees/EmployeesStack';
+import {useDispatch} from 'react-redux';
+import {Logout} from '../../../redux/actions/auth';
 
 const Stack = createStackNavigator();
 
 export default function MainProfileStack() {
+  const dispatch = useDispatch();
+  const logout = () => {
+    console.log('logout');
+    dispatch(Logout());
+  };
+
   return (
     <Stack.Navigator
       screenOptions={{
@@ -28,6 +36,11 @@ export default function MainProfileStack() {
         component={MainProfileScreen}
         options={{
           headerTitle: 'Личный кабинет ',
+          headerRight: ({navigation, route}) => (
+            <Pressable onPress={logout} style={{marginRight: 20}}>
+              <AntDesign size={25} color="white" name="logout" />
+            </Pressable>
+          ),
         }}
       />
       <Stack.Screen
