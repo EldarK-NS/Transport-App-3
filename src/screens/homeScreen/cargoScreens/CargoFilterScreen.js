@@ -16,6 +16,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getTransportTypes} from '../../../redux/actions/additionalData';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import {getFilteredCargoPosts} from '../../../redux/actions/filteredData';
 
 export default function CargoFilterScreen() {
   const navigation = useNavigation();
@@ -27,9 +28,6 @@ export default function CargoFilterScreen() {
   const [destinString, setDestinString] = useState('Нур-Султан, Казахстан');
   const [fromCoord, setFromCoord] = useState(null);
   const [destinCoord, setDestinCoord] = useState(null);
-
-  const [inputFrom, setInputFrom] = useState('');
-  const [inputTo, setInputTo] = useState('');
 
   useEffect(() => {
     if (route.params) {
@@ -88,8 +86,29 @@ export default function CargoFilterScreen() {
     dispatch(getTransportTypes());
   }, []);
 
+  const filteredData = useSelector(state => state.filderedData);
+  console.log(filteredData);
+
   const getSearchResults = () => {
-    navigation.navigate('MainCargo', {screen: 'CargoResults'});
+    const data = {
+      fromCoord,
+      destinCoord,
+      transportId,
+      netStart,
+      netEnd,
+      volumeStart,
+      volumeEnd,
+      loadingDate,
+      unloadingDate,
+      widthStart,
+      widthtEnd,
+      lengthStart,
+      lengthEnd,
+      heightStart,
+      heightEnd,
+    };
+    dispatch(getFilteredCargoPosts(data));
+    // navigation.navigate('MainCargo', {screen: 'CargoResults'});
   };
 
   return (
