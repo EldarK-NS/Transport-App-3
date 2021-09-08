@@ -179,3 +179,16 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
 });
+
+// const [sportModal, setSportModal] = useState(false);
+// const sports = [
+//   {title: 'Football11', id: '1'},
+//   {title: 'Football2', id: '2'},
+//   {title: 'Football3', id: '3'},
+//   {title: 'Football4', id: '4'},
+//   {title: 'Football5', id: '5'},
+//   {title: 'Football6', id: '6'},
+//   {title: 'Football7', id: '7'},
+// ];
+// const [sport, setSport] = useState(sports[0].id);
+// const [sportString, setSportString] = useState(sports[0].title);
