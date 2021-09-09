@@ -1,167 +1,386 @@
 import React, {useState, useEffect} from 'react';
 import {
   Text,
-  Platform,
   StyleSheet,
   TouchableOpacity,
   View,
-  KeyboardAvoidingView,
+  Dimensions,
+  Pressable,
 } from 'react-native';
 import {MyTheme} from '../../../components/layout/theme';
 import InputDouble from '../../../components/SearchElements/InputDouble';
 import MyPicker from '../../../components/SearchElements/MyPicker';
-import {useNavigation} from '@react-navigation/core';
-import {ScrollView} from 'react-native-gesture-handler';
 import MyDatePicker from '../../../components/SearchElements/MyDatePicker';
+import {useNavigation, useRoute} from '@react-navigation/core';
 import {useDispatch, useSelector} from 'react-redux';
-import {getAllCountries} from '../../../redux/actions/additionalData';
+import {
+  getTransportTypes,
+  getTransportSubTypes,
+  getPaymentTypes,
+  getCurrencyTypes,
+} from '../../../redux/actions/additionalData';
+import AntDesignIcon from 'react-native-vector-icons/AntDesign';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import SimpleInput from '../../../components/SearchElements/SimpleInput';
+import NumberInput from '../../../components/SearchElements/NumberInput';
+import EntypoIcon from 'react-native-vector-icons/Entypo';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {AddCargoPost} from '../../../redux/actions/addPosts';
 
 export default function AddCargoPostForm() {
+  const [token, setToken] = useState(null);
+  const getToken = async () => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+      setToken(value);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(() => {
+    getToken();
+  }, []);
+  // console.log(token);
   const navigation = useNavigation();
+  const route = useRoute();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllCountries());
+    dispatch(getTransportTypes());
+    dispatch(getPaymentTypes());
+    dispatch(getCurrencyTypes());
   }, []);
 
   const additionalData = useSelector(state => state.additionalData);
-  console.log('Data on Screen--', additionalData);
 
-  const [sportModal, setSportModal] = useState(false);
-  const sports = [
-    {title: 'Football11', id: '1'},
-    {title: 'Football2', id: '2'},
-    {title: 'Football3', id: '3'},
-    {title: 'Football4', id: '4'},
-    {title: 'Football5', id: '5'},
-    {title: 'Football6', id: '6'},
-    {title: 'Football7', id: '7'},
-  ];
-  const [sport, setSport] = useState(sports[0].id);
-  const [sportString, setSportString] = useState(sports[0].title);
+  //!Set Destination++++
+  const [fromString, setFromString] = useState('Алматы, Казахстан');
+  const [destinString, setDestinString] = useState('Нур-Султан, Казахстан');
+  const [fromCoord, setFromCoord] = useState(null);
+  const [destinCoord, setDestinCoord] = useState(null);
 
-  const [inputFrom, setInputFrom] = useState('');
-  const [inputTo, setInputTo] = useState('');
-
-  const goToSuccessResult = () => {
-    navigation.navigate('SuccessResults');
+  const additionalParams = () => {
+    navigation.navigate('AdditionalParams');
   };
 
-  //! Set Date
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [datePlaceholder, setDatePlaceholder] = useState('Выберите дату');
+  useEffect(() => {
+    if (route.params) {
+      setFromString(route.params.startString);
+      setDestinString(route.params.finishString);
+      setFromCoord(route.params.startCoord);
+      setDestinCoord(route.params.finishCoord);
+      setDocuments(route.params.documents);
+      setLoadingConditions(route.params.loadCond);
+      setTransportationConditions(route.params.transCond);
+    }
+  }, [route.params]);
+  //?---------------------------------------//
+
+  //! Set Loading Date+++
+  const [isLoadingDateVisible, setIsLoadingDateVisibility] = useState(false);
+  const [loadingDate, setLoadingDate] = useState(null);
+  const [loadingDatePlaceholder, setLoadingDatePlaceholder] =
+    useState('Выберите дату');
+
+  //! Set Unloading Date+++
+  const [isUnloadingDateVisible, setIsUnloadingDateVisibility] =
+    useState(false);
+  const [unloadingDate, setUnloadingDate] = useState(null);
+  const [unloadingDatePlaceholder, setUnloadingDatePlaceholder] =
+    useState('Выберите дату');
+  //?---------------------------------------//
+
+  //!Cargo description+++
+  const [description, setDescription] = useState('');
+  //?---------------------------------------//
+
+  //! Net and Volume+++
+  const [netStart, setNetStart] = useState(null);
+  const [netEnd, setNetEnd] = useState(null);
+  const [volumeStart, setVolumeStart] = useState(null);
+  const [volumeEnd, setVolumeEnd] = useState(null);
+
+  //?---------------------------------------//
+
+  //! set Height, Width, Length+++
+
+  const [widthStart, setWidthStart] = useState(null);
+  const [widthtEnd, setWidthEnd] = useState(null);
+
+  const [lengthStart, setLengthStart] = useState(null);
+  const [lengthEnd, setLengthEnd] = useState(null);
+
+  const [heightStart, setHeightStart] = useState(null);
+  const [heightEnd, setHeightEnd] = useState(null);
+  //?---------------------------------------//
+
+  //!Quantity+++
+  const [quantity, setQuantity] = useState(null);
+  //?---------------------------------------//
+
+  //!Transport+++
+  const transportPickerData = () => {
+    const newData = [
+      ...additionalData.transportTypes,
+      {id: null, name: 'Любой'},
+    ];
+    return newData;
+  };
+
+  const [transportTypeModal, setTransporTypetModal] = useState(false);
+  const [transportTypeId, setTransportTypeId] = useState(null);
+  const [transportTypeString, setTransportTypeString] = useState('Любой');
+
+  const [transportSubTypeModal, setTransportSubTypeModal] = useState(false);
+  const [transportSubTypeId, setTransportSubTypeId] = useState(null);
+  const [transportSubTypeString, setTransportSubTypeString] = useState(null);
+
+  useEffect(() => {
+    dispatch(getTransportSubTypes(transportTypeId));
+    setTransportSubTypeId(null);
+    setTransportSubTypeString(null);
+  }, [transportTypeId]);
+  //?---------------------------------------//
+
+  //!Price+++
+  const [price, setPrice] = useState(null);
+
+  const [paymentModal, setPaymentModal] = useState(false);
+  const [paymentId, setPaymentId] = useState(null);
+  const [paymentString, setPaymentString] = useState('Выберите валюту платежа');
+
+  const [currencyModal, setCurrencyModal] = useState(false);
+  const [currencyId, setCurrencyId] = useState(null);
+  const [currencyString, setCurrencyString] = useState(
+    'Выберите способ оплаты',
+  );
+  //?---------------------------------------//
+  //!Additional params
+  const [documents, setDocuments] = useState(null);
+  const [loadingConditions, setLoadingConditions] = useState(null);
+  const [transportationConditions, setTransportationConditions] =
+    useState(null);
+
+  const AddPost = () => {
+    const data = {
+      token: token,
+      category_id: 1,
+      sub_id: 1,
+      title: description,
+      from: fromCoord,
+      to: destinCoord,
+      volume: volumeStart,
+      net: netStart,
+      start_date: loadingDate,
+      end_date: unloadingDate,
+      documents: documents,
+      price: price,
+      price_type: currencyId,
+      payment_type: paymentId,
+      type_transport: transportTypeId,
+      type_sub_transport: transportSubTypeId,
+      from_string: fromString,
+      to_string: destinString,
+      loading: loadingConditions,
+      condition: transportationConditions,
+    };
+    dispatch(AddCargoPost(data));
+    // navigation.navigate('MainCargo', {screen: 'CargoResults'});
+  };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false} endFillColor={'white'}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'position' : 'height'}
-        style={{flex: 1}}
-        keyboardVerticalOffset={20}>
-        <View style={styles.container}>
-          <View style={styles.titleBlock}>
-            <Text
-              style={styles.subTitle}
-              numberOfLines={2}
-              ellipsizeMode={'clip'}>
-              Заполните всю необходимую информацию о вашем грузе.
-            </Text>
-          </View>
-          <View style={styles.formBlock}>
-            <MyPicker
-              modalOpen={sportModal}
-              setModalOpen={setSportModal}
-              value={sport}
-              setValue={setSport}
-              data={sports}
-              valueString={sportString}
-              setValueString={setSportString}
-              placeholder="Oткуда"
-            />
-            <MyPicker
-              modalOpen={sportModal}
-              setModalOpen={setSportModal}
-              value={sport}
-              setValue={setSport}
-              data={sports}
-              valueString={sportString}
-              setValueString={setSportString}
-              placeholder="Куда"
-            />
-            <MyDatePicker
-              setVisible={setDatePickerVisibility}
-              setDate={setSelectedDate}
-              setTitle={setDatePlaceholder}
-              placeholder={datePlaceholder}
-              visibility={isDatePickerVisible}
-            />
-          </View>
-          <View style={styles.formBlock}>
+    <KeyboardAwareScrollView>
+      <View style={styles.container}>
+        <Pressable
+          style={styles.formBlock}
+          onPress={() => navigation.navigate('PlaceAutocomplite2')}>
+          <View style={styles.visibleContainer}>
             <View>
-              <MyPicker
-                modalOpen={sportModal}
-                setModalOpen={setSportModal}
-                value={sport}
-                setValue={setSport}
-                data={sports}
-                valueString={sportString}
-                setValueString={setSportString}
-                placeholder="Нужен транспорт"
-              />
-              <View style={styles.inputBlock}>
-                <InputDouble
-                  inputFrom={inputFrom}
-                  inputTo={inputTo}
-                  setInputFrom={setInputFrom}
-                  setInputTo={setInputTo}
-                  label="Вес, тн"
-                />
-                <InputDouble
-                  inputFrom={inputFrom}
-                  inputTo={inputTo}
-                  setInputFrom={setInputFrom}
-                  setInputTo={setInputTo}
-                  label="Объем, м3"
-                />
-              </View>
+              <Text style={styles.placeholderLabel}>Откуда</Text>
+              <Text style={styles.placeText}>{fromString}</Text>
             </View>
+            <AntDesignIcon
+              name="caretdown"
+              size={10}
+              color={MyTheme.black}
+              style={{marginRight: 10}}
+            />
           </View>
-          <View style={styles.formBlock}>
+          <View style={styles.visibleContainer}>
             <View>
-              <MyPicker
-                modalOpen={sportModal}
-                setModalOpen={setSportModal}
-                value={sport}
-                setValue={setSport}
-                data={sports}
-                valueString={sportString}
-                setValueString={setSportString}
-                placeholder="Форма оплаты"
+              <Text style={styles.placeholderLabel}>Куда</Text>
+              <Text style={styles.placeText}>{destinString}</Text>
+            </View>
+            <AntDesignIcon
+              name="caretdown"
+              size={10}
+              color={MyTheme.black}
+              style={{marginRight: 10}}
+            />
+          </View>
+        </Pressable>
+        <View style={styles.formBlock}>
+          <View>
+            <MyDatePicker
+              visibility={isLoadingDateVisible}
+              setVisible={setIsLoadingDateVisibility}
+              setDate={setLoadingDate}
+              setTitle={setLoadingDatePlaceholder}
+              placeholder={loadingDatePlaceholder}
+              title={'Дата погрузки'}
+            />
+          </View>
+          <View>
+            <MyDatePicker
+              visibility={isUnloadingDateVisible}
+              setVisible={setIsUnloadingDateVisibility}
+              setDate={setUnloadingDate}
+              setTitle={setUnloadingDatePlaceholder}
+              placeholder={unloadingDatePlaceholder}
+              title={'Дата выгрузки'}
+            />
+          </View>
+        </View>
+        <View style={styles.sectionGrey}>
+          <Text style={styles.label}>Характеристики груза:</Text>
+        </View>
+        <View style={styles.formBlock}>
+          <View>
+            <View style={styles.textInputBlock}>
+              <SimpleInput
+                label={'Описание груза'}
+                setInputText={setDescription}
+                inputText={description}
               />
             </View>
             <View style={styles.inputBlock}>
               <InputDouble
-                inputFrom={inputFrom}
-                inputTo={inputTo}
-                setInputFrom={setInputFrom}
-                setInputTo={setInputTo}
-                label="Стоимость перевозки, тн"
+                inputFrom={netStart}
+                inputTo={netEnd}
+                setInputFrom={setNetStart}
+                setInputTo={setNetEnd}
+                label="Вес, тн"
+              />
+              <InputDouble
+                inputFrom={volumeStart}
+                inputTo={volumeEnd}
+                setInputFrom={setVolumeStart}
+                setInputTo={setVolumeEnd}
+                label="Объем, м3"
               />
             </View>
           </View>
-          <TouchableOpacity style={styles.button} onPress={goToSuccessResult}>
-            <Text style={styles.buttonText}>ДОБАВИТЬ ОБЪЯВЛЕНИЕ</Text>
-          </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
-    </ScrollView>
+
+        <View style={styles.formBlock}>
+          <View style={styles.inputBlock}>
+            <InputDouble
+              inputFrom={widthStart}
+              inputTo={widthtEnd}
+              setInputFrom={setWidthStart}
+              setInputTo={setWidthEnd}
+              label="Ширина, м"
+            />
+            <InputDouble
+              inputFrom={lengthStart}
+              inputTo={lengthEnd}
+              setInputFrom={setLengthStart}
+              setInputTo={setLengthEnd}
+              label="Длина, м"
+            />
+            <InputDouble
+              inputFrom={heightStart}
+              inputTo={heightEnd}
+              setInputFrom={setHeightStart}
+              setInputTo={setHeightEnd}
+              label="Высота, м"
+            />
+            <NumberInput
+              input={quantity}
+              setInput={setQuantity}
+              label="Количество мест"
+              placeholder={'0'}
+            />
+          </View>
+        </View>
+        <View style={styles.sectionGrey}>
+          <Text style={styles.label}>Транспорт:</Text>
+        </View>
+        <View style={styles.formBlock}>
+          <MyPicker
+            modalOpen={transportTypeModal}
+            setModalOpen={setTransporTypetModal}
+            value={transportTypeId}
+            setValue={setTransportTypeId}
+            data={transportPickerData()}
+            valueString={transportTypeString}
+            setValueString={setTransportTypeString}
+            placeholder="Способ транспортировки"
+          />
+          <MyPicker
+            modalOpen={transportSubTypeModal}
+            setModalOpen={setTransportSubTypeModal}
+            value={transportSubTypeId}
+            setValue={setTransportSubTypeId}
+            data={additionalData.transportSubTypes}
+            valueString={transportSubTypeString}
+            setValueString={setTransportSubTypeString}
+            placeholder="Тип транспорта"
+          />
+        </View>
+        <View style={styles.sectionGrey}>
+          <Text style={styles.label}>Стоимость первозки:</Text>
+        </View>
+        <View style={styles.formBlock}>
+          <NumberInput
+            input={price}
+            setInput={setPrice}
+            label="Цена"
+            placeholder={'0'}
+          />
+          <MyPicker
+            modalOpen={paymentModal}
+            setModalOpen={setPaymentModal}
+            value={paymentId}
+            setValue={setPaymentId}
+            data={additionalData.currencyTypes}
+            valueString={paymentString}
+            setValueString={setPaymentString}
+            placeholder="Валюта"
+          />
+          <MyPicker
+            modalOpen={currencyModal}
+            setModalOpen={setCurrencyModal}
+            value={currencyId}
+            setValue={setCurrencyId}
+            data={additionalData.paymentTypes}
+            valueString={currencyString}
+            setValueString={setCurrencyString}
+            placeholder="Способ оплаты"
+          />
+        </View>
+        <View style={styles.sectionGrey}>
+          <Text style={styles.label}>Дополнительные параметры:</Text>
+        </View>
+        <Pressable style={styles.formBlock} onPress={additionalParams}>
+          <View style={styles.additParams}>
+            <Text style={styles.additParamsText}>
+              Документы, Способ погрузки, Условия перевозки
+            </Text>
+            <EntypoIcon name="chevron-right" size={18} color={MyTheme.grey} />
+          </View>
+        </Pressable>
+        <TouchableOpacity style={styles.button} onPress={AddPost}>
+          <Text style={styles.buttonText}>ДОБАВИТЬ ОБЪЯВЛЕНИЕ</Text>
+        </TouchableOpacity>
+      </View>
+    </KeyboardAwareScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    height: '100%',
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: MyTheme.background,
@@ -183,7 +402,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 8,
+    marginVertical: 15,
   },
   buttonText: {
     fontSize: 15,
@@ -192,26 +411,62 @@ const styles = StyleSheet.create({
     // fontFamily:'IBM-Bold',
     fontWeight: 'bold',
   },
-  titleBlock: {
-    width: '100%',
+  visibleContainer: {
+    width: Dimensions.get('window').width - 20,
+    height: 60,
     alignItems: 'center',
-    paddingTop: 18,
-    paddingBottom: 11,
-    backgroundColor: 'white',
+    justifyContent: 'space-between',
+    borderBottomColor: MyTheme.grey,
+    borderBottomWidth: 0.5,
+    flexDirection: 'row',
   },
-  title: {
-    // fontFamily: "IBM-Medium",
-    fontSize: 21,
+  placeholderLabel: {
+    alignSelf: 'flex-start',
+    marginLeft: 10,
+    // fontFamily: 'IBM-Regular',
+    fontSize: 13,
+    lineHeight: 16,
+    color: MyTheme.grey,
+  },
+  placeText: {
+    alignSelf: 'flex-start',
+    marginLeft: 10,
+    // fontFamily: 'IBM-Regular',
+    fontSize: 17,
     lineHeight: 24,
     color: MyTheme.black,
-    marginBottom: 7,
   },
-  subTitle: {
-    // fontFamily: "IBM-Regular",
-    fontSize: 14,
-    lineHeight: 18,
+  label: {
+    // fontFamily: 'IBM-SemiBold',
+    fontSize: 15,
+    lineHeight: 24,
+    // marginLeft: 15,
     color: MyTheme.grey,
-    width: '60%',
-    textAlign: 'center',
+    fontWeight: 'bold',
+    // textDecorationLine: 'underline',
+  },
+  sectionGrey: {
+    height: 35,
+    width: '100%',
+    backgroundColor: MyTheme.background,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  additParams: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: Dimensions.get('window').width - 30,
+    borderBottomWidth: 0.5,
+    borderBottomColor: MyTheme.grey,
+  },
+  additParamsText: {
+    marginLeft: 10,
+    paddingVertical: 10,
+    // fontFamily: 'IBM-Regular',
+    fontSize: 17,
+    lineHeight: 24,
+    color: MyTheme.black,
+    width: 250,
   },
 });

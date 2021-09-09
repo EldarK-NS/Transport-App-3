@@ -1,25 +1,31 @@
 import {
   GET_COMPANY_TYPES_SUCCESS,
   GET_COMPANY_TYPES_FAIL,
-  GET_ALL_COUNTRIES_SUCCESS,
-  GET_ALL_COUNTRIES_FAIL,
-  // GET_CITIES_BY_COUNTRY_ID_SUCCESS,
-  // GET_CITIES_BY_COUNTRY_ID_FAIL,
   GET_PAYMENT_TYPES_SUCCESS,
   GET_PAYMENT_TYPES_FAIL,
   GET_CURRENCY_TYPES_SUCCESS,
   GET_CURRENCY_TYPES_FAIL,
   GET_TRANSPORT_TYPES_SUCCESS,
   GET_TRANSPORT_TYPES_FAIL,
+  GET_TRANSPORT_SUB_TYPES_SUCCESS,
+  GET_TRANSPORT_SUB_TYPES_FAIL,
+  GET_DOCUMENTS_SUCCESS,
+  GET_DOCUMENTS_FAIL,
+  GET_LOADING_CONDITIONS_SUCCESS,
+  GET_LOADING_CONDITIONS_FAIL,
+  GET_TRANSPORT_CONDITIONS_SUCCESS,
+  GET_TRANSPORT_CONDITIONS_FAIL,
 } from '../types';
 const initialState = {
   loading: true,
   companyTypes: [],
-  allCountries: [],
-  cities: [],
   paymentTypes: [],
   currencyTypes: [],
   transportTypes: [],
+  transportSubTypes: [],
+  documents: [],
+  loadingCond: [],
+  tarnsportCond: [],
 };
 
 export const helpDataReducer = (state = initialState, action) => {
@@ -29,12 +35,6 @@ export const helpDataReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         companyTypes: action.payload,
-      };
-    case GET_ALL_COUNTRIES_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        allCountries: action.payload,
       };
     case GET_PAYMENT_TYPES_SUCCESS:
       return {
@@ -54,11 +54,38 @@ export const helpDataReducer = (state = initialState, action) => {
         loading: false,
         transportTypes: action.payload,
       };
-    case GET_ALL_COUNTRIES_FAIL:
+    case GET_TRANSPORT_SUB_TYPES_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        transportSubTypes: action.payload,
+      };
+    case GET_DOCUMENTS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        documents: action.payload,
+      };
+    case GET_LOADING_CONDITIONS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        loadingCond: action.payload,
+      };
+    case GET_TRANSPORT_CONDITIONS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        tarnsportCond: action.payload,
+      };
     case GET_COMPANY_TYPES_FAIL:
     case GET_PAYMENT_TYPES_FAIL:
     case GET_CURRENCY_TYPES_FAIL:
     case GET_TRANSPORT_TYPES_FAIL:
+    case GET_TRANSPORT_SUB_TYPES_FAIL:
+    case GET_DOCUMENTS_FAIL:
+    case GET_LOADING_CONDITIONS_FAIL:
+    case GET_TRANSPORT_CONDITIONS_FAIL:
       return {
         ...state,
         loading: true,

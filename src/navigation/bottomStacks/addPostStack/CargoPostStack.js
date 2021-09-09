@@ -8,6 +8,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import AddCargoPostForm from '../../../screens/addPost/addCargoPost/AddCargoPostForm';
 import {MyTheme} from '../../../components/layout/theme';
 import SuccessResultScreen from '../../../screens/addPost/addCargoPost/SuccessResultScreen';
+import PlaceAutocomplite2 from '../../../screens/addPost/addCargoPost/PlaceAutocomplite2';
+import AdditionalParams from '../../../screens/addPost/addCargoPost/AdditionalParams';
 
 const Stack = createStackNavigator();
 
@@ -48,6 +50,39 @@ export default function CargoPostStack() {
               <AntDesign name="close" size={20} color="white" />
             </Pressable>
           ),
+        })}
+      />
+      <Stack.Screen
+        name="PlaceAutocomplite2"
+        component={PlaceAutocomplite2}
+        options={({navigation, route}) => ({
+          headerTitle: 'Откуда-Куда',
+          headerTitleStyle: {
+            fontSize: 17,
+            fontWeight: 'bold',
+            color: 'white',
+          },
+          headerLeft: () => (
+            <Pressable
+              style={styles.leftButton}
+              onPress={() => navigation.goBack()}>
+              <AntDesign name="left" size={24} color="white" />
+              <Text style={styles.buttonText}>Назад</Text>
+            </Pressable>
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="AdditionalParams"
+        component={AdditionalParams}
+        options={({navigation, route}) => ({
+          headerTitle: 'Доп. параметры',
+          headerTitleStyle: {
+            fontSize: 17,
+            fontWeight: 'bold',
+            color: 'white',
+          },
+          headerLeft: () => null,
         })}
       />
       <Stack.Screen

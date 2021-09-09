@@ -1,34 +1,21 @@
 import React from 'react';
 import {StyleSheet, Text, View, TextInput, Dimensions} from 'react-native';
 import {MyTheme} from '../layout/theme';
-
-export default function InputDouble({
-  inputFrom,
-  inputTo,
-  setInputFrom,
-  setInputTo,
-  label,
-}) {
+import EntypoIcon from 'react-native-vector-icons/Entypo';
+export default function SimpleInput({label, setInputText, inputText}) {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
       <View style={styles.inputContainer}>
         <TextInput
-          placeholder="от"
+          placeholder="Краткое описание груза"
           style={styles.input}
-          onChangeText={setInputFrom}
-          value={inputFrom}
-          keyboardType="number-pad"
+          onChangeText={setInputText}
+          value={inputText}
           returnKeyType="done"
+          maxLength={40}
         />
-        <TextInput
-          placeholder="до"
-          style={styles.input}
-          onChangeText={setInputTo}
-          value={inputTo}
-          keyboardType="number-pad"
-          returnKeyType="done"
-        />
+        <EntypoIcon name="chevron-right" size={15} color={MyTheme.grey} />
       </View>
     </View>
   );
@@ -37,31 +24,31 @@ export default function InputDouble({
 const styles = StyleSheet.create({
   container: {
     width: Dimensions.get('window').width - 30,
-    marginBottom: 10,
+    borderBottomColor: MyTheme.grey,
+    borderBottomWidth: 0.5,
   },
   inputContainer: {
+    height: 60,
     flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   label: {
     // fontFamily: 'IBM-Regular',
     fontSize: 13,
     lineHeight: 16,
     color: MyTheme.grey,
-    marginLeft: 10,
-    marginBottom: 5,
+    marginLeft: 7,
+    marginTop: 7,
+    position: 'absolute',
   },
   input: {
-    width: '50%',
     height: 45,
-    paddingLeft: 12,
-    borderWidth: 0.5,
-    borderColor: MyTheme.grey,
     fontSize: 17,
     // fontFamily: 'IBM-Regular',
     color: MyTheme.black,
-    lineHeight: 20,
-    marginBottom: 5,
+    lineHeight: 24,
+    padding: 7,
+    marginTop: 9,
   },
 });

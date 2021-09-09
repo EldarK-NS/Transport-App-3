@@ -10,7 +10,7 @@ import {MyTheme} from '../../../components/layout/theme';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import {useNavigation} from '@react-navigation/core';
 
-export default function PlaceAutocomplite() {
+export default function PlaceAutocomplite2() {
   const navigation = useNavigation();
 
   //!StartPlace
@@ -22,7 +22,7 @@ export default function PlaceAutocomplite() {
   const [finishPlaceString, setFinishPlaceString] = useState(null);
 
   const GoBack = () => {
-    navigation.navigate('CargoFilter', {
+    navigation.navigate('AddPostForm', {
       startCoord: startPlace,
       startString: startPlaceString,
       finishCoord: finishPlace,

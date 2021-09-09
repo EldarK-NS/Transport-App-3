@@ -2,30 +2,16 @@ import React from 'react';
 import {StyleSheet, Text, View, TextInput, Dimensions} from 'react-native';
 import {MyTheme} from '../layout/theme';
 
-export default function InputDouble({
-  inputFrom,
-  inputTo,
-  setInputFrom,
-  setInputTo,
-  label,
-}) {
+export default function NumberInput({setInput, input, label, placeholder}) {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
       <View style={styles.inputContainer}>
         <TextInput
-          placeholder="от"
+          placeholder={placeholder}
           style={styles.input}
-          onChangeText={setInputFrom}
-          value={inputFrom}
-          keyboardType="number-pad"
-          returnKeyType="done"
-        />
-        <TextInput
-          placeholder="до"
-          style={styles.input}
-          onChangeText={setInputTo}
-          value={inputTo}
+          onChangeText={setInput}
+          value={input}
           keyboardType="number-pad"
           returnKeyType="done"
         />
@@ -49,11 +35,11 @@ const styles = StyleSheet.create({
     fontSize: 13,
     lineHeight: 16,
     color: MyTheme.grey,
-    marginLeft: 10,
+    marginLeft: 8,
     marginBottom: 5,
   },
   input: {
-    width: '50%',
+    width: '100%',
     height: 45,
     paddingLeft: 12,
     borderWidth: 0.5,

@@ -87,7 +87,6 @@ export default function CargoFilterScreen() {
   }, []);
 
   const filteredData = useSelector(state => state.filderedData);
-  console.log(filteredData);
 
   const getSearchResults = () => {
     const data = {
