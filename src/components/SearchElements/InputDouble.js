@@ -18,7 +18,7 @@ export default function InputDouble({
           style={styles.input}
           onChangeText={setInputFrom}
           value={inputFrom}
-          keyboardType="number-pad"
+          keyboardType="numeric"
           returnKeyType="done"
         />
         <TextInput
@@ -26,7 +26,7 @@ export default function InputDouble({
           style={styles.input}
           onChangeText={setInputTo}
           value={inputTo}
-          keyboardType="number-pad"
+          keyboardType="numeric"
           returnKeyType="done"
         />
       </View>

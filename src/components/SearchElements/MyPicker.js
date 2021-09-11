@@ -70,7 +70,7 @@ export default function MyPicker({
                   selectedValue={value}
                   style={{height: 50, width: '100%'}}
                   onValueChange={itemValue => {
-                    const valString = data.find(item => item.id === itemValue);
+                    const valString = data?.find(item => item.id === itemValue);
                     return setValue(itemValue), setValueString(valString.name);
                   }}>
                   {pickerData(data)}

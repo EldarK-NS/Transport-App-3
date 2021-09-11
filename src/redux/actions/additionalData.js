@@ -45,7 +45,6 @@ export function getPaymentTypes() {
       const res = await axios.get(
         'https://test.money-men.kz/api/getPaymentType',
       );
-      console.log('res-Payments', res.data);
       dispatch({
         type: GET_PAYMENT_TYPES_SUCCESS,
         payload: res.data,
@@ -63,7 +62,6 @@ export function getCurrencyTypes() {
   return async dispatch => {
     try {
       const res = await axios.get('https://test.money-men.kz/api/getCurrency');
-      console.log('res-Currency', res.data);
       dispatch({
         type: GET_CURRENCY_TYPES_SUCCESS,
         payload: res.data,

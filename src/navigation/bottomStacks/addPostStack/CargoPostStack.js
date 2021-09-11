@@ -95,6 +95,7 @@ export default function CargoPostStack() {
             fontWeight: 'bold',
             color: 'white',
           },
+          headerLeft: () => null,
           headerRight: () => (
             <Pressable
               style={[styles.leftButton, {marginRight: 10}]}

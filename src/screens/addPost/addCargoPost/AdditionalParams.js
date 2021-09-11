@@ -13,6 +13,7 @@ import {useNavigation} from '@react-navigation/core';
 import {useDispatch, useSelector} from 'react-redux';
 import CheckBox from '@react-native-community/checkbox';
 import {MyTheme} from '../../../components/layout/theme';
+import {additDataForCargoPost} from '../../../redux/actions/transitStore';
 
 import {
   getDocuments,
@@ -50,11 +51,15 @@ export default function AdditionalParams() {
     let documents = reverse(checkDoc, doc1);
     let loadCond = reverse(checkLoadCond, doc2);
     let transCond = reverse(checkTransCond, doc3);
-    navigation.navigate('AddPostForm', {
-      documents,
-      loadCond,
-      transCond,
-    });
+    const data = {
+      additionals: {
+        documents,
+        loadCond,
+        transCond,
+      },
+    };
+    dispatch(additDataForCargoPost(data));
+    navigation.navigate('AddPostForm');
   };
 
   return (

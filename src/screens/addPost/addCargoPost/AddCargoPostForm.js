@@ -11,7 +11,7 @@ import {MyTheme} from '../../../components/layout/theme';
 import InputDouble from '../../../components/SearchElements/InputDouble';
 import MyPicker from '../../../components/SearchElements/MyPicker';
 import MyDatePicker from '../../../components/SearchElements/MyDatePicker';
-import {useNavigation, useRoute} from '@react-navigation/core';
+import {useNavigation} from '@react-navigation/core';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   getTransportTypes,
@@ -25,10 +25,16 @@ import SimpleInput from '../../../components/SearchElements/SimpleInput';
 import NumberInput from '../../../components/SearchElements/NumberInput';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {AddCargoPost} from '../../../redux/actions/addPosts';
+import {removeDataForCargoPost} from '../../../redux/actions/transitStore';
+import axios from 'axios';
 
 export default function AddCargoPostForm() {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  //! Get Token+++
   const [token, setToken] = useState(null);
+
   const getToken = async () => {
     try {
       const value = await AsyncStorage.getItem('token');
@@ -40,11 +46,9 @@ export default function AddCargoPostForm() {
   useEffect(() => {
     getToken();
   }, []);
-  // console.log(token);
-  const navigation = useNavigation();
-  const route = useRoute();
-  const dispatch = useDispatch();
+  //?---------------------------------------//
 
+  //!Fetch Additional Data
   useEffect(() => {
     dispatch(getTransportTypes());
     dispatch(getPaymentTypes());
@@ -52,6 +56,7 @@ export default function AddCargoPostForm() {
   }, []);
 
   const additionalData = useSelector(state => state.additionalData);
+  const transitData = useSelector(state => state.transitData);
 
   //!Set Destination++++
   const [fromString, setFromString] = useState('Алматы, Казахстан');
@@ -59,21 +64,15 @@ export default function AddCargoPostForm() {
   const [fromCoord, setFromCoord] = useState(null);
   const [destinCoord, setDestinCoord] = useState(null);
 
-  const additionalParams = () => {
-    navigation.navigate('AdditionalParams');
-  };
-
   useEffect(() => {
-    if (route.params) {
-      setFromString(route.params.startString);
-      setDestinString(route.params.finishString);
-      setFromCoord(route.params.startCoord);
-      setDestinCoord(route.params.finishCoord);
-      setDocuments(route.params.documents);
-      setLoadingConditions(route.params.loadCond);
-      setTransportationConditions(route.params.transCond);
+    if (transitData.startPlaceCargo !== null) {
+      setFromCoord(transitData.startPlaceCargo.id);
+      setFromString(transitData.startPlaceCargo.string);
+      setDestinCoord(transitData.endPlaceCargo.id);
+      setDestinString(transitData.endPlaceCargo.string);
     }
-  }, [route.params]);
+  }, [transitData.endPlaceCargo]);
+
   //?---------------------------------------//
 
   //! Set Loading Date+++
@@ -127,6 +126,11 @@ export default function AddCargoPostForm() {
     return newData;
   };
 
+  const PickerData = (data, label) => {
+    const newData = [...data, {id: null, name: label}];
+    return newData;
+  };
+
   const [transportTypeModal, setTransporTypetModal] = useState(false);
   const [transportTypeId, setTransportTypeId] = useState(null);
   const [transportTypeString, setTransportTypeString] = useState('Любой');
@@ -155,37 +159,40 @@ export default function AddCargoPostForm() {
     'Выберите способ оплаты',
   );
   //?---------------------------------------//
-  //!Additional params
+  //!Additional params+++
+
+  const additionalParams = () => {
+    navigation.navigate('AdditionalParams');
+  };
+
   const [documents, setDocuments] = useState(null);
   const [loadingConditions, setLoadingConditions] = useState(null);
   const [transportationConditions, setTransportationConditions] =
     useState(null);
 
-  const AddPost = () => {
-    const data = {
-      token: token,
-      category_id: 1,
-      sub_id: 1,
-      title: description,
-      from: fromCoord,
-      to: destinCoord,
-      volume: volumeStart,
-      net: netStart,
-      start_date: loadingDate,
-      end_date: unloadingDate,
-      documents: documents,
-      price: price,
-      price_type: currencyId,
-      payment_type: paymentId,
-      type_transport: transportTypeId,
-      type_sub_transport: transportSubTypeId,
-      from_string: fromString,
-      to_string: destinString,
-      loading: loadingConditions,
-      condition: transportationConditions,
-    };
-    dispatch(AddCargoPost(data));
-    // navigation.navigate('MainCargo', {screen: 'CargoResults'});
+  useEffect(() => {
+    if (transitData.additionalCargoPost !== null) {
+      setDocuments(transitData.additionalCargoPost.documents);
+      setLoadingConditions(transitData.additionalCargoPost.loadCond);
+      setTransportationConditions(transitData.additionalCargoPost.transCond);
+    }
+  }, [transitData.additionalCargoPost]);
+  //?---------------------------------------//
+
+  const AddPost = async () => {
+    try {
+      const res = await axios({
+        method: 'GET',
+        url: `https://test.money-men.kz/api/newAddPost?token=${token}&category_id=1&sub_id=1&title=${description}&from=${fromCoord}&to=${destinCoord}&volume=${volumeStart}&net=${netStart}&start_date=${loadingDate}&end_date=${unloadingDate}&documents[]=${documents}&price=${price}&price_type=${currencyId}&payment_type=${paymentId}&type_transport=${transportTypeId}&type_sub_transport[]=${transportSubTypeId}&from_string=${fromString}&to_string=${destinString}&loading[]=${loadingConditions}&condition[]=${transportationConditions}`,
+      });
+      console.log(res);
+      if (res.data.success) {
+        dispatch(removeDataForCargoPost());
+        navigation.navigate('SuccessResults');
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -312,7 +319,7 @@ export default function AddCargoPostForm() {
             setModalOpen={setTransporTypetModal}
             value={transportTypeId}
             setValue={setTransportTypeId}
-            data={transportPickerData()}
+            data={[...additionalData.transportTypes, {id: null, name: 'Любой'}]}
             valueString={transportTypeString}
             setValueString={setTransportTypeString}
             placeholder="Способ транспортировки"
@@ -322,7 +329,10 @@ export default function AddCargoPostForm() {
             setModalOpen={setTransportSubTypeModal}
             value={transportSubTypeId}
             setValue={setTransportSubTypeId}
-            data={additionalData.transportSubTypes}
+            data={[
+              ...additionalData.transportSubTypes,
+              {id: null, name: 'Выбрать тип транспорта'},
+            ]}
             valueString={transportSubTypeString}
             setValueString={setTransportSubTypeString}
             placeholder="Тип транспорта"
@@ -343,7 +353,10 @@ export default function AddCargoPostForm() {
             setModalOpen={setPaymentModal}
             value={paymentId}
             setValue={setPaymentId}
-            data={additionalData.currencyTypes}
+            data={[
+              ...additionalData.currencyTypes,
+              {id: null, name: 'Выбрать валюту платежа'},
+            ]}
             valueString={paymentString}
             setValueString={setPaymentString}
             placeholder="Валюта"
@@ -353,7 +366,10 @@ export default function AddCargoPostForm() {
             setModalOpen={setCurrencyModal}
             value={currencyId}
             setValue={setCurrencyId}
-            data={additionalData.paymentTypes}
+            data={[
+              ...additionalData.paymentTypes,
+              {id: null, name: 'Выбрать способ оплаты'},
+            ]}
             valueString={currencyString}
             setValueString={setCurrencyString}
             placeholder="Способ оплаты"

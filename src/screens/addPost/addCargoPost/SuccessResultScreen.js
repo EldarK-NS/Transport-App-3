@@ -1,8 +1,12 @@
 import React from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import {MyTheme} from '../../../components/layout/theme';
+import {useNavigation} from '@react-navigation/core';
+import {removeHistory} from '../../../redux/actions/addPosts';
 
 export default function SuccessResultScreen() {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <Image
@@ -14,7 +18,10 @@ export default function SuccessResultScreen() {
         Теперь, другие участники сервиса видят ваше объявление и ваши контактные
         данные.
       </Text>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('AddPost', {screen: 'Main'})}>
+        {/* onPress={() => navigation.navigate('Main')}> */}
         <Text style={styles.buttonText}>К ОБЪЯВЛЕНИЮ</Text>
       </TouchableOpacity>
     </View>

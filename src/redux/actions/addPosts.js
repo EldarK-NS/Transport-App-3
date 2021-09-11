@@ -28,19 +28,18 @@ export function AddCargoPost(data) {
     try {
       const res = await axios({
         method: 'GET',
-        url: `https://test.money-men.kz/api/newAddPost?token=${token}&category_id=${category_id}&sub_id=${sub_id}&title=${title}&from=${from}&to=${to}&volume=${volume}&net=${net}&start_date=${start_date}&end_date=${end_date}&documents[]=${documents}&price=${price}&price_type=${price_type}&payment_type=${payment_type}&type_transport=${type_transport}&type_sub_transport[]=${type_sub_transport}&from_string=${from_string}&to_string=${to_string}`,
+        url: `https://test.money-men.kz/api/newAddPost?token=${token}&category_id=${category_id}&sub_id=${sub_id}&title=${title}&from=${from}&to=${to}&volume=${volume}&net=${net}&start_date=${start_date}&end_date=${end_date}&documents[]=${documents}&price=${price}&price_type=${price_type}&payment_type=${payment_type}&type_transport=${type_transport}&type_sub_transport[]=${type_sub_transport}&from_string=${from_string}&to_string=${to_string}&loading[]=${loading}&condition[]=${condition}`,
       });
       console.log('FROM_REDUX-DATA', res.data);
-      console.log('FROM_REDUX--RES', res);
       dispatch({
         type: ADD_CARGO_POSTS_SUCCESS,
-        payload: res.data,
+        payload: res.data.success,
+        message: res.data.message || null,
       });
     } catch (error) {
-      console.log(error);
+      console.log('error', error);
       dispatch({
         type: ADD_CARGO_POSTS_FAIL,
-        // payload
       });
     }
   };

@@ -22,7 +22,7 @@ export default MyDatePicker = ({
   };
 
   const handleConfirm = date => {
-    setDate(moment(date).calendar());
+    setDate(moment(date.toJSON()).format('L'));
     setTitle(moment(date.toJSON()).format('LL'));
     hideDatePicker();
   };
