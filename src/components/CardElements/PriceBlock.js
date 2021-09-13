@@ -8,7 +8,11 @@ import {
 } from 'react-native';
 import {MyTheme} from '../layout/theme';
 
-export default function PriceBlock({title, subtitle, button, buttonColor}) {
+export default function PriceBlock({price, payment_type, button, buttonColor}) {
+  function numberWithSpaces(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  }
+
   return (
     <View
       style={
@@ -22,8 +26,12 @@ export default function PriceBlock({title, subtitle, button, buttonColor}) {
         </View>
         <View style={styles.rightSide}>
           <Text style={styles.subTitle}>Стоимость:</Text>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={[styles.subTitle, {marginBottom: 8}]}>{subtitle}</Text>
+          <Text style={styles.title}>{numberWithSpaces(price)}</Text>
+          <Text style={[styles.subTitle, {marginBottom: 8}]}>
+            {payment_type === 'наличный'
+              ? `без НДС ${payment_type}`
+              : payment_type}
+          </Text>
         </View>
       </View>
       <View

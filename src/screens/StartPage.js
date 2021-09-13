@@ -1,10 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {
-  StyleSheet,
-  SafeAreaView,
-  StatusBar,
-  ActivityIndicator,
-} from 'react-native';
+import {StyleSheet, SafeAreaView, StatusBar, Image, View} from 'react-native';
 import AuthNavigator from '../navigation/AuthNavigation';
 import RootNavigator from '../navigation/RootNavigation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -15,6 +10,7 @@ import {useSelector} from 'react-redux';
 
 export default function StartPage() {
   const [token, setToken] = useState(null);
+  const [loading, setLoading] = useState(true);
   const user = useSelector(state => state.auth);
 
   const getToken = async () => {
@@ -29,19 +25,27 @@ export default function StartPage() {
     getToken();
   }, [user]);
 
-  const [loading, setLoading] = useState(false);
+  const [isAutth, setIsAuth] = useState(false);
   useEffect(() => {
     if (token !== null) {
-      setLoading(true);
+      setIsAuth(true);
+      setLoading(false);
     } else {
+      setIsAuth(false);
       setLoading(false);
     }
   }, [token]);
-
+  if (loading) {
+    return (
+      <View style={styles.screenContainer}>
+        <Image source={require('../../assets/images/BLIZ.KZ.png')} />
+      </View>
+    );
+  }
   return (
     <SafeAreaView style={styles.container} backgroundColor={MyTheme.blue}>
-      <StatusBar barStyle={'light-content'} />
-      {!loading ? <AuthNavigator /> : <RootNavigator />}
+      <StatusBar />
+      {!isAutth ? <AuthNavigator /> : <RootNavigator />}
     </SafeAreaView>
   );
 }
@@ -49,5 +53,11 @@ export default function StartPage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  screenContainer: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

@@ -20,7 +20,7 @@ export default function MainAddPostStack() {
         headerTitleAlign: 'center',
       }}>
       <Stack.Screen
-        name="Main"
+        name="MainAddPosts"
         component={AddPostScreen}
         options={{
           headerTitle: 'Добавить объявление ',

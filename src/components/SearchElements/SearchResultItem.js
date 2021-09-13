@@ -17,8 +17,27 @@ import moment from 'moment';
 import {useNavigation} from '@react-navigation/core';
 
 export default function SearchResultItem(props) {
+  const {
+    from,
+    to,
+    driver,
+    distance,
+    net,
+    volume,
+    type_transport,
+    start_date,
+    title,
+    rating,
+    companyName,
+    price,
+    status,
+    auth,
+    updated_at,
+    path,
+    postId,
+  } = props;
   const navigation = useNavigation();
-  const {data} = props;
+
   function numberWithSpaces(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   }
@@ -30,84 +49,75 @@ export default function SearchResultItem(props) {
     }
     return rating.reverse();
   };
-  const getCargoCard = () => {
-    if (data.navPath) {
-      navigation.navigate(data.navPath, {screen: data.path});
-    } else {
-      navigation.navigate(data.path);
-    }
+  const goToCargoCard = () => {
+    navigation.navigate(path, {
+      id: postId,
+    });
   };
   return (
-    <TouchableOpacity style={styles.container} onPress={getCargoCard}>
+    <TouchableOpacity style={styles.container} onPress={goToCargoCard}>
       <View style={styles.mainBlock}>
         <View style={styles.mainLeftSide}>
           <View style={styles.titleBlock}>
-            <FontAwesome
-              name="circle"
-              size={8}
-              color={
-                data.details.status
-                  ? data.details.status.bacgroundcolor
-                  : 'black'
-              }
-              style={styles.dot}
-            />
+            {status ? (
+              <FontAwesome
+                name="circle"
+                size={8}
+                color={status ? status.bacgroundcolor : 'black'}
+                style={styles.dot}
+              />
+            ) : null}
             <Text style={styles.title}>
-              {data.details.from_string}{' '}
+              {from}{' '}
               <FontAwesome5
                 name="arrow-right"
                 size={12}
                 color="black"
                 style={styles.arrowIcon}
               />{' '}
-              {data.details.to_string}
+              {to}
             </Text>
           </View>
 
-          {data.details.status ? (
-            <Text style={styles.driver}>
-              Водитель: {data.details.status.driver}
-            </Text>
+          {status ? (
+            <Text style={styles.driver}>Водитель: {driver}</Text>
           ) : (
-            <Text style={styles.dist}> {data.details.distance}</Text>
+            <Text style={styles.dist}> {distance} км</Text>
           )}
 
           <Text style={styles.info}>
-            {data.details.net}т, {data.details.volume}m3,{' '}
-            {data.details.type_transport},{' '}
-            {moment(data.details.start_date).format('l')}, {data.details.title}
+            {net} т, {volume} m&#179;, {type_transport},{' '}
+            {moment(new Date(start_date)).format('MM/DD/YYYY')}, {title}
           </Text>
         </View>
         <View style={styles.mainRightSide}>
-          {data.details.status ? (
+          {status ? (
             <View style={styles.statusBlock}>
               <View
                 style={{
-                  backgroundColor: data.details.status.bacgroundcolor,
+                  backgroundColor: status.bacgroundcolor,
                   width: '100%',
                   padding: 2,
                 }}>
-                <Text style={styles.coloredAction}>
-                  {data.details.status.title}
-                </Text>
+                <Text style={styles.coloredAction}>{status.title}</Text>
               </View>
               <Text style={styles.yourPrice}>ВАША ЦЕНА</Text>
 
               <Text style={styles.price}>
-                {numberWithSpaces(data.details.price)}
+                {numberWithSpaces(price)}
                 <Text style={styles.currency}> &#8376;</Text>
               </Text>
             </View>
           ) : (
             <View style={styles.barePrice}>
               <Text style={styles.price}>
-                {numberWithSpaces(data.details.price)}{' '}
+                {numberWithSpaces(price)}{' '}
                 <Text style={styles.currency}> &#8376;</Text>{' '}
               </Text>
               <Text style={styles.tax}>без НДС</Text>
             </View>
           )}
-          {!data.details.status && (
+          {!status && (
             <AntDesign
               name="staro"
               size={22}
@@ -118,7 +128,7 @@ export default function SearchResultItem(props) {
         </View>
       </View>
       <View style={styles.footerBlock}>
-        {data.details.status ? (
+        {status ? (
           <View style={styles.footerContainer}>
             <View style={styles.companyDate}>
               <Text style={styles.tax}>ТОО &laquo;ОУСА Альянс&raquo;</Text>
@@ -127,14 +137,12 @@ export default function SearchResultItem(props) {
               </Text>
             </View>
             <View style={styles.cargoStatus}>
-              {data.details.status.title === 'ОТКАЗ' ? (
+              {status.title === 'ОТКАЗ' ? (
                 <View style={styles.reasonDenied}>
                   <Text style={styles.reason}>Причина отказа:</Text>
-                  <Text style={styles.denied}>
-                    {data.details.status.reason}
-                  </Text>
+                  <Text style={styles.denied}>{status.reason}</Text>
                 </View>
-              ) : data.details.status.title === 'ПРИНЯТО' ? (
+              ) : status.title === 'ПРИНЯТО' ? (
                 <Pressable style={styles.buttonConfirm}>
                   <Text style={styles.buttonTitle}>ПОДТВЕРДИТЬ ЗАЯВКУ</Text>
                 </Pressable>
@@ -143,10 +151,10 @@ export default function SearchResultItem(props) {
           </View>
         ) : (
           <View style={styles.companyDate}>
-            {data.auth ? (
+            {auth ? (
               <View style={styles.footerLeftSide}>
                 <View style={styles.stars}>
-                  {ratingsStar(data.details.rating, 6).map((item, index) => {
+                  {ratingsStar(rating, 6).map((item, index) => {
                     return (
                       <FontAwesome
                         name="star"
@@ -158,7 +166,7 @@ export default function SearchResultItem(props) {
                     );
                   })}
                 </View>
-                <Text style={styles.reason}>ТОО &laquo;ОУСА Альянс&raquo;</Text>
+                <Text style={styles.reason}>{companyName}</Text>
               </View>
             ) : (
               <View style={styles.lock}>
@@ -169,7 +177,7 @@ export default function SearchResultItem(props) {
               </View>
             )}
             <Text style={styles.reason}>
-              изм. {moment(data.updated_at).format('LT')}
+              изм. {moment(updated_at).format('LT')}
             </Text>
           </View>
         )}
@@ -180,21 +188,23 @@ export default function SearchResultItem(props) {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 15,
-    // width: Dimensions.get('window').width - 30,
-    width: '100%',
+    // padding: 15,
+    paddingVertical: 15,
+    paddingHorizontal: 5,
+    width: Dimensions.get('window').width - 30,
+    // width: '100%',
     borderBottomWidth: 0.5,
     borderBottomColor: MyTheme.grey,
   },
   mainBlock: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     marginBottom: 5,
   },
   mainLeftSide: {
     // maxWidth: Dimensions.get('window').width * 0.68,
-    width: '68%',
+    width: '60%',
   },
   titleBlock: {
     flexDirection: 'row',
@@ -216,6 +226,8 @@ const styles = StyleSheet.create({
   dist: {
     fontSize: 14,
     lineHeight: 18,
+    marginLeft: 10,
+    marginTop: 3,
     color: MyTheme.blue,
     // fontFamily: 'IBM-Regular',
   },
@@ -267,15 +279,15 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: MyTheme.grey,
     // fontFamily: 'IBM-Regular',
-    alignSelf: 'center',
-    marginBottom: 10,
+    alignSelf: 'flex-end',
+    marginBottom: 20,
   },
   price: {
     fontSize: 16,
     color: MyTheme.black,
     // fontFamily: 'IBM-SemiBold',
     lineHeight: 24,
-    marginHorizontal: 5,
+    // marginHorizontal: 5,
   },
   currency: {
     fontSize: 14,

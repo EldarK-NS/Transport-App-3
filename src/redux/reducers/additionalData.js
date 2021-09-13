@@ -15,6 +15,8 @@ import {
   GET_LOADING_CONDITIONS_FAIL,
   GET_TRANSPORT_CONDITIONS_SUCCESS,
   GET_TRANSPORT_CONDITIONS_FAIL,
+  GET_FREIGHT_CONDITIONS_SUCCESS,
+  GET_FREIGHT_CONDITIONS_FAIL,
 } from '../types';
 const initialState = {
   loading: true,
@@ -25,7 +27,8 @@ const initialState = {
   transportSubTypes: [],
   documents: [],
   loadingCond: [],
-  tarnsportCond: [],
+  transportCond: [],
+  freightCond: [],
 };
 
 export const helpDataReducer = (state = initialState, action) => {
@@ -76,7 +79,13 @@ export const helpDataReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        tarnsportCond: action.payload,
+        transportCond: action.payload,
+      };
+    case GET_FREIGHT_CONDITIONS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        freightCond: action.payload,
       };
     case GET_COMPANY_TYPES_FAIL:
     case GET_PAYMENT_TYPES_FAIL:
@@ -86,6 +95,7 @@ export const helpDataReducer = (state = initialState, action) => {
     case GET_DOCUMENTS_FAIL:
     case GET_LOADING_CONDITIONS_FAIL:
     case GET_TRANSPORT_CONDITIONS_FAIL:
+    case GET_FREIGHT_CONDITIONS_FAIL:
       return {
         ...state,
         loading: true,

@@ -6,6 +6,8 @@ import {
   View,
   Dimensions,
   Pressable,
+  Modal,
+  Image,
 } from 'react-native';
 import {MyTheme} from '../../../components/layout/theme';
 import InputDouble from '../../../components/SearchElements/InputDouble';
@@ -21,14 +23,16 @@ import {
 } from '../../../redux/actions/additionalData';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
-import SimpleInput from '../../../components/SearchElements/SimpleInput';
 import NumberInput from '../../../components/SearchElements/NumberInput';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {removeDataForCargoPost} from '../../../redux/actions/transitStore';
 import axios from 'axios';
+import {SimpleInput} from '../../../components/SearchElements/SimpleInput';
 
 export default function AddCargoPostForm() {
+  const [modalShow, setModalShow] = useState(false);
+
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -151,12 +155,12 @@ export default function AddCargoPostForm() {
 
   const [paymentModal, setPaymentModal] = useState(false);
   const [paymentId, setPaymentId] = useState(null);
-  const [paymentString, setPaymentString] = useState('Выберите валюту платежа');
+  const [paymentString, setPaymentString] = useState('Выберите способ оплаты');
 
   const [currencyModal, setCurrencyModal] = useState(false);
   const [currencyId, setCurrencyId] = useState(null);
   const [currencyString, setCurrencyString] = useState(
-    'Выберите способ оплаты',
+    'Выберите валюту платежа',
   );
   //?---------------------------------------//
   //!Additional params+++
@@ -167,6 +171,7 @@ export default function AddCargoPostForm() {
 
   const [documents, setDocuments] = useState(null);
   const [loadingConditions, setLoadingConditions] = useState(null);
+  const [freightConditions, setFreightConditions] = useState(null);
   const [transportationConditions, setTransportationConditions] =
     useState(null);
 
@@ -174,6 +179,7 @@ export default function AddCargoPostForm() {
     if (transitData.additionalCargoPost !== null) {
       setDocuments(transitData.additionalCargoPost.documents);
       setLoadingConditions(transitData.additionalCargoPost.loadCond);
+      setFreightConditions(transitData.additionalCargoPost.freightCond);
       setTransportationConditions(transitData.additionalCargoPost.transCond);
     }
   }, [transitData.additionalCargoPost]);
@@ -183,12 +189,12 @@ export default function AddCargoPostForm() {
     try {
       const res = await axios({
         method: 'GET',
-        url: `https://test.money-men.kz/api/newAddPost?token=${token}&category_id=1&sub_id=1&title=${description}&from=${fromCoord}&to=${destinCoord}&volume=${volumeStart}&net=${netStart}&start_date=${loadingDate}&end_date=${unloadingDate}&documents[]=${documents}&price=${price}&price_type=${currencyId}&payment_type=${paymentId}&type_transport=${transportTypeId}&type_sub_transport[]=${transportSubTypeId}&from_string=${fromString}&to_string=${destinString}&loading[]=${loadingConditions}&condition[]=${transportationConditions}`,
+        url: `https://test.money-men.kz/api/newAddPost?token=${token}&category_id=1&sub_id=1&title=${description}&from=${fromCoord}&to=${destinCoord}&volume=${volumeStart}&net=${netStart}&start_date=${loadingDate}&end_date=${unloadingDate}&documents[]=${documents}&price=${price}&price_type=${currencyId}&payment_type=${paymentId}&type_transport=${transportTypeId}&type_sub_transport[]=${transportSubTypeId}&from_string=${fromString}&to_string=${destinString}&loading[]=${loadingConditions}&condition[]=${transportationConditions}&addition[]=${freightConditions}`,
       });
       console.log(res);
       if (res.data.success) {
         dispatch(removeDataForCargoPost());
-        navigation.navigate('SuccessResults');
+        setModalShow(true);
       }
     } catch (error) {
       console.log(error);
@@ -198,6 +204,48 @@ export default function AddCargoPostForm() {
   return (
     <KeyboardAwareScrollView>
       <View style={styles.container}>
+        <Modal transparent={true} visible={modalShow}>
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: '#000000aa',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <View
+              style={{
+                backgroundColor: '#fff',
+                margin: 20,
+                padding: 40,
+                borderRadius: 20,
+                width: Dimensions.get('window').width - 50,
+                height: Dimensions.get('window').height - 200,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Image
+                source={require('../../../../assets/images/Bitmap.png')}
+                style={styles.modalImage}
+              />
+              <Text style={styles.modalTitle}>Объявление опубликованно!</Text>
+              <Text style={styles.modalSubTitle}>
+                Теперь, другие участники сервиса видят ваше объявление и ваши
+                контактные данные.
+              </Text>
+              <TouchableOpacity
+                style={styles.modalButton}
+                onPress={() => {
+                  setModalShow(false);
+                  navigation.reset({
+                    index: 0,
+                    routes: [{name: 'Home'}],
+                  });
+                }}>
+                <Text style={styles.modalbButtonText}>К ОБЪЯВЛЕНИЮ</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
         <Pressable
           style={styles.formBlock}
           onPress={() => navigation.navigate('PlaceAutocomplite2')}>
@@ -349,30 +397,30 @@ export default function AddCargoPostForm() {
             placeholder={'0'}
           />
           <MyPicker
-            modalOpen={paymentModal}
-            setModalOpen={setPaymentModal}
-            value={paymentId}
-            setValue={setPaymentId}
-            data={[
-              ...additionalData.currencyTypes,
-              {id: null, name: 'Выбрать валюту платежа'},
-            ]}
-            valueString={paymentString}
-            setValueString={setPaymentString}
-            placeholder="Валюта"
-          />
-          <MyPicker
             modalOpen={currencyModal}
             setModalOpen={setCurrencyModal}
             value={currencyId}
             setValue={setCurrencyId}
+            valueString={currencyString}
+            setValueString={setCurrencyString}
+            placeholder="Валюта"
+            data={[
+              ...additionalData.currencyTypes,
+              {id: null, name: 'Выбрать валюту платежа'},
+            ]}
+          />
+          <MyPicker
+            modalOpen={paymentModal}
+            setModalOpen={setPaymentModal}
+            value={paymentId}
+            setValue={setPaymentId}
+            valueString={paymentString}
+            setValueString={setPaymentString}
+            placeholder="Способ оплаты"
             data={[
               ...additionalData.paymentTypes,
               {id: null, name: 'Выбрать способ оплаты'},
             ]}
-            valueString={currencyString}
-            setValueString={setCurrencyString}
-            placeholder="Способ оплаты"
           />
         </View>
         <View style={styles.sectionGrey}>
@@ -484,5 +532,53 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     color: MyTheme.black,
     width: 250,
+  },
+  modalContainer: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+  },
+  modalTitle: {
+    // fontFamily:'IBM-Bold',
+    fontSize: 21,
+    lineHeight: 24,
+    color: MyTheme.blue,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    width: '75%',
+    textAlign: 'center',
+  },
+  modalSubTitle: {
+    // fontFamily:'IBM-Regular',
+    fontSize: 14,
+    lineHeight: 18,
+    color: MyTheme.grey,
+    marginBottom: 40,
+    width: '85%',
+    textAlign: 'center',
+  },
+  modalButton: {
+    width: 220,
+    height: 45,
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: MyTheme.blue,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: MyTheme.background,
+  },
+  modalbButtonText: {
+    // fontFamily:'IBM-SemiBold',
+    fontSize: 14,
+    lineHeight: 24,
+    color: MyTheme.blue,
+    fontWeight: '600',
+  },
+  modalImage: {
+    width: 84,
+    height: 84,
+    marginBottom: 30,
   },
 });

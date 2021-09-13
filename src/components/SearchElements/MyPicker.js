@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   visibleContainer: {
-    width: Dimensions.get('window').width - 20,
+    width: Dimensions.get('window').width - 35,
     height: 60,
     alignItems: 'center',
     justifyContent: 'center',
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
   },
   title: {
     alignSelf: 'flex-start',
-    marginLeft: 14,
+    marginLeft: 5,
     // fontFamily: 'IBM-Regular',
     fontSize: 17,
     lineHeight: 24,
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
   },
   placeholderLabel: {
     alignSelf: 'flex-start',
-    marginLeft: 14,
+    marginLeft: 5,
     // fontFamily: 'IBM-Regular',
     fontSize: 13,
     lineHeight: 16,

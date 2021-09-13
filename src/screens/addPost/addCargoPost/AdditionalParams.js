@@ -19,6 +19,7 @@ import {
   getDocuments,
   getLoadingConditions,
   getTransportConditions,
+  getFreightConditions,
 } from '../../../redux/actions/additionalData';
 
 export default function AdditionalParams() {
@@ -29,12 +30,14 @@ export default function AdditionalParams() {
     dispatch(getDocuments());
     dispatch(getLoadingConditions());
     dispatch(getTransportConditions());
+    dispatch(getFreightConditions());
   }, []);
 
   const additionalData = useSelector(state => state.additionalData);
   const [checkDoc, setCheckDocum] = useState({});
   const [checkLoadCond, setCheckLoadCond] = useState({});
   const [checkTransCond, setCheckTransCond] = useState({});
+  const [checkFreightCond, setCheckFreightCond] = useState({});
 
   const reverse = (obj, arr) => {
     for (let key in obj) {
@@ -47,15 +50,18 @@ export default function AdditionalParams() {
   let doc1 = [];
   let doc2 = [];
   let doc3 = [];
+  let doc4 = [];
   const Confirm = () => {
     let documents = reverse(checkDoc, doc1);
     let loadCond = reverse(checkLoadCond, doc2);
     let transCond = reverse(checkTransCond, doc3);
+    let freightCond = reverse(checkFreightCond, doc4);
     const data = {
       additionals: {
         documents,
         loadCond,
         transCond,
+        freightCond,
       },
     };
     dispatch(additDataForCargoPost(data));
@@ -111,8 +117,8 @@ export default function AdditionalParams() {
         </View>
         <Text style={styles.title}>Условия транспортировки</Text>
         <View style={styles.checkboxBlockSection}>
-          {additionalData.tarnsportCond.data ? (
-            additionalData.tarnsportCond.data.map((b, index) => {
+          {additionalData.transportCond.data ? (
+            additionalData.transportCond.data.map((b, index) => {
               return (
                 <View key={b.id} style={styles.checkboxBlock}>
                   <CheckBox
@@ -131,7 +137,31 @@ export default function AdditionalParams() {
             <ActivityIndicator size={'large'} color={MyTheme.blue} />
           )}
         </View>
-
+        <Text style={styles.title}>Условия фрахта</Text>
+        <View style={styles.checkboxBlockSection}>
+          {additionalData.freightCond.data ? (
+            additionalData.freightCond.data.map((b, index) => {
+              return (
+                <View key={b.id} style={styles.checkboxBlock}>
+                  <CheckBox
+                    boxType="square"
+                    disabled={false}
+                    value={checkFreightCond[b.id]}
+                    onValueChange={newValue => {
+                      setCheckFreightCond({
+                        ...checkFreightCond,
+                        [b.id]: newValue,
+                      });
+                    }}
+                  />
+                  <Text style={styles.label}>{b.name}</Text>
+                </View>
+              );
+            })
+          ) : (
+            <ActivityIndicator size={'large'} color={MyTheme.blue} />
+          )}
+        </View>
         <TouchableOpacity onPress={Confirm} style={styles.confirm}>
           <Text style={styles.buttonText}>ПОДТВЕРДИТЬ</Text>
         </TouchableOpacity>

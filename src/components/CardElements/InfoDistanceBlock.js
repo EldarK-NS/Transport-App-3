@@ -8,14 +8,14 @@ import {
   Dimensions,
 } from 'react-native';
 import {MyTheme} from '../layout/theme';
+import moment from 'moment';
 
 export default function InfoDistanceBlock({
   colorInfo,
   titleText,
-  subtitleText,
   pointA_Title,
   pointA_Subtitle,
-  pointA_date,
+  start_date,
   pointB_Title,
   pointB_Subtitle,
   pointB_date,
@@ -37,7 +37,9 @@ export default function InfoDistanceBlock({
       {titleText ? (
         <View style={styles.titleContainer}>
           <Text style={styles.titleText}>{titleText}</Text>
-          <Text style={styles.subTitleText}>{subtitleText}</Text>
+          <Text style={styles.subTitleText}>
+            {pointA_Title}-{pointB_Title} {moment(start_date).format('DD MMMM')}
+          </Text>
         </View>
       ) : null}
       {pointA_Title ? (
@@ -49,7 +51,9 @@ export default function InfoDistanceBlock({
             <View style={styles.middleItemText}>
               <Text style={styles.point}>{pointA_Title}</Text>
               <Text style={styles.pointDescr}>{pointA_Subtitle}</Text>
-              <Text style={styles.date}>{pointA_date}</Text>
+              <Text style={styles.date}>
+                {moment(start_date).format('DD MMMM')}
+              </Text>
             </View>
           </View>
           <View style={styles.verticalLine}></View>
@@ -97,9 +101,9 @@ const styles = StyleSheet.create({
     fontFamily: 'IBM-SemiBold',
     fontSize: 12,
   },
-  // titleContainer: {
-
-  // },
+  titleContainer: {
+    alignItems: 'center',
+  },
   titleText: {
     // fontFamily: 'IBM-SemiBold',
     fontSize: 21,

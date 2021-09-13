@@ -1,7 +1,7 @@
 export const funcList = [
-  {id: '1', title: 'Мои объявления', navPath: 'MyPosts'},
-  {id: '2', title: 'Профиль компании', navPath: 'MyPosts'},
-  {id: '3', title: 'Уведомления', navPath: 'MyPosts'},
+  {id: '1', title: 'Мои объявления', navPath: 'MyEmployees'},
+  {id: '2', title: 'Профиль компании', navPath: 'MyEmployees'},
+  {id: '3', title: 'Уведомления', navPath: 'MyEmployees'},
   {id: '4', title: 'Настройки', navPath: 'MyEmployees'},
   {id: '5', title: 'Сотрудники', navPath: 'MyEmployees'},
   {id: '6', title: 'Баланс и статус', navPath: 'MyEmployees'},

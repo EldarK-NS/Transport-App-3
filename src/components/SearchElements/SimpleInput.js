@@ -1,8 +1,9 @@
 import React from 'react';
 import {StyleSheet, Text, View, TextInput, Dimensions} from 'react-native';
-import {MyTheme} from '../layout/theme';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
-export default function SimpleInput({label, setInputText, inputText}) {
+import {MyTheme} from '../layout/theme';
+
+export const SimpleInput = ({label, setInputText, inputText}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
@@ -19,7 +20,7 @@ export default function SimpleInput({label, setInputText, inputText}) {
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

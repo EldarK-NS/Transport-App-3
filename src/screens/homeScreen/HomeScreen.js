@@ -34,8 +34,8 @@ export default function HomeScreen() {
               title={item.title}
               subtitle={item.descr}
               iconname={item.icon}
-              navPath={item.path}
-              mainPath={item.mainPath}
+              navPath={'CargoFilter'}
+              mainPath={'MainCargo'}
             />
           )}
           keyExtractor={item => item.id}

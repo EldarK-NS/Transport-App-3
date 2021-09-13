@@ -7,70 +7,82 @@ import {
   Dimensions,
   Pressable,
 } from 'react-native';
+import {useNavigation} from '@react-navigation/core';
+import {useDispatch, useSelector} from 'react-redux';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+
 import {MyTheme} from '../../../components/layout/theme';
 import InputDouble from '../../../components/SearchElements/InputDouble';
 import MyPicker from '../../../components/SearchElements/MyPicker';
 import MyDatePicker from '../../../components/SearchElements/MyDatePicker';
-import {useNavigation, useRoute} from '@react-navigation/core';
-import {useDispatch, useSelector} from 'react-redux';
 import {getTransportTypes} from '../../../redux/actions/additionalData';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
-import {getFilteredCargoPosts} from '../../../redux/actions/filteredData';
+import {removeDataForCargoPost} from '../../../redux/actions/transitStore';
+
+//TODO: нужно ли очищать поля после возврата назад из результатов поиска
 
 export default function CargoFilterScreen() {
   const navigation = useNavigation();
-  const route = useRoute();
   const dispatch = useDispatch();
 
-  //!Set Destination
-  const [fromString, setFromString] = useState('Алматы, Казахстан');
-  const [destinString, setDestinString] = useState('Нур-Султан, Казахстан');
+  const transitData = useSelector(state => state.transitData);
+
+  //!Set Destination++++
+  const [fromString, setFromString] = useState(null);
+  const [destinString, setDestinString] = useState(null);
   const [fromCoord, setFromCoord] = useState(null);
   const [destinCoord, setDestinCoord] = useState(null);
 
   useEffect(() => {
-    if (route.params) {
-      setFromString(route.params.startString);
-      setDestinString(route.params.finishString);
-      setFromCoord(route.params.startCoord);
-      setDestinCoord(route.params.finishCoord);
+    if (transitData.startPlaceCargo !== null) {
+      setFromCoord(transitData.startPlaceCargo.id);
+      setFromString(transitData.startPlaceCargo.string);
+      setDestinCoord(transitData.endPlaceCargo.id);
+      setDestinString(transitData.endPlaceCargo.string);
     }
-  }, [route.params]);
-  //---------------------------------------//
-  //!Transport
-  const transportPickerData = () => {
-    const newData = [
-      ...additionalData.transportTypes,
-      {id: null, name: 'Любой'},
-    ];
-    return newData;
-  };
-  const [transportModal, setTransportModal] = useState(false);
-  const [transportId, setTransportId] = useState(null);
-  const [transportString, setTransportString] = useState('Любой');
-  //---------------------------------------//
-  //! Net and Volume
-  const [netStart, setNetStart] = useState(null);
-  const [netEnd, setNetEnd] = useState(null);
-  const [volumeStart, setVolumeStart] = useState(null);
-  const [volumeEnd, setVolumeEnd] = useState(null);
-  //---------------------------------------//
-  //! Set Loading Date
+  }, [transitData.endPlaceCargo]);
+  //?---------------------------------------//
+
+  //! Set Loading Date+++
   const [isLoadingDateVisible, setIsLoadingDateVisibility] = useState(false);
   const [loadingDate, setLoadingDate] = useState(null);
   const [loadingDatePlaceholder, setLoadingDatePlaceholder] =
     useState('Выберите дату');
-
-  //! Set Unloading Date
+  //! Set Unloading Date+++
   const [isUnloadingDateVisible, setIsUnloadingDateVisibility] =
     useState(false);
   const [unloadingDate, setUnloadingDate] = useState(null);
   const [unloadingDatePlaceholder, setUnloadingDatePlaceholder] =
     useState('Выберите дату');
-  //---------------------------------------//
+  //?---------------------------------------//
 
-  //! set Height, Width, Length
+  //!Transport+++
+  const [transportModal, setTransportModal] = useState(false);
+  const [transportId, setTransportId] = useState(null);
+  const [transportString, setTransportString] = useState('Любой');
+
+  //?---------------------------------------//
+
+  //!Quantity+++
+  const [quantityStart, setQuantityStart] = useState(null);
+  const [quantityEnd, setQuantityEnd] = useState(null);
+  //?---------------------------------------//
+
+  //!Price+++
+  const [priceStart, setPriceStart] = useState(null);
+  const [priceEnd, setPriceEnd] = useState(null);
+
+  //?---------------------------------------//
+
+  //! Net and Volume+++
+  const [netStart, setNetStart] = useState(null);
+  const [netEnd, setNetEnd] = useState(null);
+  const [volumeStart, setVolumeStart] = useState(null);
+  const [volumeEnd, setVolumeEnd] = useState(null);
+
+  //?---------------------------------------//
+
+  //! set Height, Width, Length+++
 
   const [widthStart, setWidthStart] = useState(null);
   const [widthtEnd, setWidthEnd] = useState(null);
@@ -80,39 +92,46 @@ export default function CargoFilterScreen() {
 
   const [heightStart, setHeightStart] = useState(null);
   const [heightEnd, setHeightEnd] = useState(null);
-  //---------------------------------------//
+
+  //?---------------------------------------//
+
   const additionalData = useSelector(state => state.additionalData);
   useEffect(() => {
     dispatch(getTransportTypes());
   }, []);
 
-  const filteredData = useSelector(state => state.filderedData);
-
   const getSearchResults = () => {
     const data = {
-      fromCoord,
-      destinCoord,
-      transportId,
-      netStart,
-      netEnd,
-      volumeStart,
-      volumeEnd,
-      loadingDate,
-      unloadingDate,
-      widthStart,
-      widthtEnd,
-      lengthStart,
-      lengthEnd,
-      heightStart,
-      heightEnd,
+      from: fromCoord,
+      volume_start: volumeStart,
+      volume_end: volumeEnd,
+      net_start: netStart,
+      net_end: netEnd,
+      start: loadingDate,
+      end: unloadingDate,
+      quantity_start: quantityStart,
+      quantity_end: quantityEnd,
+      width_start: widthStart,
+      width_end: widthtEnd,
+      length_start: lengthStart,
+      length_end: lengthEnd,
+      height_start: heightStart,
+      height_end: heightEnd,
+      type_transport: transportId,
+      to: destinCoord,
+      // priceStart,
+      // priceEnd,
     };
-    dispatch(getFilteredCargoPosts(data));
-    // navigation.navigate('MainCargo', {screen: 'CargoResults'});
+    dispatch(removeDataForCargoPost());
+    navigation.navigate('CargoResults', {data});
   };
 
   return (
     <KeyboardAwareScrollView>
       <View style={styles.container}>
+        <View style={styles.sectionGrey}>
+          <Text style={styles.label}>Направление:</Text>
+        </View>
         <Pressable
           style={styles.formBlock}
           onPress={() => navigation.navigate('GooglePlaces')}>
@@ -141,35 +160,8 @@ export default function CargoFilterScreen() {
             />
           </View>
         </Pressable>
-        <View style={styles.formBlock}>
-          <View>
-            <MyPicker
-              modalOpen={transportModal}
-              setModalOpen={setTransportModal}
-              value={transportId}
-              setValue={setTransportId}
-              data={transportPickerData()}
-              valueString={transportString}
-              setValueString={setTransportString}
-              placeholder="Транспорт"
-            />
-            <View style={styles.inputBlock}>
-              <InputDouble
-                inputFrom={netStart}
-                inputTo={netEnd}
-                setInputFrom={setNetStart}
-                setInputTo={setNetEnd}
-                label="Вес, тн"
-              />
-              <InputDouble
-                inputFrom={volumeStart}
-                inputTo={volumeEnd}
-                setInputFrom={setVolumeStart}
-                setInputTo={setVolumeEnd}
-                label="Объем, м3"
-              />
-            </View>
-          </View>
+        <View style={styles.sectionGrey}>
+          <Text style={styles.label}>Дата:</Text>
         </View>
         <View style={styles.formBlock}>
           <View>
@@ -193,6 +185,60 @@ export default function CargoFilterScreen() {
             />
           </View>
         </View>
+        <View style={styles.sectionGrey}>
+          <Text style={styles.label}>Транспорт, Количество, Цена:</Text>
+        </View>
+
+        <View style={styles.formBlock}>
+          <MyPicker
+            modalOpen={transportModal}
+            setModalOpen={setTransportModal}
+            value={transportId}
+            setValue={setTransportId}
+            data={[...additionalData.transportTypes, {id: null, name: 'Любой'}]}
+            valueString={transportString}
+            setValueString={setTransportString}
+            placeholder="Транспорт"
+          />
+          <View style={styles.inputBlock}>
+            <InputDouble
+              inputFrom={quantityStart}
+              inputTo={quantityEnd}
+              setInputFrom={setQuantityStart}
+              setInputTo={setQuantityEnd}
+              label="Количество мест"
+            />
+            <InputDouble
+              inputFrom={priceStart}
+              inputTo={priceEnd}
+              setInputFrom={setPriceStart}
+              setInputTo={setPriceEnd}
+              label="Цена"
+            />
+          </View>
+        </View>
+
+        <View style={styles.sectionGrey}>
+          <Text style={styles.label}>Характеристики груза:</Text>
+        </View>
+        <View style={styles.formBlock}>
+          <View style={styles.inputBlock}>
+            <InputDouble
+              inputFrom={netStart}
+              inputTo={netEnd}
+              setInputFrom={setNetStart}
+              setInputTo={setNetEnd}
+              label="Вес, тн"
+            />
+            <InputDouble
+              inputFrom={volumeStart}
+              inputTo={volumeEnd}
+              setInputFrom={setVolumeStart}
+              setInputTo={setVolumeEnd}
+              label="Объем, м3"
+            />
+          </View>
+        </View>
         <View style={styles.formBlock}>
           <View style={styles.inputBlock}>
             <InputDouble
@@ -200,21 +246,21 @@ export default function CargoFilterScreen() {
               inputTo={widthtEnd}
               setInputFrom={setWidthStart}
               setInputTo={setWidthEnd}
-              label="Ширина, см"
+              label="Ширина, м"
             />
             <InputDouble
               inputFrom={lengthStart}
               inputTo={lengthEnd}
               setInputFrom={setLengthStart}
               setInputTo={setLengthEnd}
-              label="Длина, см"
+              label="Длина, м"
             />
             <InputDouble
               inputFrom={heightStart}
               inputTo={heightEnd}
               setInputFrom={setHeightStart}
               setInputTo={setHeightEnd}
-              label="Высота, см"
+              label="Высота, м"
             />
           </View>
         </View>
@@ -250,7 +296,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 8,
+    marginVertical: 15,
   },
   buttonText: {
     fontSize: 15,
@@ -283,5 +329,21 @@ const styles = StyleSheet.create({
     fontSize: 17,
     lineHeight: 24,
     color: MyTheme.black,
+  },
+  label: {
+    // fontFamily: 'IBM-SemiBold',
+    fontSize: 15,
+    lineHeight: 24,
+    // marginLeft: 15,
+    color: MyTheme.grey,
+    fontWeight: 'bold',
+    // textDecorationLine: 'underline',
+  },
+  sectionGrey: {
+    height: 35,
+    width: '100%',
+    backgroundColor: MyTheme.background,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

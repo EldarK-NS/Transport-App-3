@@ -9,8 +9,11 @@ import {
 import {MyTheme} from '../../../components/layout/theme';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import {useNavigation} from '@react-navigation/core';
+import {useDispatch} from 'react-redux';
+import {saveStartEndPlaces} from '../../../redux/actions/transitStore';
 
 export default function PlaceAutocomplite() {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
 
   //!StartPlace
@@ -22,12 +25,18 @@ export default function PlaceAutocomplite() {
   const [finishPlaceString, setFinishPlaceString] = useState(null);
 
   const GoBack = () => {
-    navigation.navigate('CargoFilter', {
-      startCoord: startPlace,
-      startString: startPlaceString,
-      finishCoord: finishPlace,
-      finishString: finishPlaceString,
-    });
+    const data = {
+      start: {
+        string: startPlaceString,
+        id: startPlace,
+      },
+      end: {
+        string: finishPlaceString,
+        id: finishPlace,
+      },
+    };
+    dispatch(saveStartEndPlaces(data));
+    navigation.navigate('CargoFilter');
   };
 
   return (
@@ -36,7 +45,7 @@ export default function PlaceAutocomplite() {
         placeholder="Откуда"
         onPress={(data, details = null) => {
           setStartPlace(data.place_id);
-          setStartPlaceString(details.formatted_address);
+          setStartPlaceString(data.description);
         }}
         styles={{
           textInput: styles.visibleContainer,
@@ -61,7 +70,7 @@ export default function PlaceAutocomplite() {
         placeholder="Куда"
         onPress={(data, details = null) => {
           setFinishPlace(data.place_id);
-          setFinishPlaceString(details.formatted_address);
+          setFinishPlaceString(data.description);
         }}
         styles={{
           textInput: styles.visibleContainer,
