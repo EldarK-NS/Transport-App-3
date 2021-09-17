@@ -5,6 +5,7 @@ export const funcList = [
   {id: '4', title: 'Настройки', navPath: 'MyEmployees'},
   {id: '5', title: 'Сотрудники', navPath: 'MyEmployees'},
   {id: '6', title: 'Баланс и статус', navPath: 'MyEmployees'},
+  {id: '7', title: 'Избранное', navPath: 'MyEmployees'},
 ];
 
 export const messages = [

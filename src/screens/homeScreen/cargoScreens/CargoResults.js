@@ -5,7 +5,6 @@ import {
   View,
   FlatList,
   SafeAreaView,
-  ActivityIndicator,
   Alert,
   Pressable,
 } from 'react-native';
@@ -13,10 +12,15 @@ import SearchResultItem from '../../../components/SearchElements/SearchResultIte
 import axios from 'axios';
 import {useNavigation, useRoute} from '@react-navigation/core';
 import {MyTheme} from '../../../components/layout/theme';
+import {useDispatch} from 'react-redux';
+import {quantityItemsforCargoResults} from '../../../redux/actions/transitStore';
+
+//TODO: возможно нужно очищать стейт по количеству грузов в заголовке когда происходит в хедере клик назад
 
 export default function CargoResults() {
   const navigation = useNavigation();
   const route = useRoute();
+  const dispatch = useDispatch();
 
   const [currentPage, setCurrentPage] = useState(1);
   const [message, setMessage] = useState(false);
@@ -28,7 +32,6 @@ export default function CargoResults() {
     let request = `https://test.money-men.kz/api/filterPost?page=${currentPage}&`;
     const createRequest = () => {
       let newRequest = '';
-      console.log('Filter', filter.data);
       for (let i in filter.data) {
         if (filter.data[i] !== null) {
           newRequest = newRequest + i + '=' + filter.data[i] + '&';
@@ -39,14 +42,13 @@ export default function CargoResults() {
     };
     try {
       const uri = await createRequest();
-      console.log('URI', uri);
       const res = await axios({
         method: 'GET',
         url: uri,
       });
-      console.log(res.data);
       if (res.data.success === true && res.data.data.length > 0) {
         setPageQuntity(res.data.pagination.max_page);
+        dispatch(quantityItemsforCargoResults(res.data.pagination.total));
         setNewData([...newData, ...res.data.data]);
       } else if (res.data.success === true && res.data.data.length === 0) {
         setMessage(true);
@@ -58,6 +60,7 @@ export default function CargoResults() {
 
   useEffect(() => {
     getData();
+    return () => {};
   }, [currentPage]);
 
   if (message) {
@@ -67,7 +70,6 @@ export default function CargoResults() {
       [{text: 'OK', onPress: () => navigation.goBack()}],
     );
   }
-
   const renderLoader = () => {
     if (currentPage < pageQuantity) {
       return (
@@ -94,6 +96,8 @@ export default function CargoResults() {
           <SearchResultItem
             from={item.details[0].from_string}
             to={item.details[0].to_string}
+            fromId={item.details[0].from}
+            toId={item.details[0].to}
             distance={'600'}
             net={item.details[0].net}
             volume={item.details[0].volume}

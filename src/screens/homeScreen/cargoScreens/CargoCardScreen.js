@@ -65,6 +65,8 @@ export default function CargoCardScreen() {
           pointB_Title={info.data[0].details[0].to_string}
           pointB_Subtitle={'Казахстан, Алматинская область'}
           pointB_date={'~620 км, 4 ч 20 мин в пути'}
+          fromId={info.data[0].details[0].from}
+          toId={info.data[0].details[0].to}
         />
         <SecondCardBlock
           net={info.data[0].details[0].net}

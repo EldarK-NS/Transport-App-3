@@ -8,6 +8,7 @@ import {
   Pressable,
   Modal,
   Image,
+  Platform,
 } from 'react-native';
 import {MyTheme} from '../../../components/layout/theme';
 import InputDouble from '../../../components/SearchElements/InputDouble';
@@ -184,12 +185,11 @@ export default function AddCargoPostForm() {
     }
   }, [transitData.additionalCargoPost]);
   //?---------------------------------------//
-
   const AddPost = async () => {
     try {
       const res = await axios({
         method: 'GET',
-        url: `https://test.money-men.kz/api/newAddPost?token=${token}&category_id=1&sub_id=1&title=${description}&from=${fromCoord}&to=${destinCoord}&volume=${volumeStart}&net=${netStart}&start_date=${loadingDate}&end_date=${unloadingDate}&documents[]=${documents}&price=${price}&price_type=${currencyId}&payment_type=${paymentId}&type_transport=${transportTypeId}&type_sub_transport[]=${transportSubTypeId}&from_string=${fromString}&to_string=${destinString}&loading[]=${loadingConditions}&condition[]=${transportationConditions}&addition[]=${freightConditions}`,
+        url: `https://test.money-men.kz/api/newAddPost?token=${token}&category_id=2&sub_id=1&title=${description}&from=${fromCoord}&to=${destinCoord}&volume=${volumeStart}&net=${netStart}&start_date=${loadingDate}&end_date=${unloadingDate}&documents[]=${documents}&price=${price}&price_type=${currencyId}&payment_type=${paymentId}&type_transport=${transportTypeId}&type_sub_transport[]=${transportSubTypeId}&from_string=${fromString}&to_string=${destinString}&loading[]=${loadingConditions}&condition[]=${transportationConditions}&addition[]=${freightConditions}`,
       });
       console.log(res);
       if (res.data.success) {
@@ -202,7 +202,12 @@ export default function AddCargoPostForm() {
   };
 
   return (
-    <KeyboardAwareScrollView>
+    <KeyboardAwareScrollView
+      enableOnAndroid={true}
+      // extraHeight={200}
+      enableAutomaticScroll={false}
+      // extraScrollHeight={200}
+    >
       <View style={styles.container}>
         <Modal transparent={true} visible={modalShow}>
           <View

@@ -6,9 +6,12 @@ import {
   Platform,
   TouchableOpacity,
   Dimensions,
+  Pressable,
 } from 'react-native';
 import {MyTheme} from '../layout/theme';
 import moment from 'moment';
+import EntypoIcon from 'react-native-vector-icons/Entypo';
+import {useNavigation} from '@react-navigation/core';
 
 export default function InfoDistanceBlock({
   colorInfo,
@@ -21,7 +24,10 @@ export default function InfoDistanceBlock({
   pointB_date,
   buttonTitle,
   noLine,
+  fromId,
+  toId,
 }) {
+  const navigation = useNavigation();
   return (
     <View
       style={
@@ -69,6 +75,22 @@ export default function InfoDistanceBlock({
           </View>
         </View>
       ) : null}
+      <Pressable
+        style={styles.map}
+        onPress={() =>
+          navigation.navigate('CargoCardMap', {
+            pointA_Title,
+            pointB_Title,
+          })
+        }>
+        <EntypoIcon
+          name="map"
+          size={16}
+          color={MyTheme.blue}
+          style={styles.mapIcon}
+        />
+        <Text style={styles.mapText}>Показать на карте</Text>
+      </Pressable>
       {buttonTitle ? (
         <View style={styles.footerButtonContainer}>
           <TouchableOpacity style={styles.footerButton}>
@@ -182,5 +204,18 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 24,
     color: MyTheme.blue,
+  },
+  map: {
+    width: '100%',
+    flexDirection: 'row',
+    marginLeft: 47,
+    marginBottom: 5,
+  },
+  mapText: {
+    // fontFamily: 'IBM-Regular',
+    fontSize: 16,
+    lineHeight: 18,
+    color: MyTheme.blue,
+    marginLeft: 5,
   },
 });

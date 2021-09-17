@@ -2,12 +2,14 @@ import {
   SAVE_START_END_PLACES,
   SAVE_CARGO_POST_ADDITIONAL_DATA,
   REMOVE_TRANSIT_DATA,
+  ITEMS_QUANTITY,
 } from '../types';
 
 const initialState = {
   startPlaceCargo: null,
   endPlaceCargo: null,
   additionalCargoPost: null,
+  itemsQuantity: null,
 };
 
 export const transitStoreReducer = (state = initialState, action) => {
@@ -22,6 +24,11 @@ export const transitStoreReducer = (state = initialState, action) => {
       return {
         ...state,
         additionalCargoPost: action.payload,
+      };
+    case ITEMS_QUANTITY:
+      return {
+        ...state,
+        itemsQuantity: action.payload,
       };
     case REMOVE_TRANSIT_DATA:
       return {

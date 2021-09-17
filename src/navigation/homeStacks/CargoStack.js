@@ -9,10 +9,12 @@ import {MyTheme} from '../../components/layout/theme';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import PlaceAutocomplite from '../../screens/homeScreen/cargoScreens/PlaceAutocomplite';
-
+import MapCargoScreen from '../../screens/homeScreen/cargoScreens/MapCargoScreen';
+import {useSelector} from 'react-redux';
 const Stack = createStackNavigator();
 
 export default function CargoStack() {
+  const transitData = useSelector(state => state.transitData);
   return (
     <Stack.Navigator
       screenOptions={{
@@ -68,7 +70,7 @@ export default function CargoStack() {
         name="CargoResults"
         component={CargoResults}
         options={({navigation, route}) => ({
-          headerTitle: '203 груза',
+          headerTitle: transitData.itemsQuantity + ' объявлений',
           headerTitleStyle: {
             fontSize: 17,
             fontWeight: 'bold',
@@ -125,6 +127,21 @@ export default function CargoStack() {
                 color="white"
                 style={styles.icon}
               />
+            </Pressable>
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="CargoCardMap"
+        component={MapCargoScreen}
+        options={({navigation, route}) => ({
+          headerTitle: '',
+          headerLeft: () => (
+            <Pressable
+              style={styles.leftButton}
+              onPress={() => navigation.goBack()}>
+              <AntDesign name="left" size={24} color="white" />
+              <Text style={styles.buttonText}>Назад</Text>
             </Pressable>
           ),
         })}

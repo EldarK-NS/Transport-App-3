@@ -62,7 +62,7 @@ export default function PlaceAutocomplite2() {
         }}
         fetchDetails
         query={{
-          key: 'AIzaSyAyXH4XIhcvd3CGcxM1ctP6TcYy_zncuc8',
+          key: 'AIzaSyD-kk951XgVXsv3b0yqJntwbxDslSP2Oxo',
           language: 'ru',
         }}
       />
@@ -84,7 +84,7 @@ export default function PlaceAutocomplite2() {
         }}
         fetchDetails
         query={{
-          key: 'AIzaSyAyXH4XIhcvd3CGcxM1ctP6TcYy_zncuc8',
+          key: 'AIzaSyD-kk951XgVXsv3b0yqJntwbxDslSP2Oxo',
           language: 'ru',
         }}
       />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,20 +6,26 @@ import {
   Pressable,
   TouchableOpacity,
   Dimensions,
+  Alert,
 } from 'react-native';
+import axios from 'axios';
+import moment from 'moment';
+import {useNavigation} from '@react-navigation/core';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useSelector, useDispatch} from 'react-redux';
 import {MyTheme} from '../layout/theme';
-import moment from 'moment';
-import {useNavigation} from '@react-navigation/core';
+import {getAllFavoritesCargoPosts} from '../../redux/actions/profileFavorites';
 
 export default function SearchResultItem(props) {
   const {
     from,
     to,
+    // fromId,
+    // toId,
     driver,
     distance,
     net,
@@ -37,6 +43,25 @@ export default function SearchResultItem(props) {
     postId,
   } = props;
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const [token, setToken] = useState(null);
+  const [favorites, setFavorites] = useState([]);
+
+  useEffect(() => {
+    getToken();
+    return () => {
+      setToken(null);
+    };
+  }, []);
+
+  const getToken = async () => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+      setToken(value);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   function numberWithSpaces(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
@@ -49,13 +74,71 @@ export default function SearchResultItem(props) {
     }
     return rating.reverse();
   };
-  const goToCargoCard = () => {
-    navigation.navigate(path, {
-      id: postId,
-    });
+
+  useEffect(() => {
+    console.log(token);
+    dispatch(getAllFavoritesCargoPosts(token));
+  }, [token]);
+
+  const profileFavorites = useSelector(state => state.profileFavorites);
+  // console.log(
+  //   'Token:',
+  //   token,
+  //   'postId:',
+  //   postId,
+  //   'Favorite:',
+  //   favorites,
+  //   'Redux:',
+  //   profileFavorites,
+  // );
+  useEffect(() => {
+    setFavorites(profileFavorites.cargoPosts);
+    return () => {};
+  }, [profileFavorites]);
+
+  const addToFavorite = async () => {
+    if (!token) {
+      return Alert.alert(
+        'Что бы добавить груз в избранное необходимо зарегестрироваться',
+        [
+          {
+            text: 'Отмена',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {
+            text: 'Перейти к регистрации',
+            onPress: () => console.log('OK Pressed'),
+          },
+        ],
+      );
+    }
+    if (favorites.includes(postId)) {
+      try {
+        await axios(
+          `https://test.money-men.kz/api/cancelPostFavourites?token=${token}&post_id=${postId}`,
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      try {
+        await axios(
+          `https://test.money-men.kz/api/addPostFavourites?token=${token}&post_id=${postId}&category_id=1`,
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
   return (
-    <TouchableOpacity style={styles.container} onPress={goToCargoCard}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => {
+        navigation.navigate(path, {
+          id: postId,
+        });
+      }}>
       <View style={styles.mainBlock}>
         <View style={styles.mainLeftSide}>
           <View style={styles.titleBlock}>
@@ -118,12 +201,14 @@ export default function SearchResultItem(props) {
             </View>
           )}
           {!status && (
-            <AntDesign
-              name="staro"
-              size={22}
-              color={MyTheme.grey}
-              style={styles.iconStar}
-            />
+            <Pressable onPress={addToFavorite}>
+              <AntDesign
+                name="staro"
+                size={22}
+                color={favorites.includes(postId) ? MyTheme.blue : MyTheme.grey}
+                style={styles.iconStar}
+              />
+            </Pressable>
           )}
         </View>
       </View>

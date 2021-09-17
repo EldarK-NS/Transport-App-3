@@ -15,7 +15,7 @@ import {login} from '../../redux/actions/auth';
 import Entypo from 'react-native-vector-icons/Entypo';
 
 export default function LoginScreen() {
-  const [personLogin, setPersonLogin] = useState(true);
+  const [personLogin, setPersonLogin] = useState(false);
   const [hidePassword, setHidePassword] = useState(true);
   const [error, setError] = useState(null);
   const [phone, setPhone] = useState('');
