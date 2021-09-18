@@ -48,6 +48,14 @@ export default function LoginScreen() {
     setHidePassword(!hidePassword);
   };
 
+  const Registartion = () => {
+    if (personLogin === false) {
+      navigation.navigate('PersonRegister');
+    } else {
+      navigation.navigate('CompanyFirst');
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.Block}>
@@ -82,6 +90,7 @@ export default function LoginScreen() {
           keyboardType={'numeric'}
           value={phone}
           onChangeText={setPhone}
+          returnKeyType="done"
         />
         <View style={styles.passwordBlock}>
           <TextInput
@@ -90,6 +99,7 @@ export default function LoginScreen() {
             value={password}
             onChangeText={setPassword}
             secureTextEntry={hidePassword}
+            returnKeyType="done"
           />
           <Entypo
             name="eye"
@@ -107,7 +117,7 @@ export default function LoginScreen() {
         </TouchableOpacity>
         <View style={styles.questionBlock}>
           <Text style={styles.question}>Нет аккаунта?</Text>
-          <Pressable onPress={() => navigation.navigate('CompanyFirst')}>
+          <Pressable onPress={Registartion}>
             <Text style={styles.link}> Зарегистрируйтесь</Text>
           </Pressable>
         </View>

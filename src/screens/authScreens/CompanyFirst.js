@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
   },
   picker: {},
   inputName: {
-    width: 178,
+    width: 175,
     height: 45,
     borderWidth: 0.5,
     borderColor: MyTheme.grey,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, FlatList} from 'react-native';
 import SearchElementMain from '../../components/SearchElements/SearchElementMain';
 import {filterItemsList} from '../../../assets/data';

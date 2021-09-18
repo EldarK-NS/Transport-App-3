@@ -64,7 +64,9 @@ export default function SmallPicker({
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Text style={styles.closeButton}>ВЫБРАТЬ</Text>
+                  <View style={styles.closeButtonContainer}>
+                    <Text style={styles.closeButton}>ВЫБРАТЬ</Text>
+                  </View>
                 </TouchableOpacity>
                 <Picker
                   selectedValue={value}
@@ -105,18 +107,33 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   pickerContainer: {
-    width: '100%',
+    width: Dimensions.get('window').width,
     height: '30%',
     backgroundColor: 'white',
     position: 'absolute',
     bottom: 0,
+    alignSelf: 'center',
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+    borderWidth: 2,
+    borderTopColor: MyTheme.grey,
+    backgroundColor: MyTheme.background,
+  },
+  closeButtonContainer: {
+    width: 200,
+    height: 30,
+    backgroundColor: MyTheme.blue,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 5,
+    borderRadius: 10,
   },
   closeButton: {
-    marginTop: 10,
-    color: 'blue',
+    color: 'white',
+    fontSize: 16,
   },
   visibleContainer: {
-    width: 112,
+    width: 115,
     height: 45,
     alignItems: 'flex-end',
     justifyContent: 'flex-end',

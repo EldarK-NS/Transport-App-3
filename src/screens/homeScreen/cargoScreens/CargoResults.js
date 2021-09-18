@@ -12,8 +12,10 @@ import SearchResultItem from '../../../components/SearchElements/SearchResultIte
 import axios from 'axios';
 import {useNavigation, useRoute} from '@react-navigation/core';
 import {MyTheme} from '../../../components/layout/theme';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {quantityItemsforCargoResults} from '../../../redux/actions/transitStore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {getAllFavoritesCargoPosts} from '../../../redux/actions/profileFavorites';
 
 //TODO: возможно нужно очищать стейт по количеству грузов в заголовке когда происходит в хедере клик назад
 
@@ -26,10 +28,26 @@ export default function CargoResults() {
   const [message, setMessage] = useState(false);
   const [newData, setNewData] = useState([]);
   const [pageQuantity, setPageQuntity] = useState(null);
-  const filter = route.params;
+  const [favoritesList, setFavoritesList] = useState([]);
+  const [token, setToken] = useState(null);
 
+  //!Get & Set Token
+  const getToken = async () => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+      setToken(value);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(() => {
+    getToken();
+  }, []);
+
+  //!Get filtered items
+  const filter = route.params;
   const getData = async () => {
-    let request = `https://test.money-men.kz/api/filterPost?page=${currentPage}&`;
+    let request = `https://test.money-men.kz/api/filterCargo?page=${currentPage}&`;
     const createRequest = () => {
       let newRequest = '';
       for (let i in filter.data) {
@@ -70,6 +88,8 @@ export default function CargoResults() {
       [{text: 'OK', onPress: () => navigation.goBack()}],
     );
   }
+
+  //!Infinite scroll
   const renderLoader = () => {
     if (currentPage < pageQuantity) {
       return (
@@ -87,6 +107,24 @@ export default function CargoResults() {
   const loadMoreItem = () => {
     setCurrentPage(currentPage + 1);
   };
+
+  //! Get User FavoritesList
+  useEffect(() => {
+    if (token) {
+      dispatch(getAllFavoritesCargoPosts(token));
+    }
+  }, [token]);
+  const profileFavorites = useSelector(state => state.profileFavorites);
+
+  let arr = [];
+  useEffect(() => {
+    if (profileFavorites.cargoPosts) {
+      profileFavorites.cargoPosts.forEach(item => {
+        arr.push(item.id);
+      });
+      setFavoritesList(arr);
+    }
+  }, [profileFavorites]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -112,6 +150,8 @@ export default function CargoResults() {
             updated_at={item.updated_at}
             path={'CargoCard'}
             postId={item.id}
+            isFavorite={favoritesList.includes(item.id) ? true : false}
+            list={favoritesList}
           />
         )}
         keyExtractor={item => item.id}

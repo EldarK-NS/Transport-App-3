@@ -9,9 +9,9 @@ export function getAllFavoritesCargoPosts(token) {
     console.log('token in redux', token);
     try {
       const res = await axios(
-        `https://test.money-men.kz/api/getListPostFavourites?token=${token}`,
+        `https://test.money-men.kz/api/getListCargoFavourites?token=${token}`,
       );
-      console.log('REDUX', res.data);
+      console.log(res.data);
       if (res.data.success === true) {
         dispatch({
           type: GET_ALL_CARGO_FAVORITES_SUCCESS,

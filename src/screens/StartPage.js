@@ -4,15 +4,17 @@ import AuthNavigator from '../navigation/AuthNavigation';
 import RootNavigator from '../navigation/RootNavigation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {MyTheme} from '../components/layout/theme';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import {getProfile} from '../redux/actions/auth';
 
 //! В useEffect переделать стейт на прев стейт
 
 export default function StartPage() {
+  const dispatch = useDispatch();
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isAuth, setIsAuth] = useState(false);
   const user = useSelector(state => state.auth);
-
   const getToken = async () => {
     try {
       const value = await AsyncStorage.getItem('token');
@@ -25,11 +27,11 @@ export default function StartPage() {
     getToken();
   }, [user]);
 
-  const [isAutth, setIsAuth] = useState(false);
   useEffect(() => {
     if (token !== null) {
       setIsAuth(true);
       setLoading(false);
+      dispatch(getProfile(token));
     } else {
       setIsAuth(false);
       setLoading(false);
@@ -45,7 +47,7 @@ export default function StartPage() {
   return (
     <SafeAreaView style={styles.container} backgroundColor={MyTheme.blue}>
       <StatusBar />
-      {!isAutth ? <AuthNavigator /> : <RootNavigator />}
+      {!isAuth ? <AuthNavigator /> : <RootNavigator />}
     </SafeAreaView>
   );
 }

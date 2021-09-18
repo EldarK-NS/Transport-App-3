@@ -6,18 +6,16 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  ScrollView,
-  KeyboardAvoidingView,
   Alert,
 } from 'react-native';
 import {MyTheme} from '../../components/layout/theme';
 import {useNavigation} from '@react-navigation/core';
-import {useDispatch, useSelector} from 'react-redux';
-import {companySignup} from '../../redux/actions/auth';
+import {useDispatch} from 'react-redux';
+import {personSignup} from '../../redux/actions/auth';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 
-export default function CompanySecond({route}) {
+export default function PersonRegistration() {
   const navigation = useNavigation();
-  const {companyTypeId, companyTypeStr, companyName, bin} = route.params;
   const dispatch = useDispatch();
 
   //!Validation
@@ -34,7 +32,6 @@ export default function CompanySecond({route}) {
     const regx = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
     return regx.test(value);
   };
-  const userData = useSelector(state => state.auth);
   const handleRegistration = () => {
     if (userName.trim().length < 3 || userName.length > 25) {
       return setError('Имя должно быть не менее 3-х букв');
@@ -54,12 +51,9 @@ export default function CompanySecond({route}) {
       fullName: userName,
       email,
       password,
-      companyName,
-      companyType: companyTypeId,
-      bin,
     };
-    dispatch(companySignup(data));
-    Alert.alert('Поздравляем', 'Вы успешно зарегистрировались!', [
+    dispatch(personSignup(data));
+    return Alert.alert('Поздравляем', 'Вы успешно зарегистрировались!', [
       {
         text: 'OK',
         onPress: () => console.log('success'),
@@ -79,82 +73,80 @@ export default function CompanySecond({route}) {
   }
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : null}
-      style={{flex: 1}}
-      keyboardVerticalOffset={50}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.container}>
-          <View style={styles.Block}>
-            <Text style={styles.title}>Регистрация. 2 шаг</Text>
-            <Text style={styles.subTitle}>Введите данные контактного лица</Text>
+    <KeyboardAwareScrollView enableOnAndroid={true}>
+      <View style={styles.container}>
+        <View style={styles.Block}>
+          <Text style={styles.title}>Регистрация</Text>
+          <Text style={styles.subTitle}>Введите ваши данные </Text>
 
-            <Text style={styles.inputLabel}>Контакное лицо</Text>
-            <TextInput
-              placeholder="ФИО"
-              style={styles.input}
-              value={userName}
-              onChangeText={setUserName}
-              autoCapitalize={'words'}
-            />
-            <TextInput
-              placeholder="Эл. адрес"
-              style={styles.input}
-              value={email}
-              onChangeText={setEmail}
-              keyboardType="email-address"
-              textContentType={'emailAddress'}
-              autoCapitalize={'none'}
-            />
-            <TextInput
-              placeholder="Номер телефона 7 (XXX) XXX XX XX"
-              style={styles.input}
-              value={phoneNumber}
-              onChangeText={setPhoneNumber}
-              textContentType={'telephoneNumber'}
-              keyboardType="numeric"
-            />
+          <Text style={styles.inputLabel}>Контакное лицо</Text>
+          <TextInput
+            placeholder="ФИО"
+            style={styles.input}
+            value={userName}
+            onChangeText={setUserName}
+            autoCapitalize={'words'}
+            returnKeyType="done"
+          />
+          <TextInput
+            placeholder="Эл. адрес"
+            style={styles.input}
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+            textContentType={'emailAddress'}
+            autoCapitalize={'none'}
+            returnKeyType="done"
+          />
+          <TextInput
+            placeholder="Номер телефона 7 (XXX) XXX XX XX"
+            style={styles.input}
+            value={phoneNumber}
+            onChangeText={setPhoneNumber}
+            textContentType={'telephoneNumber'}
+            keyboardType="numeric"
+            returnKeyType="done"
+          />
 
-            <Text style={styles.inputLabel}>Пароль</Text>
-            <TextInput
-              placeholder="Введите пароль"
-              style={styles.input}
-              value={password}
-              onChangeText={setPassword}
-            />
-            <TextInput
-              placeholder="Повторите пароль"
-              style={styles.input}
-              value={password2}
-              onChangeText={setPassword2}
-            />
+          <Text style={styles.inputLabel}>Пароль</Text>
+          <TextInput
+            placeholder="Введите пароль"
+            style={styles.input}
+            value={password}
+            onChangeText={setPassword}
+            returnKeyType="done"
+          />
+          <TextInput
+            placeholder="Повторите пароль"
+            style={styles.input}
+            value={password2}
+            onChangeText={setPassword2}
+            returnKeyType="done"
+          />
 
-            <TouchableOpacity
-              style={styles.button}
-              onPress={handleRegistration}>
-              <Text style={styles.buttonText}>Регистрация</Text>
-            </TouchableOpacity>
-            <View style={styles.questionBlock}>
-              <Text style={styles.question}>Зарегистрированны? </Text>
-              <Pressable onPress={() => navigation.navigate('Login')}>
-                <Text style={styles.link}> Войти</Text>
-              </Pressable>
-            </View>
-          </View>
-          <View style={styles.Block}>
-            <View style={styles.line} />
-
-            <Text style={styles.rules}>
-              Авторизируясь вы автоматически соглашаетесь с
-              <Text style={styles.link}>
-                правилами сервиса и пользовательским соглашением сервиса
-              </Text>{' '}
-              Bliz.kz
-            </Text>
+          <TouchableOpacity style={styles.button} onPress={handleRegistration}>
+            <Text style={styles.buttonText}>Регистрация</Text>
+          </TouchableOpacity>
+          <View style={styles.questionBlock}>
+            <Text style={styles.question}>Зарегистрированны? </Text>
+            <Pressable onPress={() => navigation.navigate('Login')}>
+              <Text style={styles.link}> Войти</Text>
+            </Pressable>
           </View>
         </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+        <View style={styles.Block}>
+          <View style={styles.line} />
+
+          <Text style={styles.rules}>
+            Авторизируясь вы автоматически соглашаетесь с{' '}
+            <Text style={styles.link}>
+              правилами сервиса и пользовательским соглашением сервиса
+            </Text>{' '}
+            Bliz.kz
+          </Text>
+        </View>
+      </View>
+    </KeyboardAwareScrollView>
   );
 }
 
@@ -166,6 +158,7 @@ const styles = StyleSheet.create({
   },
   Block: {
     alignItems: 'center',
+    width: '100%',
   },
   title: {
     //   fontFamily:'IBM-Medium',
@@ -197,17 +190,6 @@ const styles = StyleSheet.create({
     borderColor: MyTheme.grey,
     marginBottom: 10,
     padding: 10,
-  },
-  forget: {
-    width: '75%',
-    alignItems: 'flex-end',
-    marginBottom: 25,
-  },
-  forgetText: {
-    //   fontFamily:'IBM-Medium',
-    fontSize: 14,
-    lineHeight: 20,
-    color: MyTheme.black,
   },
   button: {
     width: 300,

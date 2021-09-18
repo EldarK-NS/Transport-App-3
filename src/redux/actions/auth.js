@@ -5,6 +5,10 @@ import {
   LOGIN_FAIL,
   COMPANY_SIGN_UP_SUCCESS,
   COMPANY_SIGN_UP_FAIL,
+  PERSON_SIGN_UP_SUCCESS,
+  PERSON_SIGN_UP_FAIL,
+  GET_PROFILE_SUCCESS,
+  GET_PROFILE_FAIL,
   LOGOUT,
   // SIGN_UP_SUCCESS,
   // SIGN_UP_FAIL,
@@ -23,6 +27,32 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 //     console.log(e);
 //   }
 // };
+//!Get profile
+
+export function getProfile(token) {
+  return async dispatch => {
+    let status = '';
+    try {
+      const res = await axios(
+        `https://test.money-men.kz/api/getProfile?token=${token}`,
+      );
+      if (res.data.data[0].companyDetails) {
+        status = 'company';
+      } else {
+        status = 'person';
+      }
+      dispatch({
+        type: GET_PROFILE_SUCCESS,
+        payload: status,
+      });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: GET_PROFILE_FAIL,
+      });
+    }
+  };
+}
 
 //! Log-In
 
@@ -44,6 +74,7 @@ export function login(phone, password) {
         });
         return;
       }
+      console.log(res.data);
       await AsyncStorage.setItem('token', res.data.token);
       dispatch({
         type: LOGIN_SUCCES,
@@ -93,9 +124,44 @@ export function companySignup(data) {
         payloadToken: token,
       });
     } catch (error) {
-      console.log('Error-Redux', error);
+      console.log(error);
       dispatch({
         type: COMPANY_SIGN_UP_FAIL,
+      });
+    }
+  };
+}
+export function personSignup(data) {
+  const {fullName, phone, email, password} = data;
+  return async dispatch => {
+    try {
+      const res = await axios({
+        method: 'POST',
+        url: 'https://test.money-men.kz/api/registration',
+        data: {
+          fullName,
+          phone,
+          email,
+          password,
+        },
+      });
+      if (!res.data.success) {
+        dispatch({
+          type: PERSON_SIGN_UP_FAIL,
+          payload: 'Проверьте правильность ввода данных для регистрации!',
+        });
+        return;
+      }
+      const token = await AsyncStorage.setItem('token', res.data.token);
+      dispatch({
+        type: PERSON_SIGN_UP_SUCCESS,
+        payload: res.data,
+        payloadToken: token,
+      });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: PERSON_SIGN_UP_FAIL,
       });
     }
   };

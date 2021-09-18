@@ -9,7 +9,7 @@ const initialState = {
   startPlaceCargo: null,
   endPlaceCargo: null,
   additionalCargoPost: null,
-  itemsQuantity: null,
+  itemsQuantity: '',
 };
 
 export const transitStoreReducer = (state = initialState, action) => {

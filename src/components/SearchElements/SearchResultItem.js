@@ -16,7 +16,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useSelector, useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {MyTheme} from '../layout/theme';
 import {getAllFavoritesCargoPosts} from '../../redux/actions/profileFavorites';
 
@@ -24,8 +24,8 @@ export default function SearchResultItem(props) {
   const {
     from,
     to,
-    // fromId,
-    // toId,
+    fromId,
+    toId,
     driver,
     distance,
     net,
@@ -41,19 +41,14 @@ export default function SearchResultItem(props) {
     updated_at,
     path,
     postId,
+    isFavorite,
+    list,
   } = props;
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [token, setToken] = useState(null);
-  const [favorites, setFavorites] = useState([]);
 
-  useEffect(() => {
-    getToken();
-    return () => {
-      setToken(null);
-    };
-  }, []);
-
+  //!Get & Set Token
   const getToken = async () => {
     try {
       const value = await AsyncStorage.getItem('token');
@@ -62,39 +57,9 @@ export default function SearchResultItem(props) {
       console.log(e);
     }
   };
-
-  function numberWithSpaces(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-  }
-  const ratingsStar = (num, max) => {
-    let rating = [];
-    for (let i = 1; i < max; i++) {
-      let x = max - num - i;
-      rating.push(x);
-    }
-    return rating.reverse();
-  };
-
   useEffect(() => {
-    console.log(token);
-    dispatch(getAllFavoritesCargoPosts(token));
-  }, [token]);
-
-  const profileFavorites = useSelector(state => state.profileFavorites);
-  // console.log(
-  //   'Token:',
-  //   token,
-  //   'postId:',
-  //   postId,
-  //   'Favorite:',
-  //   favorites,
-  //   'Redux:',
-  //   profileFavorites,
-  // );
-  useEffect(() => {
-    setFavorites(profileFavorites.cargoPosts);
-    return () => {};
-  }, [profileFavorites]);
+    getToken();
+  }, []);
 
   const addToFavorite = async () => {
     if (!token) {
@@ -113,7 +78,7 @@ export default function SearchResultItem(props) {
         ],
       );
     }
-    if (favorites.includes(postId)) {
+    if (list.includes(postId)) {
       try {
         await axios(
           `https://test.money-men.kz/api/cancelPostFavourites?token=${token}&post_id=${postId}`,
@@ -130,6 +95,21 @@ export default function SearchResultItem(props) {
         console.log(error);
       }
     }
+    dispatch(getAllFavoritesCargoPosts(token));
+  };
+
+  //!Replace price
+  function numberWithSpaces(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  }
+  //! Rating
+  const ratingsStar = (num, max) => {
+    let rating = [];
+    for (let i = 1; i < max; i++) {
+      let x = max - num - i;
+      rating.push(x);
+    }
+    return rating.reverse();
   };
   return (
     <TouchableOpacity
@@ -202,12 +182,21 @@ export default function SearchResultItem(props) {
           )}
           {!status && (
             <Pressable onPress={addToFavorite}>
-              <AntDesign
-                name="staro"
-                size={22}
-                color={favorites.includes(postId) ? MyTheme.blue : MyTheme.grey}
-                style={styles.iconStar}
-              />
+              {isFavorite ? (
+                <AntDesign
+                  name="star"
+                  size={22}
+                  color={MyTheme.blue}
+                  style={styles.iconStar}
+                />
+              ) : (
+                <AntDesign
+                  name="staro"
+                  size={22}
+                  color={MyTheme.grey}
+                  style={styles.iconStar}
+                />
+              )}
             </Pressable>
           )}
         </View>
