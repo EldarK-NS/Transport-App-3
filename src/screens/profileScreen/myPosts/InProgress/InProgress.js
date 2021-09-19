@@ -1,3 +1,5 @@
+//TODO: остановил показа так как нужно определиться как будут приходить данные с бека, главный вопрос по статусу
+
 import React from 'react';
 import {StyleSheet, Text, View, FlatList} from 'react-native';
 import SearchResultItem from '../../../../components/SearchElements/SearchResultItem';

@@ -1,7 +1,6 @@
 import React from 'react';
 import {Pressable, StyleSheet, Text} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
-import HomeScreen from '../../screens/homeScreen/HomeScreen';
 import CargoFilterScreen from '../../screens/homeScreen/cargoScreens/CargoFilterScreen';
 import CargoResults from '../../screens/homeScreen/cargoScreens/CargoResults';
 import CargoCardScreen from '../../screens/homeScreen/cargoScreens/CargoCardScreen';
@@ -11,10 +10,12 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import PlaceAutocomplite from '../../screens/homeScreen/cargoScreens/PlaceAutocomplite';
 import MapCargoScreen from '../../screens/homeScreen/cargoScreens/MapCargoScreen';
 import {useSelector} from 'react-redux';
+
 const Stack = createStackNavigator();
 
 export default function CargoStack() {
   const transitData = useSelector(state => state.transitData);
+
   return (
     <Stack.Navigator
       screenOptions={{
@@ -102,15 +103,15 @@ export default function CargoStack() {
         name="CargoCard"
         component={CargoCardScreen}
         options={({navigation, route}) => ({
-          headerTitle: '',
-          headerLeft: () => (
-            <Pressable
-              style={styles.leftButton}
-              onPress={() => navigation.goBack()}>
-              <AntDesign name="left" size={24} color="white" />
-              <Text style={styles.buttonText}>Назад</Text>
-            </Pressable>
-          ),
+          headerTitle: 'Описание',
+          // headerLeft: () => (
+          //   <Pressable
+          //     style={styles.leftButton}
+          //     onPress={() => navigation.goBack()}>
+          //     <AntDesign name="left" size={24} color="white" />
+          //     <Text style={styles.buttonText}>Назад</Text>
+          //   </Pressable>
+          // ),
           headerRight: () => (
             <Pressable
               style={[styles.leftButton, {marginRight: 10}]}
@@ -135,7 +136,7 @@ export default function CargoStack() {
         name="CargoCardMap"
         component={MapCargoScreen}
         options={({navigation, route}) => ({
-          headerTitle: '',
+          headerTitle: 'Маршрут',
           headerLeft: () => (
             <Pressable
               style={styles.leftButton}

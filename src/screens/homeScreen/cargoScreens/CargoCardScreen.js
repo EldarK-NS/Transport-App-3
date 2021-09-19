@@ -1,10 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useLayoutEffect} from 'react';
 import {
   ScrollView,
   StyleSheet,
   View,
   Text,
   ActivityIndicator,
+  Pressable,
 } from 'react-native';
 import InfoDistanceBlock from '../../../components/CardElements/InfoDistanceBlock';
 import SecondCardBlock from '../../../components/CardElements/SecondCardBlock';
@@ -13,16 +14,44 @@ import ContactBlock from '../../../components/CardElements/ContactBlock';
 import {useRoute} from '@react-navigation/core';
 import axios from 'axios';
 import {MyTheme} from '../../../components/layout/theme';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import {useNavigation} from '@react-navigation/core';
 
 export default function CargoCardScreen() {
   const [info, setInfo] = useState(null);
   const route = useRoute();
-  const postId = route.params.id;
-  console.log('info', info);
+  const navigation = useNavigation();
+  const incomeData = route.params;
+
+  //! Set header left button
+  const headerNavigation = () => {
+    if (incomeData.from === 'favorite') {
+      // navigation.reset({
+      //   index: 0,
+      //   routes: [{name: 'Profile', screen: 'MyFavorites'}],
+      // });
+      navigation.navigate('Profile', {screen: 'MyFavorites'});
+    } else if (incomeData.from === 'filter') {
+      navigation.goBack();
+    }
+  };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <Pressable style={styles.leftButton} onPress={headerNavigation}>
+          <AntDesign name="left" size={24} color="white" />
+          <Text style={styles.buttonText}>Поиск</Text>
+        </Pressable>
+      ),
+    });
+  }, [navigation]);
+
+  //! Get Data By Id comes from route.params
   const getData = async () => {
     try {
       const res = await axios(
-        `https://test.money-men.kz/api/getPostByID/${postId}`,
+        `https://test.money-men.kz/api/getPostByID/${incomeData.id}`,
       );
       //! if res.data.success ===true else Alert
       setInfo(res.data);
@@ -43,6 +72,8 @@ export default function CargoCardScreen() {
   const handleMessage = () => {
     console.log('Message!!!');
   };
+
+  //! Loader
   if (!info) {
     return (
       <ActivityIndicator
@@ -119,5 +150,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
+  },
+  leftButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: 10,
+  },
+  buttonText: {
+    color: 'white',
+    // fontFamily: "IBM-Regular",
+    fontSize: 17,
+    lineHeight: 22,
+    color: 'white',
   },
 });

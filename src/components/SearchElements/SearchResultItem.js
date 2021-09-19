@@ -117,6 +117,7 @@ export default function SearchResultItem(props) {
       onPress={() => {
         navigation.navigate(path, {
           id: postId,
+          from: 'filter',
         });
       }}>
       <View style={styles.mainBlock}>

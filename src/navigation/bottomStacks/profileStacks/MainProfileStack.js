@@ -9,6 +9,7 @@ import InProgressCardScreen from '../../../screens/profileScreen/myPosts/InProgr
 import EmployeesStack from './employees/EmployeesStack';
 import {useDispatch} from 'react-redux';
 import {Logout} from '../../../redux/actions/auth';
+import Favorites from '../../../screens/profileScreen/favorites/Favorites';
 
 const Stack = createStackNavigator();
 
@@ -48,6 +49,26 @@ export default function MainProfileStack() {
         component={MyPostsStack}
         options={({navigation, route}) => ({
           headerTitle: 'Мои заявки',
+          headerTitleStyle: {
+            fontSize: 17,
+            fontWeight: 'bold',
+            color: 'white',
+          },
+          headerLeft: () => (
+            <Pressable
+              style={styles.leftButton}
+              onPress={() => navigation.goBack()}>
+              <AntDesign name="left" size={24} color="white" />
+              <Text style={styles.buttonText}>Назад</Text>
+            </Pressable>
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="MyFavorites"
+        component={Favorites}
+        options={({navigation, route}) => ({
+          headerTitle: 'Избранное',
           headerTitleStyle: {
             fontSize: 17,
             fontWeight: 'bold',
