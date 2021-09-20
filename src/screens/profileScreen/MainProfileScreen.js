@@ -85,13 +85,13 @@ const styles = StyleSheet.create({
     marginLeft: 12,
   },
   userName: {
-    //   fontFamily:'IBM-SemiBold',
+    fontFamily: 'IBMPlexSans-SemiBold',
     fontSize: 17,
     lineHeight: 22,
     color: MyTheme.black,
   },
   companyName: {
-    //   fontFamily:'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 14,
     lineHeight: 18,
     color: MyTheme.grey,
@@ -116,13 +116,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    //   fontFamily:'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 15,
     lineHeight: 16,
     color: MyTheme.grey,
   },
   info: {
-    //   fontFamily:'IBM-Medium',
+    fontFamily: 'IBMPlexSans-Medium',
     fontSize: 17,
     lineHeight: 24,
     color: MyTheme.blue,
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     marginBottom: 19,
   },
   buttonText: {
-    // fontFamily:'IBM-Bold',
+    fontFamily: 'IBMPlexSans-Bold',
     fontSize: 15,
     lineHeight: 24,
     color: MyTheme.green,

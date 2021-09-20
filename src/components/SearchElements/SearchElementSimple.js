@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   quantity: {
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 14,
     lineHeight: 20,
     marginRight: 15,
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     marginLeft: 16,
   },
   title: {
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 17,
     color: MyTheme.black,
     lineHeight: 24,

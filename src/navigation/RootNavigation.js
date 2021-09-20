@@ -40,7 +40,7 @@ export default function RootNavigator() {
           backgroundColor: '#008EFF',
         },
         headerTitleStyle: {
-          // fontFamily: "IBM-SemiBold",
+          fontFamily: 'IBMPlexSans-SemiBold',
           color: 'white',
         },
         tabBarHideOnKeyboard: true,

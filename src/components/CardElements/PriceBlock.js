@@ -86,13 +86,13 @@ const styles = StyleSheet.create({
     marginLeft: 28,
   },
   title: {
-    // fontFamily:'IBM-Medium',
+    fontFamily: 'IBMPlexSans-Medium',
     fontSize: 18,
     lineHeight: 21,
     color: MyTheme.black,
   },
   subTitle: {
-    // fontFamily:'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 14,
     lineHeight: 20,
     color: MyTheme.grey,
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   buttonText: {
-    // fontFamily: 'IBM-Medium',
+    fontFamily: 'IBMPlexSans-Medium',
     fontSize: 15,
     lineHeight: 24,
     color: MyTheme.blue,

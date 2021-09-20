@@ -83,13 +83,13 @@ const styles = StyleSheet.create({
     marginRight: 23,
   },
   sb_Title: {
-    // fontFamily: 'IBM-Medium',
+    fontFamily: 'IBMPlexSans-Medium',
     fontSize: 15,
     lineHeight: 24,
     color: MyTheme.black,
   },
   sb_SubTitle: {
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 14,
     lineHeight: 16,
     color: MyTheme.grey,

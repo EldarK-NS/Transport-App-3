@@ -120,20 +120,20 @@ const styles = StyleSheet.create({
   },
   infoColorText: {
     color: 'white',
-    fontFamily: 'IBM-SemiBold',
+    fontFamily: 'IBMPlexSans-SemiBold',
     fontSize: 12,
   },
   titleContainer: {
     alignItems: 'center',
   },
   titleText: {
-    // fontFamily: 'IBM-SemiBold',
+    fontFamily: 'IBMPlexSans-SemiBold',
     fontSize: 21,
     lineHeight: 24,
     color: MyTheme.black,
   },
   subTitleText: {
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 15,
     // lineHeight: 24,
     color: MyTheme.grey,
@@ -155,16 +155,16 @@ const styles = StyleSheet.create({
   },
   iconText: {
     color: 'white',
-    // fontFamily: 'IBM-SemiBold',
+    fontFamily: 'IBMPlexSans-SemiBold',
     fontSize: 12,
   },
   point: {
-    // fontFamily: 'IBM-Medium',
+    fontFamily: 'IBMPlexSans-Medium',
     fontSize: 17,
     lineHeight: 24,
   },
   pointDescr: {
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 14,
     lineHeight: 16,
     color: MyTheme.grey,
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     backgroundColor: MyTheme.blue,
   },
   date: {
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 14,
     lineHeight: 16,
     color: MyTheme.black,
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   footerButtonText: {
-    // fontFamily: 'IBM-Medium',
+    fontFamily: 'IBMPlexSans-Medium',
     fontSize: 15,
     lineHeight: 24,
     color: MyTheme.blue,
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   mapText: {
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 16,
     lineHeight: 18,
     color: MyTheme.blue,

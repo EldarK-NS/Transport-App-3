@@ -477,7 +477,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 24,
     color: 'white',
-    // fontFamily:'IBM-Bold',
+    fontFamily: 'IBMPlexSans-Bold',
     fontWeight: 'bold',
   },
   visibleContainer: {
@@ -492,7 +492,7 @@ const styles = StyleSheet.create({
   placeholderLabel: {
     alignSelf: 'flex-start',
     marginLeft: 10,
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 13,
     lineHeight: 16,
     color: MyTheme.grey,
@@ -500,18 +500,17 @@ const styles = StyleSheet.create({
   placeText: {
     alignSelf: 'flex-start',
     marginLeft: 10,
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 17,
     lineHeight: 24,
     color: MyTheme.black,
   },
   label: {
-    // fontFamily: 'IBM-SemiBold',
+    fontFamily: 'IBMPlexSans-SemiBold',
     fontSize: 15,
     lineHeight: 24,
     // marginLeft: 15,
     color: MyTheme.grey,
-    fontWeight: 'bold',
     // textDecorationLine: 'underline',
   },
   sectionGrey: {
@@ -532,7 +531,7 @@ const styles = StyleSheet.create({
   additParamsText: {
     marginLeft: 10,
     paddingVertical: 10,
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 17,
     lineHeight: 24,
     color: MyTheme.black,
@@ -546,7 +545,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   modalTitle: {
-    // fontFamily:'IBM-Bold',
+    fontFamily: 'IBMPlexSans-Bold',
     fontSize: 21,
     lineHeight: 24,
     color: MyTheme.blue,
@@ -556,7 +555,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   modalSubTitle: {
-    // fontFamily:'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 14,
     lineHeight: 18,
     color: MyTheme.grey,
@@ -575,7 +574,7 @@ const styles = StyleSheet.create({
     backgroundColor: MyTheme.background,
   },
   modalbButtonText: {
-    // fontFamily:'IBM-SemiBold',
+    fontFamily: 'IBMPlexSans-SemiBold',
     fontSize: 14,
     lineHeight: 24,
     color: MyTheme.blue,

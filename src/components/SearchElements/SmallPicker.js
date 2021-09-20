@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
   title: {
     alignSelf: 'flex-start',
     marginLeft: 10,
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 17,
     lineHeight: 24,
     color: MyTheme.black,
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
   placeholderLabel: {
     alignSelf: 'flex-start',
     marginLeft: 10,
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 13,
     lineHeight: 16,
     color: MyTheme.grey,
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   placeholderLabelAndr: {
     alignSelf: 'flex-start',
     marginLeft: 10,
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 13,
     lineHeight: 16,
     color: MyTheme.grey,

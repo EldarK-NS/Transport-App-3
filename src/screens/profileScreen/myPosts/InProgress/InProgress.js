@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   title: {
-    // fontFamily: 'IBM-SemiBold',
+    fontFamily: 'IBMPlexSans-SemiBold',
     fontSize: 13,
     color: MyTheme.grey,
     marginLeft: 16,

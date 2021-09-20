@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     marginVertical: 15,
   },
   whiteText: {
-    // fontFamily:'IBM-Bold',
+    fontFamily: 'IBMPlexSans-Bold',
     fontSize: 15,
     lineHeight: 24,
     color: 'white',
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   blackText: {
-    // fontFamily:'IBM-Medium',
+    fontFamily: 'IBMPlexSans-Medium',
     fontSize: 15,
     lineHeight: 24,
     color: MyTheme.black,

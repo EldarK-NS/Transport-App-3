@@ -118,6 +118,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 17,
-    fontWeight: 'bold',
+    fontFamily: 'IBMPlexSans-Regular',
   },
 });

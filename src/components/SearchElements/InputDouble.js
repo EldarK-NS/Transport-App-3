@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   label: {
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 13,
     lineHeight: 16,
     color: MyTheme.grey,
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: MyTheme.grey,
     fontSize: 17,
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     color: MyTheme.black,
     lineHeight: 20,
     marginBottom: 5,

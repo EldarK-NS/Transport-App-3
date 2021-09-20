@@ -173,7 +173,7 @@ export default function AdditionalParams() {
 const styles = StyleSheet.create({
   title: {
     fontSize: 18,
-    // fontFamily:'IMB-SemiBold',
+    fontFamily: 'IBMPlexSans-SemiBold',
     textAlign: 'center',
     marginTop: 7,
     marginBottom: 7,

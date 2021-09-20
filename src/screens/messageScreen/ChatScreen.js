@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
   },
   leftSideText: {
     fontSize: 16,
+    fontFamily: 'IBMPlexSans-Regular',
   },
   rightSide: {
     width: '70%',
@@ -70,5 +71,6 @@ const styles = StyleSheet.create({
   rightideText: {
     color: 'white',
     fontSize: 16,
+    fontFamily: 'IBMPlexSans-Regular',
   },
 });

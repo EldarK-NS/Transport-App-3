@@ -302,8 +302,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 24,
     color: 'white',
-    // fontFamily:'IBM-Bold',
-    fontWeight: 'bold',
+    fontFamily: 'IBMPlexSans-Bold',
   },
   visibleContainer: {
     width: Dimensions.get('window').width - 20,
@@ -317,7 +316,7 @@ const styles = StyleSheet.create({
   placeholderLabel: {
     alignSelf: 'flex-start',
     marginLeft: 10,
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 13,
     lineHeight: 16,
     color: MyTheme.grey,
@@ -325,13 +324,13 @@ const styles = StyleSheet.create({
   placeText: {
     alignSelf: 'flex-start',
     marginLeft: 10,
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 17,
     lineHeight: 24,
     color: MyTheme.black,
   },
   label: {
-    // fontFamily: 'IBM-SemiBold',
+    fontFamily: 'IBMPlexSans-SemiBold',
     fontSize: 15,
     lineHeight: 24,
     // marginLeft: 15,

@@ -125,13 +125,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   title: {
-    // fontFamily: 'IBM-Medium',
+    fontFamily: 'IBMPlexSans-Medium',
     fontSize: 15,
     lineHeight: 24,
     color: MyTheme.black,
   },
   subTitle: {
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 14,
     lineHeight: 20,
     color: MyTheme.grey,
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   buttonText: {
-    // fontFamily: 'IBM-Bold',
+    fontFamily: 'IBMPlexSans-Bold',
     fontSize: 15,
     lineHeight: 24,
     color: 'white',

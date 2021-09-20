@@ -111,13 +111,12 @@ const styles = StyleSheet.create({
     backgroundColor: MyTheme.background,
   },
   label: {
-    // fontFamily: 'IBM-SemiBold',
+    fontFamily: 'IBMPlexSans-SemiBold',
     fontSize: 13,
     lineHeight: 24,
     marginTop: 24,
     marginLeft: 15,
     color: MyTheme.grey,
-    fontWeight: 'bold',
   },
   sectionWhite: {
     width: '100%',
@@ -129,25 +128,25 @@ const styles = StyleSheet.create({
   coloredAction: {
     backgroundColor: data.details.status.bacgroundcolor,
     padding: 2,
-    // fontFamily:'IBM-SemiBold',
+    fontFamily: 'IBMPlexSans-SemiBold',
     fontSize: 12,
     width: '50%',
     marginBottom: 15,
   },
   title: {
-    // fontFamily:'IBM-SemiBold',
+    fontFamily: 'IBMPlexSans-SemiBold',
     fontSize: 21,
     lineHeight: 24,
     color: MyTheme.black,
   },
   destinationString: {
-    // fontFamily:'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 15,
     lineHeight: 24,
     color: MyTheme.grey,
   },
   smallGreyText: {
-    // fontFamily:'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 14,
     lineHeight: 17,
     color: MyTheme.grey,
@@ -165,10 +164,9 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   worningText: {
-    // fontFamily: 'IBM-Bold',
+    fontFamily: 'IBMPlexSans-Bold',
     fontSize: 14,
     lineHeight: 24,
     color: MyTheme.blue,
-    fontWeight: 'bold',
   },
 });

@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   label: {
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 13,
     lineHeight: 16,
     color: MyTheme.grey,
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   input: {
     height: 45,
     fontSize: 17,
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     color: MyTheme.black,
     lineHeight: 24,
     padding: 7,

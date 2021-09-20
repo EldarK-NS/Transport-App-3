@@ -290,7 +290,7 @@ const styles = StyleSheet.create({
     marginLeft: 3,
     lineHeight: 20,
     color: MyTheme.black,
-    // fontFamily: 'IBM-Medium',
+    fontFamily: 'IBMPlexSans-Medium',
   },
   dot: {
     alignSelf: 'flex-start',
@@ -304,27 +304,27 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginTop: 3,
     color: MyTheme.blue,
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
   },
   driver: {
     fontSize: 14,
     lineHeight: 18,
     color: MyTheme.black,
     marginTop: 4,
-    // fontFamily: 'IBM-Medium',
+    fontFamily: 'IBMPlexSans-Medium',
   },
   info: {
     fontSize: 14,
     lineHeight: 18,
     marginTop: 10,
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     color: MyTheme.black,
   },
   hiddenText: {
     fontSize: 12,
     lineHeight: 16,
     color: MyTheme.grey,
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
   },
   mainRightSide: {
     justifyContent: 'center',
@@ -339,12 +339,12 @@ const styles = StyleSheet.create({
   },
   coloredAction: {
     fontSize: 12,
-    // fontFamily: 'IBM-SemiBold',
+    fontFamily: 'IBMPlexSans-SemiBold',
     alignSelf: 'center',
   },
   yourPrice: {
     fontSize: 10,
-    // fontFamily: 'IBM-SemiBold',
+    fontFamily: 'IBMPlexSans-SemiBold',
     color: MyTheme.grey,
   },
   barePrice: {
@@ -353,14 +353,14 @@ const styles = StyleSheet.create({
   tax: {
     fontSize: 12,
     color: MyTheme.grey,
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     alignSelf: 'flex-end',
     marginBottom: 20,
   },
   price: {
     fontSize: 16,
     color: MyTheme.black,
-    // fontFamily: 'IBM-SemiBold',
+    fontFamily: 'IBMPlexSans-SemiBold',
     lineHeight: 24,
     // marginHorizontal: 5,
   },
@@ -380,7 +380,7 @@ const styles = StyleSheet.create({
   reason: {
     fontSize: 12,
     color: MyTheme.grey,
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
   },
   reasonDenied: {
     backgroundColor: MyTheme.lightGrey,
@@ -391,7 +391,7 @@ const styles = StyleSheet.create({
     padding: 2,
   },
   denied: {
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 14,
   },
   buttonConfirm: {

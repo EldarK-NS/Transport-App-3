@@ -80,13 +80,13 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   title: {
-    // fontFamily:'IBM-Medium',
+    fontFamily: 'IBMPlexSans-Medium',
     fontSize: 17,
     lineHeight: 24,
     color: MyTheme.black,
   },
   price: {
-    // fontFamily:'IBM-Medium',
+    fontFamily: 'IBMPlexSans-Medium',
     fontSize: 14,
     lineHeight: 24,
     color: MyTheme.blue,
@@ -97,14 +97,14 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   descrTitle: {
-    // fontFamily:'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 14,
     lineHeight: 24,
     color: MyTheme.grey,
     width: '50%',
   },
   descr: {
-    // fontFamily:'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 14,
     lineHeight: 24,
     color: MyTheme.black,
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     width: '50%',
   },
   noteTetxt: {
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 14,
     lineHeight: 24,
     color: MyTheme.black,

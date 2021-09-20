@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
   priceTitle: {
     fontSize: 12,
     color: MyTheme.grey,
-    // fontFamily:'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     marginVertical: 5,
   },
   rowBack: {
@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    // fontFamily:'IBM-SemiBold',
+    fontFamily: 'IBMPlexSans-SemiBold',
     marginBottom: 3,
     color: MyTheme.black,
   },
@@ -272,7 +272,7 @@ const styles = StyleSheet.create({
   warning: {
     fontSize: 18,
     color: 'red',
-    fontWeight: 'bold',
+    fontFamily: 'IBMPlexSans-SemiBold',
     alignSelf: 'center',
   },
 });

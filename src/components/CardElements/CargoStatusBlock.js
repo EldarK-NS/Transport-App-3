@@ -218,12 +218,12 @@ const styles = StyleSheet.create({
   },
   iconTitle: {
     color: MyTheme.blue,
-    // fontFamily: 'IBM-SemiBold',
+    fontFamily: 'IBMPlexSans-SemiBold',
     fontWeight: 'bold',
     fontSize: 12,
   },
   statusText: {
-    // fontFamily: 'IBM-Bold',
+    fontFamily: 'IBMPlexSans-Bold',
     fontSize: 14,
     lineHeight: 24,
     color: MyTheme.blue,
@@ -249,20 +249,20 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 21,
     color: MyTheme.grey,
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     width: '90%',
   },
   smallBlackText: {
     fontSize: 14,
     lineHeight: 21,
     color: MyTheme.black,
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
   },
   blackMiddletext: {
     fontSize: 18,
     lineHeight: 21,
     color: MyTheme.black,
-    // fontFamily: 'IBM-Medium',
+    fontFamily: 'IBMPlexSans-Medium',
   },
   firstStatusButton: {
     width: 280,
@@ -289,7 +289,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 24,
     color: MyTheme.blue,
-    // fontFamily: 'IBM-Medium',
+    fontFamily: 'IBMPlexSans-Medium',
   },
   map: {
     flexDirection: 'row',

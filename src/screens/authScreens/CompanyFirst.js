@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    //   fontFamily:'IBM-Medium',
+    fontFamily: 'IBMPlexSans-Medium',
     fontSize: 29,
     lineHeight: 48,
     color: MyTheme.black,
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   subTitle: {
-    //   fontFamily:'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 14,
     lineHeight: 20,
     color: MyTheme.grey,
@@ -199,12 +199,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   switherTextBlack: {
-    //   fontFamily:'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 17,
     color: MyTheme.black,
   },
   switherTextWhite: {
-    //   fontFamily:'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 17,
     color: 'white',
   },
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
   forgetText: {
-    //   fontFamily:'IBM-Medium',
+    fontFamily: 'IBMPlexSans-Medium',
     fontSize: 14,
     lineHeight: 20,
     color: MyTheme.black,
@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
   buttonText: {
-    //   fontFamily:'IBM-Bold',
+    fontFamily: 'IBMPlexSans-Bold',
     fontSize: 16,
     color: 'white',
   },
@@ -259,11 +259,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   question: {
-    //   fontFamily:'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 14,
   },
   link: {
-    //   fontFamily:'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 14,
     color: MyTheme.blue,
   },
@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   rules: {
-    //   fontFamily:'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 14,
     width: '90%',
     textAlign: 'center',

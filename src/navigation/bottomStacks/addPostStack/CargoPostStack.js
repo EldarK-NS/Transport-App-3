@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    // fontFamily: "IBM-Regular",
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 17,
     lineHeight: 22,
     color: 'white',

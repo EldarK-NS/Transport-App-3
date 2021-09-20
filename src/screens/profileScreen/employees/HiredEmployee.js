@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   text: {
     width: '80%',
     textAlign: 'center',
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 14,
     lineHeight: 18,
     color: MyTheme.grey,
@@ -70,16 +70,15 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   title: {
-    // fontFamily: 'IBM-SemiBold',
+    fontFamily: 'IBMPlexSans-SemiBold',
     fontSize: 21,
     lineHeight: 24,
     color: MyTheme.blue,
-    fontWeight: 'bold',
     marginBottom: 10,
   },
   content: {
     textAlign: 'center',
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 14,
     lineHeight: 18,
     color: MyTheme.black,
@@ -96,10 +95,9 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   buttonText: {
-    // fontFamily: 'IBM-Bold',
+    fontFamily: 'IBMPlexSans-Bold',
     fontSize: 15,
     lineHeight: 24,
     color: 'white',
-    fontWeight: 'bold',
   },
 });

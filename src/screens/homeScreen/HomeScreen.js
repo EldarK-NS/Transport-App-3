@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
   widgetsTitle: {
     height: 45,
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     color: '#A2A9B2',
     fontSize: 12,
     justifyContent: 'flex-end',

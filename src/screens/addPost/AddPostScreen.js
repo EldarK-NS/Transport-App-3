@@ -44,14 +44,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   title: {
-    // fontFamily: "IBM-Medium",
+    fontFamily: 'IBMPlexSans-Medium',
     fontSize: 21,
     lineHeight: 24,
     color: MyTheme.black,
     marginBottom: 7,
   },
   subTitle: {
-    // fontFamily: "IBM-Regular",
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 14,
     lineHeight: 18,
     color: MyTheme.grey,

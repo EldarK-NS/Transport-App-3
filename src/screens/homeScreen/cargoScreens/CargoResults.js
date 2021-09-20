@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   loaderText: {
-    // fontFamily:'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 15,
     color: 'white',
   },
@@ -448,7 +448,7 @@ const styles = StyleSheet.create({
 //     marginVertical: 10,
 //   },
 //   loaderText: {
-//     // fontFamily:'IBM-Regular',
+//     // fontFamily:'IBMPlexSans-Regular',
 //     fontSize: 15,
 //     color: 'white',
 //   },
@@ -459,7 +459,7 @@ const styles = StyleSheet.create({
 //   },
 //   buttonText: {
 //     color: 'white',
-//     // fontFamily: "IBM-Regular",
+//     // fontFamily: "IBMPlexSans-Regular",
 //     fontSize: 17,
 //     lineHeight: 22,
 //     color: 'white',

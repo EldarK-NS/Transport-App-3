@@ -67,14 +67,14 @@ const styles = StyleSheet.create({
     width: '70%',
   },
   userName: {
-    // fontFamily: 'IBM-Medium',
+    fontFamily: 'IBMPlexSans-Medium',
     fontSize: 16,
     lineHeight: 24,
     fontWeight: '600',
     color: MyTheme.black,
   },
   messText: {
-    // fontFamily: 'IBM-Regular',
+    fontFamily: 'IBMPlexSans-Regular',
     fontSize: 13,
     lineHeight: 16,
     color: MyTheme.grey,
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   date: {
-    // fontFamily: 'IBM-Medium',
+    fontFamily: 'IBMPlexSans-Medium',
     fontSize: 12,
     lineHeight: 16,
     color: MyTheme.grey,
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   quantity: {
-    // fontFamily: 'IBM-Medium',
+    fontFamily: 'IBMPlexSans-Medium',
     fontSize: 12,
     lineHeight: 16,
     fontWeight: 'bold',
