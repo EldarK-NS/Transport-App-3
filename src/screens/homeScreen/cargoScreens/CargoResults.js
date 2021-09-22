@@ -145,7 +145,7 @@ export default function CargoResults() {
             rating={4.5}
             companyName={"TOO'MyCompany'"}
             price={200000}
-            staus={null}
+            status={null}
             auth={true}
             updated_at={item.updated_at}
             path={'CargoCard'}

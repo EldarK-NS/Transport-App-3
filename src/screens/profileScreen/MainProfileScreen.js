@@ -12,6 +12,7 @@ import {MyTheme} from '../../components/layout/theme';
 import Feather from 'react-native-vector-icons/Feather';
 import SearchElementSimple from '../../components/SearchElements/SearchElementSimple';
 import {funcList} from '../../../assets/allData/profileData';
+import {useSelector} from 'react-redux';
 
 export default function MainProfileScreen() {
   return (

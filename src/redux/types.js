@@ -10,6 +10,9 @@ export const PERSON_SIGN_UP_FAIL = 'PERSON_SIGN_UP_FAIL';
 export const GET_PROFILE_SUCCESS = 'GET_PROFILE_SUCCESS';
 export const GET_PROFILE_FAIL = 'GET_PROFILE_FAIL';
 export const LOGOUT = ' LOGOUT';
+export const GET_TOKEN_SUCCESS = ' GET_TOKEN_SUCCESS';
+export const GET_TOKEN_FAIL = ' GET_TOKEN_FAIL';
+
 // export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
 // export const SIGN_UP_FAIL = 'SIGN_UP_FAIL';
 // export const LOAD_USER = 'LOAD_USER';

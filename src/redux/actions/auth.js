@@ -10,23 +10,32 @@ import {
   GET_PROFILE_SUCCESS,
   GET_PROFILE_FAIL,
   LOGOUT,
-  // SIGN_UP_SUCCESS,
-  // SIGN_UP_FAIL,
+  GET_TOKEN_SUCCESS,
+  GET_TOKEN_FAIL,
+
   // LOAD_USER,
   // LOAD_USER_ERROR,
 } from '../types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// const getToken = async token => {
-//   try {
-//     const value = await AsyncStorage.getItem('token');
-//     if (value !== null) {
-//       console.log(value);
-//     } else console.log('no token');
-//   } catch (e) {
-//     console.log(e);
-//   }
-// };
+export function getToken() {
+  return async dispatch => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+      if (value !== null) {
+        dispatch({
+          type: GET_TOKEN_SUCCESS,
+          payload: value,
+        });
+      } else console.log('no token');
+    } catch (e) {
+      console.log(e);
+      dispatch({
+        type: GET_TOKEN_FAIL,
+      });
+    }
+  };
+}
 //!Get profile
 
 export function getProfile(token) {
