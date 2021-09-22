@@ -44,8 +44,16 @@ export default function PlaceAutocomplite2() {
       <GooglePlacesAutocomplete
         placeholder="Откуда"
         onPress={(data, details = null) => {
+          if (details.formatted_address.includes('Казахстан')) {
+            setStartPlaceString(
+              `${details.address_components[0].long_name}, KZ`,
+            );
+          } else {
+            setStartPlaceString(
+              `${details.address_components[0].long_name}, ${details.address_components[2].short_name}`,
+            );
+          }
           setStartPlace(data.place_id);
-          setStartPlaceString(data.description);
         }}
         styles={{
           textInput: styles.visibleContainer,
@@ -69,8 +77,16 @@ export default function PlaceAutocomplite2() {
       <GooglePlacesAutocomplete
         placeholder="Куда"
         onPress={(data, details = null) => {
+          if (details.formatted_address.includes('Казахстан')) {
+            setFinishPlaceString(
+              `${details.address_components[0].long_name}, KZ`,
+            );
+          } else {
+            setFinishPlaceString(
+              `${details.address_components[0].long_name}, ${details.address_components[2].short_name}`,
+            );
+          }
           setFinishPlace(data.place_id);
-          setFinishPlaceString(data.description);
         }}
         styles={{
           textInput: styles.visibleContainer,

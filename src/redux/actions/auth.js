@@ -10,25 +10,33 @@ import {
   GET_PROFILE_SUCCESS,
   GET_PROFILE_FAIL,
   LOGOUT,
-  // SIGN_UP_SUCCESS,
-  // SIGN_UP_FAIL,
+  GET_TOKEN_SUCCESS,
+  GET_TOKEN_FAIL,
   // LOAD_USER,
   // LOAD_USER_ERROR,
 } from '../types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// const getToken = async token => {
-//   try {
-//     const value = await AsyncStorage.getItem('token');
-//     if (value !== null) {
-//       console.log(value);
-//     } else console.log('no token');
-//   } catch (e) {
-//     console.log(e);
-//   }
-// };
-//!Get profile
+export function getToken() {
+  return async dispatch => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+      if (value !== null) {
+        dispatch({
+          type: GET_TOKEN_SUCCESS,
+          payload: value,
+        });
+      }
+    } catch (e) {
+      console.log(e);
+      dispatch({
+        type: GET_TOKEN_FAIL,
+      });
+    }
+  };
+}
 
+//!Get profile
 export function getProfile(token) {
   return async dispatch => {
     let status = '';
@@ -36,14 +44,9 @@ export function getProfile(token) {
       const res = await axios(
         `https://test.money-men.kz/api/getProfile?token=${token}`,
       );
-      if (res.data.data[0].companyDetails) {
-        status = 'company';
-      } else {
-        status = 'person';
-      }
       dispatch({
         type: GET_PROFILE_SUCCESS,
-        payload: status,
+        payload: res.data.data[0],
       });
     } catch (error) {
       console.log(error);
@@ -74,12 +77,11 @@ export function login(phone, password) {
         });
         return;
       }
-      console.log(res.data);
+      console.log('Login data', res.data);
       await AsyncStorage.setItem('token', res.data.token);
       dispatch({
         type: LOGIN_SUCCES,
-        payload: res.data,
-        payloadToken: res.data.token,
+        payload: res.data.token,
       });
     } catch (error) {
       console.log(error);

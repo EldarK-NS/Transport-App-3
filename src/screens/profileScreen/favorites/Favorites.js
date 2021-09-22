@@ -41,9 +41,21 @@ export default function Favorites() {
   }, [token]);
 
   const profileFavorites = useSelector(state => state.profileFavorites);
+  //TODO: решить вопрос с расстоянием, жду Мукана если вставит поле с расстоянием в details
+  // const [distance, setDistance] = useState('');
 
-  const [newData, setNewData] = useState();
-
+  // // //! Get Distance
+  // const getDistance = async (x, y) => {
+  //   try {
+  //     const res = await axios(
+  //       `https://test.money-men.kz/api/distance?from=${x}&to=${y}`,
+  //     );
+  //     setDistance(res.data.distance);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  const [newData, setNewData] = useState([]);
   useEffect(() => {
     setNewData(
       profileFavorites.cargoPosts.map(item => ({
@@ -57,12 +69,12 @@ export default function Favorites() {
         volume: item.details[0].volume,
         price: 200000,
         updated: item.updated_at,
-        distance: '600 км',
+        // distance: distance,
       })),
     );
-    // return () => {
-    //   cleanup;
-    // };
+    return () => {
+      setNewData([]);
+    };
   }, [profileFavorites]);
 
   //!Replace price

@@ -4,8 +4,17 @@ import SearchElementMain from '../../components/SearchElements/SearchElementMain
 import {filterItemsList} from '../../../assets/data';
 import {usefulWidgets} from '../../../assets/data';
 import {MyTheme} from '../../components/layout/theme';
+import {useDispatch, useSelector} from 'react-redux';
+import {getProfile} from '../../redux/actions/auth';
 
 export default function HomeScreen() {
+  const dispatch = useDispatch();
+  const auth = useSelector(state => state.auth);
+
+  useEffect(() => {
+    dispatch(getProfile(auth.token));
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.mainPart}>

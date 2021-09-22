@@ -16,7 +16,9 @@ export default function EmployeesListItem({data}) {
       <View style={styles.container}>
         <View style={styles.leftSide}>
           <Image
-            source={{uri: data.img}}
+            source={{
+              uri: 'https://tengrinews.kz/userdata/news/2020/news_392450/thumb_m/photo_309514.jpeg',
+            }}
             resizeMode="cover"
             style={styles.image}
           />
@@ -27,9 +29,9 @@ export default function EmployeesListItem({data}) {
                   ? [styles.name, {color: MyTheme.blue}]
                   : styles.name
               }>
-              {data.name}
+              {data.fio}
             </Text>
-            <Text style={styles.status}>{data.status}</Text>
+            <Text style={styles.status}>{data.position}</Text>
           </View>
         </View>
         <View
