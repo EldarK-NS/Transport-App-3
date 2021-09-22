@@ -8,7 +8,7 @@ import {
   Pressable,
   Modal,
   Image,
-  Platform,
+  Alert,
 } from 'react-native';
 import {MyTheme} from '../../../components/layout/theme';
 import InputDouble from '../../../components/SearchElements/InputDouble';
@@ -64,8 +64,8 @@ export default function AddCargoPostForm() {
   const transitData = useSelector(state => state.transitData);
 
   //!Set Destination++++
-  const [fromString, setFromString] = useState('Алматы, Казахстан');
-  const [destinString, setDestinString] = useState('Нур-Султан, Казахстан');
+  const [fromString, setFromString] = useState('Выберите пункт отправки');
+  const [destinString, setDestinString] = useState('Выберите пункт доставки');
   const [fromCoord, setFromCoord] = useState(null);
   const [destinCoord, setDestinCoord] = useState(null);
 
@@ -182,6 +182,12 @@ export default function AddCargoPostForm() {
       setLoadingConditions(transitData.additionalCargoPost.loadCond);
       setFreightConditions(transitData.additionalCargoPost.freightCond);
       setTransportationConditions(transitData.additionalCargoPost.transCond);
+      return () => {
+        setDocuments(null);
+        setLoadingConditions(null);
+        setFreightConditions(null);
+        setTransportationConditions(null);
+      };
     }
   }, [transitData.additionalCargoPost]);
   //?---------------------------------------//
@@ -192,6 +198,16 @@ export default function AddCargoPostForm() {
         url: `https://test.money-men.kz/api/newAddPost?token=${token}&category_id=1&sub_id=1&title=${description}&from=${fromCoord}&to=${destinCoord}&volume=${volumeStart}&net=${netStart}&start_date=${loadingDate}&end_date=${unloadingDate}&documents[]=${documents}&price=${price}&price_type=${currencyId}&payment_type=${paymentId}&type_transport=${transportTypeId}&type_sub_transport[]=${transportSubTypeId}&from_string=${fromString}&to_string=${destinString}&loading[]=${loadingConditions}&condition[]=${transportationConditions}&addition[]=${freightConditions}`,
       });
       console.log(res);
+      if (res.data.message) {
+        Alert.alert('Внимание', res.data.message, [
+          {
+            text: 'Перейти к пополнению балланса',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ]);
+      }
       if (res.data.success) {
         dispatch(removeDataForCargoPost());
         setModalShow(true);

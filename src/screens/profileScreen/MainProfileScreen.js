@@ -15,6 +15,8 @@ import {funcList} from '../../../assets/allData/profileData';
 import {useSelector} from 'react-redux';
 
 export default function MainProfileScreen() {
+  const auth = useSelector(state => state.auth);
+  console.log(auth);
   return (
     <View style={styles.container}>
       <View style={styles.profileBlock}>
@@ -24,8 +26,12 @@ export default function MainProfileScreen() {
             style={styles.image}
           />
           <View style={styles.names}>
-            <Text style={styles.userName}>Айсулу Н.Л.</Text>
-            <Text style={styles.companyName}>ТОО «Логистик Фарм»</Text>
+            <Text style={styles.userName}>{auth.user?.fullName}</Text>
+            <Text style={styles.companyName}>
+              {auth.user?.companyDetails
+                ? auth.user.companyDetails[0].companyName
+                : null}
+            </Text>
           </View>
         </View>
         <View style={styles.downSection}>

@@ -1,14 +1,14 @@
 import React from 'react';
-import {
-  Text,
-  View,
-  //   TouchableOpacity,
-  Dimensions,
-  StyleSheet,
-} from 'react-native';
+import {Text, View, Dimensions, StyleSheet, Pressable} from 'react-native';
 import {MyTheme} from '../layout/theme';
 
-export default function PriceBlock({price, payment_type, button, buttonColor}) {
+export default function PriceBlock({
+  price,
+  payment_type,
+  button,
+  buttonColor,
+  onHandlePress,
+}) {
   function numberWithSpaces(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   }
@@ -34,7 +34,8 @@ export default function PriceBlock({price, payment_type, button, buttonColor}) {
           </Text>
         </View>
       </View>
-      <View
+      <Pressable
+        onPress={onHandlePress}
         style={
           buttonColor ? [styles.button, {borderColor: 'red'}] : styles.button
         }>
@@ -46,7 +47,7 @@ export default function PriceBlock({price, payment_type, button, buttonColor}) {
           }>
           {button}
         </Text>
-      </View>
+      </Pressable>
       <View>
         {buttonColor ? (
           <Text style={[styles.subTitle, {textAlign: 'center'}]}>

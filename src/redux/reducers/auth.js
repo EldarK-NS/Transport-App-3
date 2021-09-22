@@ -20,7 +20,6 @@ const initialState = {
   user: null,
   message: null,
   token: null,
-  user_status: null,
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -32,14 +31,18 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         isAuthenticated: true,
         loading: false,
-        user: action.payload,
-        token: action.payloadToken,
         message: null,
+        token: action.payload,
+      };
+    case GET_TOKEN_SUCCESS:
+      return {
+        ...state,
+        token: action.payload,
       };
     case GET_PROFILE_SUCCESS:
       return {
         ...state,
-        user_status: action.payload,
+        user: action.payload,
       };
     case GET_TOKEN_SUCCESS:
       return {
@@ -48,6 +51,7 @@ export const authReducer = (state = initialState, action) => {
       };
     case LOGOUT:
     case LOGIN_FAIL:
+    case GET_TOKEN_FAIL:
     case GET_PROFILE_FAIL:
     case COMPANY_SIGN_UP_FAIL:
     case PERSON_SIGN_UP_FAIL:
@@ -58,7 +62,6 @@ export const authReducer = (state = initialState, action) => {
         loading: false,
         user: null,
         token: null,
-        user_status: null,
         message: action.payload,
       };
     default:

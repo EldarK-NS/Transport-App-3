@@ -27,7 +27,7 @@ export default function SearchResultItem(props) {
     fromId,
     toId,
     driver,
-    distance,
+    // distance,
     net,
     volume,
     type_transport,
@@ -47,6 +47,23 @@ export default function SearchResultItem(props) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [token, setToken] = useState(null);
+  const [distance, setDistance] = useState('');
+
+  //! Get Distance
+  const getDistance = async () => {
+    try {
+      const res = await axios(
+        `https://test.money-men.kz/api/distance?from=${fromId}&to=${toId}`,
+      );
+      setDistance(res.data.distance);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getDistance();
+  }, [fromId, toId]);
 
   //!Get & Set Token
   const getToken = async () => {
@@ -118,6 +135,7 @@ export default function SearchResultItem(props) {
         navigation.navigate(path, {
           id: postId,
           from: 'filter',
+          distance,
         });
       }}>
       <View style={styles.mainBlock}>
@@ -146,7 +164,7 @@ export default function SearchResultItem(props) {
           {status ? (
             <Text style={styles.driver}>Водитель: {driver}</Text>
           ) : (
-            <Text style={styles.dist}> {distance} км</Text>
+            <Text style={styles.dist}> {distance}</Text>
           )}
 
           <Text style={styles.info}>

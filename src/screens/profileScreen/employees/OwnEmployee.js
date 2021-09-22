@@ -1,14 +1,32 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
 import EmployeesListItem from '../../../components/SearchElements/EmployeesListItem';
-import {employeesList} from '../../../../assets/allData/employees';
 import {MyTheme} from '../../../components/layout/theme';
+import axios from 'axios';
+import {useSelector} from 'react-redux';
 
 export default function OwnEmployee() {
+  const [employeeList, setEmployeeList] = useState([]);
+  const auth = useSelector(state => state.auth);
+
+  const getMyEmployee = async () => {
+    try {
+      const res = await axios(
+        `https://test.money-men.kz/api/getEmployee?token=${auth.token}`,
+      );
+      setEmployeeList(res.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getMyEmployee();
+  }, []);
   return (
     <View style={styles.container}>
       <FlatList
-        data={employeesList}
+        data={employeeList}
         renderItem={({item}) => <EmployeesListItem data={item} />}
         keyExtractor={item => item.id}
       />
