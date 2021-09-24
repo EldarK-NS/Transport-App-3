@@ -152,6 +152,7 @@ export default function CargoResults() {
             postId={item.id}
             isFavorite={favoritesList.includes(item.id) ? true : false}
             list={favoritesList}
+            inProgress={null}
           />
         )}
         keyExtractor={item => item.id}

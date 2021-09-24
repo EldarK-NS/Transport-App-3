@@ -41,6 +41,7 @@ export default function MySuggestions() {
   }, []);
 
   console.log('CustomerData-inHold', customerData);
+  console.log('ExecutorData-inHold', executeData);
 
   return (
     <View style={styles.container}>
@@ -67,11 +68,12 @@ export default function MySuggestions() {
               price={item.price.price}
               currency={item.price.currency}
               user={item.user[0].fullName}
-              staus={item.status}
+              status={item.status}
               auth={true}
-              updated_at={item.details[0].details.updated_at}
+              updated_at={item.details[0].updated_at}
               // path={'CargoCard'}
               postId={item.details[0].details.id}
+              inProgress={null}
               // isFavorite={favoritesList.includes(item.id) ? true : false}
               // list={favoritesList}
             />
@@ -84,13 +86,38 @@ export default function MySuggestions() {
       <Text style={styles.title}>Я ЗАКАЗЧИК (3)</Text>
 
       <View style={styles.items}>
-        <Text>Мои объявления - мне сделали предложение</Text>
-        {/* <FlatList
-          data={myPostsInProgress_executor}
-          renderItem={({item}) => <SearchResultItem data={item} />}
+        <FlatList
+          data={executeData}
+          renderItem={({item}) => (
+            <SearchResultItem
+              from={item.details[0].details[0].from_string}
+              to={item.details[0].details[0].to_string}
+              fromId={item.details[0].details[0].from}
+              toId={item.details[0].details[0].to}
+              distance={'600'}
+              net={item.details[0].details[0].net}
+              volume={item.details[0].details[0].volume}
+              type_transport={item.details[0].details[0].type_transport}
+              // start_date={item.details[0].start_date}
+              title={item.details[0].details[0].title}
+              // rating={4.5}
+              // companyName={"TOO'MyCompany'"}
+              price={item.price.price}
+              currency={item.price.currency}
+              user={item.user[0].fullName}
+              status={item.status}
+              auth={true}
+              updated_at={item.details[0].details.updated_at}
+              // path={'CargoCard'}
+              postId={item.details[0].details.id}
+              inProgress={null}
+              // isFavorite={favoritesList.includes(item.id) ? true : false}
+              // list={favoritesList}
+            />
+          )}
           showsVerticalScrollIndicator={false}
-          style={{height: '35%'}}
-        /> */}
+          style={{height: '55%'}}
+        />
       </View>
     </View>
   );

@@ -30,8 +30,8 @@ export const filterItemsList = [
     title: 'Склады',
     descr: '560 предложений',
     icon: 'dolly',
-    mainPath: 'MainCargo',
-    path: 'CargoFilter',
+    mainPath: 'Storage',
+    path: 'StorageFilter',
   },
   {
     id: '5',

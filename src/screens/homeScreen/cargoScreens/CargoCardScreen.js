@@ -347,16 +347,15 @@ const styles = StyleSheet.create({
   },
   inputBlock: {
     width: 200,
-    height: 35,
+    height: 45,
     borderWidth: 0.5,
     borderColor: MyTheme.grey,
-
     justifyContent: 'center',
     marginVertical: 25,
     borderRadius: 5,
   },
   input: {
-    fontSize: 18,
+    fontSize: 17,
     fontFamily: 'IBMPlexSans-Regular',
     marginLeft: 15,
   },

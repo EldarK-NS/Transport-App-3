@@ -43,11 +43,22 @@ export default function SearchResultItem(props) {
     postId,
     isFavorite,
     list,
+    inProgress,
   } = props;
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [token, setToken] = useState(null);
   const [distance, setDistance] = useState('');
+
+  const statusColors = x => {
+    if (x == 'Ожидает') {
+      return {background: MyTheme.yellow, color: MyTheme.black};
+    } else if (x == 'Отказ') {
+      return {background: MyTheme.yellow, color: MyTheme.black};
+    } else if (x == 'Принято') {
+      return {background: MyTheme.blue, color: 'white'};
+    }
+  };
 
   //! Get Distance
   const getDistance = async () => {
@@ -81,7 +92,7 @@ export default function SearchResultItem(props) {
   const addToFavorite = async () => {
     if (!token) {
       return Alert.alert(
-        'Что бы добавить груз в избранное необходимо зарегестрироваться',
+        'Что бы добавить груз в избранное необходимо зарегистрироваться',
         [
           {
             text: 'Отмена',
@@ -145,10 +156,11 @@ export default function SearchResultItem(props) {
               <FontAwesome
                 name="circle"
                 size={8}
-                color={status ? status.bacgroundcolor : 'black'}
+                color={status ? statusColors(status).background : 'black'}
                 style={styles.dot}
               />
             ) : null}
+
             <Text style={styles.title}>
               {from}{' '}
               <FontAwesome5
@@ -157,15 +169,13 @@ export default function SearchResultItem(props) {
                 color="black"
                 style={styles.arrowIcon}
               />{' '}
-              {to}
+              {to} <Text style={styles.dist}> {distance}</Text>
             </Text>
           </View>
 
-          {status ? (
+          {inProgress !== null ? (
             <Text style={styles.driver}>Водитель: {driver}</Text>
-          ) : (
-            <Text style={styles.dist}> {distance}</Text>
-          )}
+          ) : null}
 
           <Text style={styles.info}>
             {net} т, {volume} m&#179;, {type_transport},{' '}
@@ -173,15 +183,21 @@ export default function SearchResultItem(props) {
           </Text>
         </View>
         <View style={styles.mainRightSide}>
-          {status ? (
+          {status !== null ? (
             <View style={styles.statusBlock}>
               <View
                 style={{
-                  backgroundColor: status.bacgroundcolor,
+                  backgroundColor: statusColors(status).background,
                   width: '100%',
                   padding: 2,
                 }}>
-                <Text style={styles.coloredAction}>{status.title}</Text>
+                <Text
+                  style={[
+                    styles.coloredAction,
+                    {color: statusColors(status).color},
+                  ]}>
+                  {status}
+                </Text>
               </View>
               <Text style={styles.yourPrice}>ВАША ЦЕНА</Text>
 
@@ -199,7 +215,7 @@ export default function SearchResultItem(props) {
               <Text style={styles.tax}>без НДС</Text>
             </View>
           )}
-          {!status && (
+          {status === null ? (
             <Pressable onPress={addToFavorite}>
               {isFavorite ? (
                 <AntDesign
@@ -217,30 +233,34 @@ export default function SearchResultItem(props) {
                 />
               )}
             </Pressable>
-          )}
+          ) : null}
         </View>
       </View>
       <View style={styles.footerBlock}>
-        {status ? (
+        {status !== null ? (
           <View style={styles.footerContainer}>
             <View style={styles.companyDate}>
-              <Text style={styles.tax}>ТОО &laquo;ОУСА Альянс&raquo;</Text>
+              <Text style={styles.companyName}>
+                ТОО &laquo;ОУСА Альянс&raquo;
+              </Text>
               <Text style={styles.reason}>
-                изм. {moment(data.updated_at).format('LT')}
+                изм. {moment(updated_at).format('LT')}
               </Text>
             </View>
-            <View style={styles.cargoStatus}>
-              {status.title === 'ОТКАЗ' ? (
-                <View style={styles.reasonDenied}>
-                  <Text style={styles.reason}>Причина отказа:</Text>
-                  <Text style={styles.denied}>{status.reason}</Text>
-                </View>
-              ) : status.title === 'ПРИНЯТО' ? (
-                <Pressable style={styles.buttonConfirm}>
-                  <Text style={styles.buttonTitle}>ПОДТВЕРДИТЬ ЗАЯВКУ</Text>
-                </Pressable>
-              ) : null}
-            </View>
+            {status !== null && status === 'Ожидает' ? null : (
+              <View style={styles.cargoStatus}>
+                {status === 'Отказ' ? (
+                  <View style={styles.reasonDenied}>
+                    <Text style={styles.reason}>Причина отказа:</Text>
+                    <Text style={styles.denied}>{status.reason}</Text>
+                  </View>
+                ) : status === 'Принято' ? (
+                  <Pressable style={styles.buttonConfirm}>
+                    <Text style={styles.buttonTitle}>ПОДТВЕРДИТЬ ЗАЯВКУ</Text>
+                  </Pressable>
+                ) : null}
+              </View>
+            )}
           </View>
         ) : (
           <View style={styles.companyDate}>
@@ -364,6 +384,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontFamily: 'IBMPlexSans-SemiBold',
     color: MyTheme.grey,
+    marginVertical: 4,
   },
   barePrice: {
     alignItems: 'flex-end',
@@ -374,6 +395,12 @@ const styles = StyleSheet.create({
     fontFamily: 'IBMPlexSans-Regular',
     alignSelf: 'flex-end',
     marginBottom: 20,
+  },
+  companyName: {
+    fontSize: 12,
+    color: MyTheme.grey,
+    fontFamily: 'IBMPlexSans-Regular',
+    alignSelf: 'flex-end',
   },
   price: {
     fontSize: 16,

@@ -132,13 +132,14 @@ const styles = StyleSheet.create({
   },
   visibleContainer: {
     width: 200,
-    height: 35,
+    height: 45,
     alignItems: 'center',
     justifyContent: 'center',
     borderColor: MyTheme.grey,
     borderWidth: 0.5,
     borderRadius: 5,
     marginBottom: 30,
+    paddingBottom: 8,
   },
   iosButton: {
     width: '100%',
