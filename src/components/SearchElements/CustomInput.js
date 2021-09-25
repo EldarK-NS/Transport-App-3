@@ -2,7 +2,13 @@ import React from 'react';
 import {StyleSheet, Text, View, TextInput, Dimensions} from 'react-native';
 import {MyTheme} from '../layout/theme';
 
-export default function NumberInput({setInput, input, label, placeholder}) {
+export default function CustomInput({
+  setInput,
+  input,
+  label,
+  placeholder,
+  type,
+}) {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
@@ -12,8 +18,9 @@ export default function NumberInput({setInput, input, label, placeholder}) {
           style={styles.input}
           onChangeText={setInput}
           value={input}
-          keyboardType="number-pad"
+          keyboardType={type === 'number' ? 'number-pad' : 'default'}
           returnKeyType="done"
+          autoCapitalize="none"
         />
       </View>
     </View>

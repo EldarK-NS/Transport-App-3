@@ -17,7 +17,7 @@ export const funcList = [
   {
     id: '4',
     title: 'Настройки',
-    path: 'MyEmployees',
+    path: 'Settings',
   },
   {
     id: '5',
@@ -91,4 +91,13 @@ export const messages = [
     path: '',
     newMessage: null,
   },
+];
+
+export const mainProfileSettings = [
+  {id: 1, title: 'Личная информация', path: 'PersonalInformation'},
+  {id: 2, title: 'Документы', path: 'Documents'},
+  {id: 3, title: 'Профиль компании', path: 'CompanyProfile'},
+  {id: 4, title: 'Изменить пароль', path: 'ChangePassword'},
+  {id: 5, title: 'Уведомления', path: 'Notifications'},
+  {id: 6, title: 'Удалить аккаунт', path: 'RemoveAccount'},
 ];

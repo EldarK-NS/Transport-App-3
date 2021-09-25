@@ -56,7 +56,7 @@ export default MyDatePicker = ({
 
 const styles = StyleSheet.create({
   visibleContainer: {
-    width: Dimensions.get('window').width - 20,
+    width: Dimensions.get('window').width - 30,
     height: 60,
     alignItems: 'center',
     justifyContent: 'center',

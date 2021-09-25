@@ -10,6 +10,7 @@ import EmployeesStack from './employees/EmployeesStack';
 import {useDispatch} from 'react-redux';
 import {Logout} from '../../../redux/actions/auth';
 import Favorites from '../../../screens/profileScreen/favorites/Favorites';
+import SettingsStack from './settings/SettingsStack';
 
 const Stack = createStackNavigator();
 
@@ -103,6 +104,11 @@ export default function MainProfileStack() {
             </Pressable>
           ),
         })}
+      />
+      <Stack.Screen
+        name="Settings"
+        component={SettingsStack}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="InProgressCard"

@@ -24,7 +24,7 @@ import {
 } from '../../../redux/actions/additionalData';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
-import NumberInput from '../../../components/SearchElements/NumberInput';
+import CustomInput from '../../../components/SearchElements/CustomInput';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {removeDataForCargoPost} from '../../../redux/actions/transitStore';
@@ -371,11 +371,12 @@ export default function AddCargoPostForm() {
               setInputTo={setHeightEnd}
               label="Высота, м"
             />
-            <NumberInput
+            <CustomInput
               input={quantity}
               setInput={setQuantity}
               label="Количество мест"
               placeholder={'0'}
+              type={'number'}
             />
           </View>
         </View>
@@ -411,11 +412,12 @@ export default function AddCargoPostForm() {
           <Text style={styles.label}>Стоимость первозки:</Text>
         </View>
         <View style={styles.formBlock}>
-          <NumberInput
+          <CustomInput
             input={price}
             setInput={setPrice}
             label="Цена"
             placeholder={'0'}
+            type={'number'}
           />
           <MyPicker
             modalOpen={currencyModal}
@@ -497,7 +499,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   visibleContainer: {
-    width: Dimensions.get('window').width - 20,
+    width: Dimensions.get('window').width - 30,
     height: 60,
     alignItems: 'center',
     justifyContent: 'space-between',

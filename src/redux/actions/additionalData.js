@@ -17,6 +17,8 @@ import {
   GET_TRANSPORT_CONDITIONS_FAIL,
   GET_FREIGHT_CONDITIONS_SUCCESS,
   GET_FREIGHT_CONDITIONS_FAIL,
+  GET_ALL_COUNTRIES_SUCCESS,
+  GET_ALL_COUNTRIES_FAIL,
 } from '../types';
 import axios from 'axios';
 
@@ -184,6 +186,23 @@ export function getFreightConditions() {
       console.log(error);
       dispatch({
         type: GET_FREIGHT_CONDITIONS_FAIL,
+      });
+    }
+  };
+}
+//! Get Freight Conditions
+export function getAllCountries() {
+  return async dispatch => {
+    try {
+      const res = await axios.get('https://test.money-men.kz/api/country');
+      dispatch({
+        type: GET_ALL_COUNTRIES_SUCCESS,
+        payload: res.data,
+      });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: GET_ALL_COUNTRIES_FAIL,
       });
     }
   };
