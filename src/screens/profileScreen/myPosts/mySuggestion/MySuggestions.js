@@ -3,7 +3,7 @@ import {StyleSheet, Text, View, FlatList} from 'react-native';
 import {MyTheme} from '../../../../components/layout/theme';
 import axios from 'axios';
 import {useSelector} from 'react-redux';
-import SearchResultItem from '../../../../components/SearchElements/SearchResultItem';
+import SearchResultItemCustomer from '../../../../components/SearchElements/SearchResultItemCustomer';
 import SearchResultItemExecuted from '../../../../components/SearchElements/SearchResultItemExecuted';
 export default function MySuggestions() {
   const [executeOrders, setExecuteOrders] = useState([]);
@@ -90,7 +90,7 @@ export default function MySuggestions() {
         <FlatList
           data={customerData}
           renderItem={({item}) => (
-            <SearchResultItem
+            <SearchResultItemCustomer
               from={item.details[0].details[0].from_string}
               to={item.details[0].details[0].to_string}
               fromId={item.details[0].details[0].from}

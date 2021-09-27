@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   visibleContainer: {
-    width: Dimensions.get('window').width - 30,
+    width: Dimensions.get('window').width - 35,
     height: 60,
     alignItems: 'center',
     justifyContent: 'center',
