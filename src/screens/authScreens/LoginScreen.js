@@ -35,7 +35,9 @@ export default function LoginScreen() {
   }, [user]);
   useEffect(() => {
     if (error) {
-      Alert.alert(error, [{text: 'OK', onPress: () => console.log(error)}]);
+      Alert.alert('Ошибка', error, [
+        {text: 'OK', onPress: () => console.log(error)},
+      ]);
     }
     setError(null);
   }, [error]);

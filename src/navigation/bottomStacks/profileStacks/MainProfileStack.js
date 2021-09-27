@@ -11,6 +11,7 @@ import {useDispatch} from 'react-redux';
 import {Logout} from '../../../redux/actions/auth';
 import Favorites from '../../../screens/profileScreen/favorites/Favorites';
 import SettingsStack from './settings/SettingsStack';
+import MySuggestStack from './myPosts/MySuggestStack';
 
 const Stack = createStackNavigator();
 
@@ -64,6 +65,13 @@ export default function MainProfileStack() {
             </Pressable>
           ),
         })}
+      />
+      <Stack.Screen
+        name="MySuggestPosts"
+        component={MySuggestStack}
+        options={{
+          headerShown: false,
+        }}
       />
       <Stack.Screen
         name="MyFavorites"

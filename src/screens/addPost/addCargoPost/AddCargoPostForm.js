@@ -486,7 +486,7 @@ const styles = StyleSheet.create({
     width: '80%',
     height: 50,
     backgroundColor: MyTheme.blue,
-    borderRadius: 20,
+    borderRadius: 25,
     alignItems: 'center',
     justifyContent: 'center',
     marginVertical: 15,

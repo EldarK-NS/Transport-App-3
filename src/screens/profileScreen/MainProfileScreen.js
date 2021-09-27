@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -12,10 +12,15 @@ import {MyTheme} from '../../components/layout/theme';
 import Feather from 'react-native-vector-icons/Feather';
 import SearchElementSimple from '../../components/SearchElements/SearchElementSimple';
 import {funcList} from '../../../assets/allData/profileData';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import {removeDataForCargoPost} from '../../redux/actions/transitStore';
 
 export default function MainProfileScreen() {
+  const dispatch = useDispatch();
   const auth = useSelector(state => state.auth);
+  useEffect(() => {
+    dispatch(removeDataForCargoPost());
+  }, []);
   console.log(auth);
   return (
     <View style={styles.container}>
