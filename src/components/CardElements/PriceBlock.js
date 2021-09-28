@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     color: MyTheme.grey,
   },
   button: {
-    width: '50%',
+    width: '80%',
     height: 45,
     borderWidth: 1,
     borderRadius: 22,

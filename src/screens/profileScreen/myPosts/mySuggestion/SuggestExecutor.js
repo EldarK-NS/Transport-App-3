@@ -13,6 +13,7 @@ import ContactBlock from '../../../../components/CardElements/ContactBlock';
 import axios from 'axios';
 
 //FIXME: нет url на отказ от предложения и получения данных по user_id, нужно модальное окно для указания причины отказа
+//FIXME: подтверждение заказа не работает, возможно нужно передать id самой заявки
 
 export default function SuggestExecutor() {
   const navigation = useNavigation();
@@ -26,6 +27,7 @@ export default function SuggestExecutor() {
       const res = await axios(
         `https://test.money-men.kz/api/acceptPost?token=${auth.token}&user_id=${data.data.user_id}`,
       );
+      console.log(res);
     } catch (error) {
       console.log(error);
     }

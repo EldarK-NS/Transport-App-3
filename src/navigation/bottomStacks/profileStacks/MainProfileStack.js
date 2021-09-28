@@ -12,6 +12,8 @@ import {Logout} from '../../../redux/actions/auth';
 import Favorites from '../../../screens/profileScreen/favorites/Favorites';
 import SettingsStack from './settings/SettingsStack';
 import MySuggestStack from './myPosts/MySuggestStack';
+import MyNotifications from '../../../screens/profileScreen/notifications/MyNotifications';
+import BalanceStack from './balance/BalanceStack';
 
 const Stack = createStackNavigator();
 
@@ -67,6 +69,7 @@ export default function MainProfileStack() {
         })}
       />
       <Stack.Screen
+        //это стэк который прикреплен к моим предложениям в моих постах, это карточки которые специально выведены из осноыного топбарстека, я его вынес наверх
         name="MySuggestPosts"
         component={MySuggestStack}
         options={{
@@ -98,6 +101,46 @@ export default function MainProfileStack() {
         component={EmployeesStack}
         options={({navigation, route}) => ({
           headerTitle: 'Выберите водителя',
+          headerTitleStyle: {
+            fontSize: 17,
+            fontWeight: 'bold',
+            color: 'white',
+          },
+          headerLeft: () => (
+            <Pressable
+              style={styles.leftButton}
+              onPress={() => navigation.goBack()}>
+              <AntDesign name="left" size={24} color="white" />
+              <Text style={styles.buttonText}>Назад</Text>
+            </Pressable>
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="MyNotifications"
+        component={MyNotifications}
+        options={({navigation, route}) => ({
+          headerTitle: 'Уведомления',
+          headerTitleStyle: {
+            fontSize: 17,
+            fontWeight: 'bold',
+            color: 'white',
+          },
+          headerLeft: () => (
+            <Pressable
+              style={styles.leftButton}
+              onPress={() => navigation.goBack()}>
+              <AntDesign name="left" size={24} color="white" />
+              <Text style={styles.buttonText}>Назад</Text>
+            </Pressable>
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="MyBalance"
+        component={BalanceStack}
+        options={({navigation, route}) => ({
+          headerTitle: 'Баланс',
           headerTitleStyle: {
             fontSize: 17,
             fontWeight: 'bold',

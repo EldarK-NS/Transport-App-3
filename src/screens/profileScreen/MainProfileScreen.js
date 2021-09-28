@@ -14,8 +14,10 @@ import SearchElementSimple from '../../components/SearchElements/SearchElementSi
 import {funcList} from '../../../assets/allData/profileData';
 import {useSelector, useDispatch} from 'react-redux';
 import {removeDataForCargoPost} from '../../redux/actions/transitStore';
+import {useNavigation} from '@react-navigation/core';
 
 export default function MainProfileScreen() {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const auth = useSelector(state => state.auth);
   useEffect(() => {
@@ -57,7 +59,9 @@ export default function MainProfileScreen() {
               <Text style={styles.info}>15 000 &#8376;</Text>
             </View>
           </View>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('MyBalance')}>
             <Text style={styles.buttonText}>Пополнить счет</Text>
           </TouchableOpacity>
         </View>

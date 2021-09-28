@@ -5,14 +5,9 @@ export const funcList = [
     path: 'MyPosts',
   },
   {
-    id: '2',
-    title: 'Профиль компании',
-    path: 'MyEmployees',
-  },
-  {
     id: '3',
     title: 'Уведомления',
-    path: 'MyEmployees',
+    path: 'MyNotifications',
   },
   {
     id: '4',
@@ -27,7 +22,7 @@ export const funcList = [
   {
     id: '6',
     title: 'Баланс и статус',
-    path: 'MyEmployees',
+    path: 'MyBalance',
   },
   {
     id: '7',
