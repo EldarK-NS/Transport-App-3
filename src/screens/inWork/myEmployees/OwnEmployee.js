@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
-import EmployeesListItem from '../../../components/SearchElements/EmployeesListItem';
 import {MyTheme} from '../../../components/layout/theme';
 import axios from 'axios';
 import {useSelector} from 'react-redux';
+import EmployeesListItem from '../../../components/SearchElements/EmployeesListItem';
 
 export default function OwnEmployee() {
   const [employeeList, setEmployeeList] = useState([]);

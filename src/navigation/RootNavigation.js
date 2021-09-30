@@ -2,26 +2,25 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import MainStack from './homeStacks/MainStack';
-import ItemScreen from '../screens/itemScreen/ItemScreen';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {MyTheme} from '../components/layout/theme';
 import MainAddPostStack from './bottomStacks/addPostStack/MainAddPostStack';
 import MainProfileStack from './bottomStacks/profileStacks/MainProfileStack';
 import MessagesStack from './bottomStacks/messagesStack/MessagesStack';
-
+import InWorkStack from './bottomStacks/inWorkStacks/InWorkStack';
 const Tab = createBottomTabNavigator();
 
 export default function RootNavigator() {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="Главная"
       screenOptions={({route}) => ({
         tabBarIcon: ({focused, color, size}) => {
           if (route.name === 'Home') {
             return <Feather name="home" size={size} color={color} />;
           }
-          if (route.name === 'Item') {
+          if (route.name === 'InWork') {
             return <Feather name="file-text" size={size} color={color} />;
           }
           if (route.name === 'AddPost') {
@@ -53,7 +52,13 @@ export default function RootNavigator() {
           headerShown: false,
         }}
       />
-      <Tab.Screen name="Item" component={ItemScreen} />
+      <Tab.Screen
+        name="InWork"
+        component={InWorkStack}
+        options={{
+          headerShown: false,
+        }}
+      />
       <Tab.Screen
         name="AddPost"
         component={MainAddPostStack}

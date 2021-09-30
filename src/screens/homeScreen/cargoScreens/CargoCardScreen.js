@@ -24,6 +24,9 @@ import {getCurrencyTypes} from '../../../redux/actions/additionalData';
 import {useSelector, useDispatch} from 'react-redux';
 import Entypo from 'react-native-vector-icons/Entypo';
 
+//FIXME: InfoDistanceBlock - область добавить, убрать страну из подзаголовка, возможно нужна будет цветовая стилизация Alert
+//FIXME: доработать навигацию при переходе с этого скрина на Favorites, что бы произошел сброс стека навигации.
+
 export default function CargoCardScreen() {
   const [info, setInfo] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
@@ -67,9 +70,9 @@ export default function CargoCardScreen() {
     if (incomeData.from === 'favorite') {
       // navigation.reset({
       //   index: 0,
-      //   routes: [{name: 'Profile', screen: 'MyFavorites'}],
+      //   routes: ('InWork', {screen: 'Favorites'}),
       // });
-      navigation.navigate('Profile', {screen: 'MyFavorites'});
+      navigation.navigate('InWork', {screen: 'Favorites'});
     } else if (incomeData.from === 'filter') {
       navigation.goBack();
     }
@@ -96,8 +99,6 @@ export default function CargoCardScreen() {
       />
     );
   }
-
-  //FIXME: InfoDistanceBlock - область добавить, убрать страну из подзаголовка, возможно нужна будет цветовая стилизация Alert
 
   //! Modal Section
   const makeOffer = () => {

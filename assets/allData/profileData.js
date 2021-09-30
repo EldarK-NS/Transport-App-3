@@ -1,10 +1,5 @@
 export const funcList = [
   {
-    id: '1',
-    title: 'Мои объявления',
-    path: 'MyPosts',
-  },
-  {
     id: '3',
     title: 'Уведомления',
     path: 'MyNotifications',
@@ -23,11 +18,6 @@ export const funcList = [
     id: '6',
     title: 'Баланс и статус',
     path: 'MyBalance',
-  },
-  {
-    id: '7',
-    title: 'Избранное',
-    path: 'MyFavorites',
   },
 ];
 

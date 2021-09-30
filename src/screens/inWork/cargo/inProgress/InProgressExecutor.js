@@ -1,10 +1,10 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
-export default function SuggestCustomer() {
+export default function InProgressExecutor() {
   return (
     <View>
-      <Text>SuggestCustomer</Text>
+      <Text>InProgressExecutor</Text>
     </View>
   );
 }

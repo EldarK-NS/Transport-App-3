@@ -74,7 +74,7 @@ export default function SearchResultItemExecuted(props) {
   };
 
   return (
-    <TouchableOpacity
+    <View
       style={styles.container}
       onPress={() => {
         navigation.navigate(path, {
@@ -127,12 +127,7 @@ export default function SearchResultItemExecuted(props) {
               <Pressable
                 style={styles.offerWrapper}
                 onPress={() =>
-                  navigation.navigate('MySuggestPosts', {
-                    screen: 'SuggestExecutor',
-                    params: {
-                      data: item,
-                    },
-                  })
+                  navigation.navigate('OfferExecutorAction', {data: item})
                 }>
                 <View style={styles.offerBlock}>
                   <View style={{flexDirection: 'row'}}>
@@ -158,7 +153,7 @@ export default function SearchResultItemExecuted(props) {
           }}
         />
       </View>
-    </TouchableOpacity>
+    </View>
   );
 }
 
@@ -220,6 +215,7 @@ const styles = StyleSheet.create({
     backgroundColor: MyTheme.yellow,
     padding: 5,
     width: 120,
+    marginRight: 10,
   },
 
   tax: {
@@ -261,5 +257,4 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  titleWrapper: {},
 });

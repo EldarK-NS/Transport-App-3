@@ -5,58 +5,55 @@ import {
   StyleSheet,
   Text,
   View,
-  Switch,
   Image,
+  ActivityIndicator,
 } from 'react-native';
+
 import {MyTheme} from '../../../components/layout/theme';
 import CustomInput from '../../../components/SearchElements/CustomInput';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/core';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
-import {getCompanyTypes} from '../../../redux/actions/additionalData';
 import MyPicker from '../../../components/SearchElements/MyPicker';
 import axios from 'axios';
 
 //FIXME: нет url на обновление профиля компаниии
 
-export default function CompanyProfile() {
+export default function UpdateEmployee() {
   const navigation = useNavigation();
-  const dispatch = useDispatch();
-  const [bin, setBin] = useState(null);
+  const [positions, setPositions] = useState(null);
   const [name, setName] = useState(null);
-  const [token, setToken] = useState(null);
+  const [surname, setSurname] = useState(null);
+  const [phone, setPhone] = useState(null);
+  const [email, setEmail] = useState(null);
 
-  const additionalData = useSelector(state => state.additionalData);
-
-  useEffect(() => {
-    dispatch(getCompanyTypes());
-  }, []);
   const auth = useSelector(state => state.auth);
-  useEffect(() => {
-    if (auth.token !== null) {
-      setToken(auth.token);
+
+  const getPositions = async () => {
+    try {
+      const res = await axios('https://test.money-men.kz/api/getPositions');
+      setPositions(res.data);
+    } catch (error) {
+      console.log(error);
     }
+  };
+
+  useEffect(() => {
+    getPositions();
     return () => {
-      setToken(null);
+      setPositions(null);
     };
-  }, [auth]);
-
-  //!Switchers
-  const [isEnabled1, setIsEnabled1] = useState(true);
-  const toggleSwitch1 = () => setIsEnabled1(previousState => !previousState);
-
-  const [isEnabled2, setIsEnabled2] = useState(true);
-  const toggleSwitch2 = () => setIsEnabled2(previousState => !previousState);
+  }, []);
 
   //!Set companyTypes
 
-  const [companyTypesModal, setCompanyTypesModal] = useState(false);
-  const [companyTypeId, setCompanyTypeId] = useState(null);
-  const [companyType, setCompanyType] = useState(null);
+  const [positionsModal, setPositionsModal] = useState(false);
+  const [positionId, setPositionId] = useState(null);
+  const [position, setPosition] = useState(null);
 
   const saveNewData = async () => {
-    console.log('save');
+    console.log(name, surname, phone, email, positionId, position);
   };
 
   const cancel = () => {
@@ -64,102 +61,60 @@ export default function CompanyProfile() {
   };
 
   return (
-    <KeyboardAwareScrollView>
+    <KeyboardAwareScrollView style={{height: '100%', backgroundColor: 'white'}}>
       <View style={styles.container}>
         <View style={styles.sectionForm}>
           <View style={styles.section}>
-            <Text style={styles.title}>Идентификационный номер компании</Text>
-            <Text style={styles.subTitle}>Для резидентов РК БИН</Text>
-            <CustomInput
-              input={bin}
-              setInput={setBin}
-              label="БИН"
-              placeholder={' '}
-              type={'number'}
-            />
-          </View>
-          <View style={[styles.section, {borderBottomColor: 'white'}]}>
-            <Text style={styles.title}>Форма и название юр. лица</Text>
-            <Text style={styles.subTitle}>
-              В названии, не указывайте форму и кавычки
-            </Text>
-            <View style={{marginBottom: 10}}>
-              <MyPicker
-                modalOpen={companyTypesModal}
-                setModalOpen={setCompanyTypesModal}
-                value={companyTypeId}
-                setValue={setCompanyTypeId}
-                valueString={companyType}
-                setValueString={setCompanyType}
-                placeholder="Форма юр. лица"
-                data={additionalData.companyTypes}
-              />
-            </View>
+            <Text style={styles.title}>Редактировать сотрудника</Text>
             <CustomInput
               input={name}
               setInput={setName}
-              label="Название"
+              label="Имя"
               placeholder={' '}
               type={'text'}
             />
-            <View style={styles.switherWrapper}>
-              <Text
-                style={[
-                  styles.switcherText,
-                  !isEnabled1 && {textDecorationLine: 'line-through'},
-                ]}>
-                Прямой заказчик грузоперевозок
-              </Text>
-              <Switch
-                trackColor={{false: MyTheme.black, true: MyTheme.blue}}
-                thumbColor={'white'}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitch1}
-                value={isEnabled1}
-              />
-            </View>
-            <View style={styles.switherWrapper}>
-              <Text
-                style={[
-                  styles.switcherText,
-                  !isEnabled2 && {textDecorationLine: 'line-through'},
-                ]}>
-                Прямой перевозчик
-              </Text>
-              <Switch
-                trackColor={{false: MyTheme.black, true: MyTheme.blue}}
-                thumbColor={'white'}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitch2}
-                value={isEnabled2}
-              />
-            </View>
-          </View>
-          <View style={styles.section}>
-            <Text style={styles.title}>Логотип компании</Text>
-            <Text style={styles.subTitle}>
-              Настоящий логотип вашей компании в форматах .jpg, .jpeg, .png
-            </Text>
-            <View style={styles.imageSection}>
-              <Image
-                style={styles.image}
-                source={require('../../../../assets/images/BLIZ.KZ.png')}
-                resizeMode="contain"
-              />
-
-              <View style={styles.imageButton}>
-                <Text style={styles.buttonText}>ИЗМЕНИТЬ</Text>
-              </View>
-              <Pressable style={styles.icon}>
-                <FontAwesome5
-                  name={'trash-alt'}
-                  size={22}
-                  color={MyTheme.blue}
+            <CustomInput
+              input={surname}
+              setInput={setSurname}
+              label="Фамилия"
+              placeholder={' '}
+              type={'text'}
+            />
+            <View style={{marginBottom: 15}}>
+              {!positions ? (
+                <ActivityIndicator size="small" color={MyTheme.blue} />
+              ) : (
+                <MyPicker
+                  modalOpen={positionsModal}
+                  setModalOpen={setPositionsModal}
+                  value={positionId}
+                  setValue={setPositionId}
+                  valueString={position}
+                  setValueString={setPosition}
+                  placeholder="Должность"
+                  data={[
+                    ...positions,
+                    {id: null, name: 'Выбрать должность сотрудника'},
+                  ]}
                 />
-              </Pressable>
+              )}
             </View>
-          </View>
+            <CustomInput
+              input={phone}
+              setInput={setPhone}
+              label="Номер телефона"
+              placeholder={' '}
+              type={'text'}
+            />
 
+            <CustomInput
+              input={email}
+              setInput={setEmail}
+              label="Эл. почта"
+              placeholder={' '}
+              type={'text'}
+            />
+          </View>
           <View style={[styles.section, {borderBottomColor: 'white'}]}>
             <Pressable
               style={[styles.button, {backgroundColor: MyTheme.blue}]}
@@ -198,6 +153,7 @@ const styles = StyleSheet.create({
     fontSize: 19,
     lineHeight: 28,
     color: MyTheme.black,
+    marginVertical: 20,
   },
   subTitle: {
     fontFamily: 'IBMPlexSans-Regular',

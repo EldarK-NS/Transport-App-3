@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   },
   visibleContainer: {
     width: Dimensions.get('window').width - 35,
-    height: 60,
+    height: 50,
     alignItems: 'center',
     justifyContent: 'center',
     borderBottomColor: MyTheme.grey,

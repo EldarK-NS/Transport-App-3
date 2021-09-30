@@ -4,7 +4,7 @@ export const filterItemsList = [
   {
     id: '1',
     title: 'Грузы',
-    descr: 'поиск груза и транспота',
+    descr: 'поиск грузов',
     icon: 'package-variant-closed',
     mainPath: 'MainCargo',
     path: 'CargoFilter',
@@ -12,7 +12,7 @@ export const filterItemsList = [
   {
     id: '2',
     title: 'Транспорт',
-    descr: 'поиск груза и транспота',
+    descr: 'поиск транспорта',
     icon: 'truck-outline',
     mainPath: 'MainCargo',
     path: 'CargoFilter',

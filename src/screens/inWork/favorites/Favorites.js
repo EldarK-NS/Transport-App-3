@@ -11,7 +11,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/core';
-
 import {getAllFavoritesCargoPosts} from '../../../redux/actions/profileFavorites';
 import {MyTheme} from '../../../components/layout/theme';
 

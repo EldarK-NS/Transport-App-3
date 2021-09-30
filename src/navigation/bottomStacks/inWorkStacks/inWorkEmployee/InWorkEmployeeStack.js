@@ -1,11 +1,12 @@
 import React from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {MyTheme} from '../../../../components/layout/theme';
-import OwnEmployee from '../../../../screens/profileScreen/employees/OwnEmployee';
-import HiredEmployee from '../../../../screens/profileScreen/employees/HiredEmployee';
+import OwnEmployee from '../../../../screens/inWork/myEmployees/OwnEmployee';
+import HiredEmployee from '../../../../screens/inWork/myEmployees/HiredEmployee';
+
 const TopTab = createMaterialTopTabNavigator();
 
-export default function EmployeesStack() {
+export default function InWorkEmployeeStack() {
   return (
     <TopTab.Navigator
       initialRouteName="OwnEmployee"

@@ -15,7 +15,7 @@ import axios from 'axios';
 //FIXME: нет url на отказ от предложения и получения данных по user_id, нужно модальное окно для указания причины отказа
 //FIXME: подтверждение заказа не работает, возможно нужно передать id самой заявки
 
-export default function SuggestExecutor() {
+export default function OfferExecutorAction() {
   const navigation = useNavigation();
   const route = useRoute();
   const dispatch = useDispatch();

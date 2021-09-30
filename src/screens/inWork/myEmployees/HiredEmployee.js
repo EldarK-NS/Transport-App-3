@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, TextInput, View, Image} from 'react-native';
 import {MyTheme} from '../../../components/layout/theme';
+
 export default function HiredEmployee() {
   return (
     <View style={styles.container}>

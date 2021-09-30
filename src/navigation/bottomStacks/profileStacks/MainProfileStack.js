@@ -3,17 +3,13 @@ import {Text, Pressable, StyleSheet, View} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {MyTheme} from '../../../components/layout/theme';
 import MainProfileScreen from '../../../screens/profileScreen/MainProfileScreen';
-import MyPostsStack from './myPosts/MyPostsStack';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import InProgressCardScreen from '../../../screens/profileScreen/myPosts/InProgress/InProgressCardScreen';
-import EmployeesStack from './employees/EmployeesStack';
 import {useDispatch} from 'react-redux';
 import {Logout} from '../../../redux/actions/auth';
-import Favorites from '../../../screens/profileScreen/favorites/Favorites';
 import SettingsStack from './settings/SettingsStack';
-import MySuggestStack from './myPosts/MySuggestStack';
 import MyNotifications from '../../../screens/profileScreen/notifications/MyNotifications';
 import BalanceStack from './balance/BalanceStack';
+import EmployeeStack from './employees/EmployeeStack';
 
 const Stack = createStackNavigator();
 
@@ -49,72 +45,9 @@ export default function MainProfileStack() {
         }}
       />
       <Stack.Screen
-        name="MyPosts"
-        component={MyPostsStack}
-        options={({navigation, route}) => ({
-          headerTitle: 'Мои заявки',
-          headerTitleStyle: {
-            fontSize: 17,
-            fontWeight: 'bold',
-            color: 'white',
-          },
-          headerLeft: () => (
-            <Pressable
-              style={styles.leftButton}
-              onPress={() => navigation.goBack()}>
-              <AntDesign name="left" size={24} color="white" />
-              <Text style={styles.buttonText}>Назад</Text>
-            </Pressable>
-          ),
-        })}
-      />
-      <Stack.Screen
-        //это стэк который прикреплен к моим предложениям в моих постах, это карточки которые специально выведены из осноыного топбарстека, я его вынес наверх
-        name="MySuggestPosts"
-        component={MySuggestStack}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="MyFavorites"
-        component={Favorites}
-        options={({navigation, route}) => ({
-          headerTitle: 'Избранное',
-          headerTitleStyle: {
-            fontSize: 17,
-            fontWeight: 'bold',
-            color: 'white',
-          },
-          headerLeft: () => (
-            <Pressable
-              style={styles.leftButton}
-              onPress={() => navigation.goBack()}>
-              <AntDesign name="left" size={24} color="white" />
-              <Text style={styles.buttonText}>Назад</Text>
-            </Pressable>
-          ),
-        })}
-      />
-      <Stack.Screen
         name="MyEmployees"
-        component={EmployeesStack}
-        options={({navigation, route}) => ({
-          headerTitle: 'Выберите водителя',
-          headerTitleStyle: {
-            fontSize: 17,
-            fontWeight: 'bold',
-            color: 'white',
-          },
-          headerLeft: () => (
-            <Pressable
-              style={styles.leftButton}
-              onPress={() => navigation.goBack()}>
-              <AntDesign name="left" size={24} color="white" />
-              <Text style={styles.buttonText}>Назад</Text>
-            </Pressable>
-          ),
-        })}
+        component={EmployeeStack}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="MyNotifications"
@@ -160,26 +93,6 @@ export default function MainProfileStack() {
         name="Settings"
         component={SettingsStack}
         options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="InProgressCard"
-        component={InProgressCardScreen}
-        options={({navigation, route}) => ({
-          headerTitle: 'Заявка №000151',
-          headerTitleStyle: {
-            fontSize: 17,
-            fontWeight: 'bold',
-            color: 'white',
-          },
-          headerLeft: () => (
-            <Pressable
-              style={styles.leftButton}
-              onPress={() => navigation.goBack()}>
-              <AntDesign name="left" size={24} color="white" />
-              <Text style={styles.buttonText}>Назад</Text>
-            </Pressable>
-          ),
-        })}
       />
       {/* <Stack.Screen name="MainSpecEquipment" component={SpecEquipmentStack} options={{ headerShown: false }} /> */}
     </Stack.Navigator>
