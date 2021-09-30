@@ -364,7 +364,7 @@ export const specEquipmentList = [
     title: 'Грузоперевозки',
     quantity: 48,
     mainPath: 'MainSpecEquipment',
-    path: 'CategoryList',
+    path: 'CategoryItems',
   },
   {
     id: '3',
@@ -432,7 +432,13 @@ export const diggerMachineList = [
     mainPath: 'MainSpecEquipment',
     path: 'SpecEquipmResults',
   },
-  {id: '6', title: 'Погрузчики', quantity: 27},
+  {
+    id: '6',
+    title: 'Погрузчики',
+    quantity: 27,
+    mainPath: 'MainSpecEquipment',
+    path: 'SpecEquipmResults',
+  },
 ];
 
 export const specEquipItemData = [

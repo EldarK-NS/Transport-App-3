@@ -14,7 +14,7 @@ export default function CategoryListScreen() {
               title={item.title}
               title={item.title}
               quantity={item.quantity}
-              navPath={item.path}
+              path={item.path}
             />
           )}
           keyExtractor={item => item.id}

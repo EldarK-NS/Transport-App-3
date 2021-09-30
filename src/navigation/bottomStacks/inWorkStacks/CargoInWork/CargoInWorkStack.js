@@ -9,6 +9,8 @@ import CargoInWorkMain from '../../../../screens/inWork/cargo/CargoInWorkMain';
 import OfferCustomer from '../../../../screens/inWork/cargo/offers/OfferCustomer';
 import OfferExecutor from '../../../../screens/inWork/cargo/offers/OfferExecutor';
 import OfferExecutorAction from '../../../../screens/inWork/cargo/offers/OfferExecutorAction';
+import InProgressCustomer from '../../../../screens/inWork/cargo/inProgress/InProgressCustomer';
+import InProgressExecutor from '../../../../screens/inWork/cargo/inProgress/InProgressExecutor';
 
 const Stack = createStackNavigator();
 
@@ -104,19 +106,46 @@ export default function CargoInWorkStack() {
           ),
         })}
       />
-      {/* <Stack.Screen
-        name="AdditionalParams"
-        component={AdditionalParams}
+      <Stack.Screen
+        name="InProgressCustomer"
+        component={InProgressCustomer}
         options={({navigation, route}) => ({
-          headerTitle: 'Доп. параметры',
+          headerTitle: 'Исполнение',
           headerTitleStyle: {
             fontSize: 17,
             fontWeight: 'bold',
             color: 'white',
           },
-          headerLeft: () => null,
+          headerLeft: () => (
+            <Pressable
+              style={styles.leftButton}
+              onPress={() => navigation.goBack()}>
+              <AntDesign name="left" size={24} color="white" />
+              <Text style={styles.buttonText}>Назад</Text>
+            </Pressable>
+          ),
         })}
-      /> */}
+      />
+      <Stack.Screen
+        name="InProgressExecutor"
+        component={InProgressExecutor}
+        options={({navigation, route}) => ({
+          headerTitle: 'Исполнение',
+          headerTitleStyle: {
+            fontSize: 17,
+            fontWeight: 'bold',
+            color: 'white',
+          },
+          headerLeft: () => (
+            <Pressable
+              style={styles.leftButton}
+              onPress={() => navigation.goBack()}>
+              <AntDesign name="left" size={24} color="white" />
+              <Text style={styles.buttonText}>Назад</Text>
+            </Pressable>
+          ),
+        })}
+      />
     </Stack.Navigator>
   );
 }

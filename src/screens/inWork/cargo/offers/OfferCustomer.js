@@ -12,23 +12,23 @@ export default function OfferCustomer() {
   const auth = useSelector(state => state.auth);
 
   //! get and set customerData
-  const iAmCustomer = async () => {
-    try {
-      const res = await axios(
-        `https://test.money-men.kz/api/customerOrdersInHold?token=${auth.token}`,
-      );
-
-      setCustomerData(res.data.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   useEffect(() => {
     iAmCustomer();
     return () => {
       setCustomerData([]);
     };
   }, []);
+
+  const iAmCustomer = async () => {
+    try {
+      const res = await axios(
+        `https://test.money-men.kz/api/customerOrdersInHold?token=${auth.token}`,
+      );
+      setCustomerData(res.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <View style={styles.container}>

@@ -4,6 +4,7 @@ import SearchElementSimple from '../../../components/SearchElements/SearchElemen
 import {diggerMachineList} from '../../../../assets/data';
 
 export default function CategoryItemsScreen() {
+  console.log(diggerMachineList);
   return (
     <View>
       <View style={styles.container}>
@@ -12,9 +13,9 @@ export default function CategoryItemsScreen() {
           renderItem={({item}) => (
             <SearchElementSimple
               title={item.title}
-              title={item.title}
               quantity={item.quantity}
-              navPath={item.path}
+              mainPath={item.mainPath}
+              path={item.path}
             />
           )}
           keyExtractor={item => item.id}

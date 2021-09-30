@@ -1,10 +1,10 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
-export default function ScpecEquipmInWork() {
+export default function AllMyPosts() {
   return (
     <View>
-      <Text>ScpecEquipmInWork</Text>
+      <Text>AllMyPosts</Text>
     </View>
   );
 }

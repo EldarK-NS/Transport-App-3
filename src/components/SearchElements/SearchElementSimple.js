@@ -6,11 +6,15 @@ import {MyTheme} from '../layout/theme';
 import {useNavigation} from '@react-navigation/core';
 
 export default function SearchElementSimple(props) {
-  const {title, quantity, path} = props;
+  const {title, quantity, path, mainPath} = props;
   const navigation = useNavigation();
 
   const handlePress = () => {
-    navigation.navigate(path);
+    if (mainPath) {
+      navigation.navigate(mainPath, {screen: path});
+    } else {
+      navigation.navigate(path);
+    }
   };
 
   return (

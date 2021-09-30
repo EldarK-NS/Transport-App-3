@@ -8,8 +8,8 @@ export default function CargoInWorkMain() {
       <View style={styles.sectionGrey}>
         <Text style={styles.label}>В работе</Text>
       </View>
-      <SearchElementSimple title="Я исполнитель" />
-      <SearchElementSimple title="Я заказчик" />
+      <SearchElementSimple title="Я исполнитель" path="InProgressCustomer" />
+      <SearchElementSimple title="Я заказчик" path="InProgressExecutor" />
       <View style={styles.sectionGrey}>
         <Text style={styles.label}>Предложения</Text>
       </View>
