@@ -14,6 +14,7 @@ const Stack = createStackNavigator();
 export default function SpecEquipmentStack() {
   return (
     <Stack.Navigator
+      initialRouteName="CategoryList"
       screenOptions={{
         headerStyle: {
           backgroundColor: MyTheme.blue,

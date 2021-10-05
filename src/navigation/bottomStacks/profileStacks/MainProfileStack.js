@@ -22,6 +22,7 @@ export default function MainProfileStack() {
 
   return (
     <Stack.Navigator
+      initialRouteName="MainProfile"
       screenOptions={{
         headerStyle: {
           backgroundColor: MyTheme.blue,

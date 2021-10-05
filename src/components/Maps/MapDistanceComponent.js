@@ -10,7 +10,9 @@ import {MyTheme} from '../layout/theme';
 export default function MapDistanceComponent({coordinates}) {
   const [fromCoord, setFromCoord] = useState(null);
   const [toCoord, setToCoord] = useState(null);
+
   Geocoder.init('AIzaSyD-kk951XgVXsv3b0yqJntwbxDslSP2Oxo');
+
   useEffect(() => {
     Geocoder.from(coordinates.pointA_Title)
       .then(json => {

@@ -32,17 +32,13 @@ export default function CargoResults() {
   const [token, setToken] = useState(null);
 
   //!Get & Set Token
-  const getToken = async () => {
-    try {
-      const value = await AsyncStorage.getItem('token');
-      setToken(value);
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  const auth = useSelector(state => state.auth);
   useEffect(() => {
-    getToken();
-  }, []);
+    setToken(auth.token);
+    return () => {
+      setToken(null);
+    };
+  }, [auth]);
 
   //!Get filtered items
   const filter = route.params;

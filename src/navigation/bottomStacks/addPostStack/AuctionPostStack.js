@@ -4,18 +4,17 @@ import React from 'react';
 import {Pressable, StyleSheet, Text} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import AddCargoPostForm from '../../../screens/addPost/addCargoPost/AddCargoPostForm';
 import {MyTheme} from '../../../components/layout/theme';
-import PlaceAutocomplite2 from '../../../screens/addPost/addCargoPost/PlaceAutocomplite2';
-import AdditionalParams from '../../../screens/addPost/addCargoPost/AdditionalParams';
+import AddAuctionPostForm from '../../../screens/addPost/AddAuctionPost/AddAuctionPostForm';
+import AuctionAutocomplite from '../../../screens/addPost/AddAuctionPost/AuctionAutocomplite';
+import AuctionAdditionalParams from '../../../screens/addPost/AddAuctionPost/AuctionAdditionalParams';
 
 const Stack = createStackNavigator();
 
-export default function CargoPostStack() {
+export default function AuctionPostStack() {
   return (
     <Stack.Navigator
-      initialRouteName="AddPostForm"
+      initialRouteName="AddAuctionPostForm"
       screenOptions={{
         headerStyle: {
           backgroundColor: MyTheme.blue,
@@ -26,10 +25,10 @@ export default function CargoPostStack() {
         headerTitleAlign: 'center',
       }}>
       <Stack.Screen
-        name="AddPostForm"
-        component={AddCargoPostForm}
+        name="AddAuctionPostForm"
+        component={AddAuctionPostForm}
         options={({navigation, route}) => ({
-          headerTitle: 'Добавить груз',
+          headerTitle: 'Добавить аукцион',
           headerTitleStyle: {
             fontSize: 17,
             fontWeight: 'bold',
@@ -46,15 +45,15 @@ export default function CargoPostStack() {
           headerRight: () => (
             <Pressable
               style={[styles.leftButton, {marginRight: 10}]}
-              onPress={() => console.log('add cargo post!')}>
+              onPress={() => console.log('add auction post!')}>
               <AntDesign name="close" size={20} color="white" />
             </Pressable>
           ),
         })}
       />
       <Stack.Screen
-        name="PlaceAutocomplite2"
-        component={PlaceAutocomplite2}
+        name="AuctionAutocomplite"
+        component={AuctionAutocomplite}
         options={({navigation, route}) => ({
           headerTitle: 'Откуда-Куда',
           headerTitleStyle: {
@@ -73,8 +72,8 @@ export default function CargoPostStack() {
         })}
       />
       <Stack.Screen
-        name="AdditionalParams"
-        component={AdditionalParams}
+        name="AuctionAdditionalParams"
+        component={AuctionAdditionalParams}
         options={({navigation, route}) => ({
           headerTitle: 'Доп. параметры',
           headerTitleStyle: {

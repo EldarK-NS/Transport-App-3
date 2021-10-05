@@ -17,6 +17,7 @@ const Stack = createStackNavigator();
 export default function SettingsStack() {
   return (
     <Stack.Navigator
+      initialRouteName="MainSettings"
       screenOptions={{
         headerStyle: {
           backgroundColor: MyTheme.blue,

@@ -14,7 +14,7 @@ const Tab = createBottomTabNavigator();
 export default function RootNavigator() {
   return (
     <Tab.Navigator
-      initialRouteName="Главная"
+      initialRouteName="Home"
       screenOptions={({route}) => ({
         tabBarIcon: ({focused, color, size}) => {
           if (route.name === 'Home') {
@@ -50,6 +50,7 @@ export default function RootNavigator() {
         component={MainStack}
         options={{
           headerShown: false,
+          tabBarLabel: 'Главная',
         }}
       />
       <Tab.Screen
@@ -57,24 +58,26 @@ export default function RootNavigator() {
         component={InWorkStack}
         options={{
           headerShown: false,
+          tabBarLabel: 'В работе',
         }}
       />
       <Tab.Screen
         name="AddPost"
         component={MainAddPostStack}
-        options={{headerShown: false}}
+        options={{headerShown: false, tabBarLabel: 'Добавить'}}
       />
       <Tab.Screen
         name="Message"
         component={MessagesStack}
         options={{
           headerShown: false,
+          tabBarLabel: 'Сообщения',
         }}
       />
       <Tab.Screen
         name="Profile"
         component={MainProfileStack}
-        options={{headerShown: false}}
+        options={{headerShown: false, tabBarLabel: 'Кабинет'}}
       />
     </Tab.Navigator>
   );

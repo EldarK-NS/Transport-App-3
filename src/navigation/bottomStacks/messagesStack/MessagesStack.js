@@ -10,6 +10,7 @@ const Stack = createStackNavigator();
 export default function MessagesStack() {
   return (
     <Stack.Navigator
+      initialRouteName="Contacts"
       screenOptions={{
         headerStyle: {
           backgroundColor: MyTheme.blue,

@@ -17,6 +17,7 @@ const Stack = createStackNavigator();
 export default function CargoInWorkStack() {
   return (
     <Stack.Navigator
+      initialRouteName="CargoInWorkMain"
       screenOptions={{
         headerStyle: {
           backgroundColor: MyTheme.blue,

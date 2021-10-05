@@ -149,12 +149,12 @@ export default function Favorites() {
         <TouchableOpacity
           style={[styles.backRightBtn, styles.backRightBtnLeft]}
           onPress={onClose}>
-          <Text>Отмена</Text>
+          <Text style={styles.deleteButton}>Отмена</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.backRightBtn, styles.backRightBtnRight]}
           onPress={onDelete}>
-          <Text>Удалить</Text>
+          <Text style={styles.deleteButton}>Удалить</Text>
         </TouchableOpacity>
       </View>
     );
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
   rowFrontVisible: {
     backgroundColor: '#FFF',
     borderRadius: 5,
-    height: 90,
+    height: 100,
     padding: 10,
     marginBottom: 10,
   },
@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
   },
   price: {
     height: '100%',
-    width: '18%',
+    width: '25%',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -257,10 +257,12 @@ const styles = StyleSheet.create({
   },
   backRightBtnLeft: {
     backgroundColor: '#1f65ff',
+    height: 100,
     right: 75,
   },
   backRightBtnRight: {
     backgroundColor: 'red',
+    height: 100,
     right: 0,
     borderTopRightRadius: 5,
     borderBottomRightRadius: 5,
@@ -285,5 +287,10 @@ const styles = StyleSheet.create({
     color: 'red',
     fontFamily: 'IBMPlexSans-SemiBold',
     alignSelf: 'center',
+  },
+  deleteButton: {
+    fontFamily: 'IBMPlexSans-Bold',
+    fontSize: 13,
+    color: 'white',
   },
 });

@@ -38,7 +38,7 @@ export default function StartPage() {
   }
   return (
     <SafeAreaView style={styles.container} backgroundColor={MyTheme.blue}>
-      <StatusBar />
+      <StatusBar barStyle="light-content" />
       {!isAuth ? <AuthNavigator /> : <RootNavigator />}
     </SafeAreaView>
   );

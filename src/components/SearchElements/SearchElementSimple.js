@@ -1,6 +1,5 @@
 import React from 'react';
 import {Dimensions, Pressable, StyleSheet, Text, View} from 'react-native';
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import {MyTheme} from '../layout/theme';
 import {useNavigation} from '@react-navigation/core';

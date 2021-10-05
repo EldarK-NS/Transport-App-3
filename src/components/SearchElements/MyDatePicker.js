@@ -13,6 +13,7 @@ export default MyDatePicker = ({
   placeholder,
   visibility,
   title,
+  type,
 }) => {
   const showDatePicker = () => {
     setVisible(true);
@@ -22,8 +23,13 @@ export default MyDatePicker = ({
   };
 
   const handleConfirm = date => {
-    setDate(moment(date.toJSON()).format('L'));
-    setTitle(moment(date.toJSON()).format('LL'));
+    if (type === 'date') {
+      setDate(moment(date.toJSON()).format('L'));
+      setTitle(moment(date.toJSON()).format('LL'));
+    } else if (type === 'time') {
+      setDate(moment(date.toJSON()).format('h:mm'));
+      setTitle(moment(date.toJSON()).format('h:mm'));
+    }
     hideDatePicker();
   };
 
@@ -36,19 +42,19 @@ export default MyDatePicker = ({
             <Text style={styles.placeholderLabel}>{placeholder}</Text>
           </View>
           <AntDesignIcon
-            name="caretdown"
-            size={10}
-            color={MyTheme.black}
+            name={type === 'date' ? 'calendar' : 'clockcircleo'}
+            size={17}
+            color={MyTheme.blue}
             style={{marginRight: 10}}
           />
         </View>
       </Pressable>
       <DateTimePickerModal
         isVisible={visibility}
-        mode="date"
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
         confirmTextIOS="Подтвердить"
+        mode={type}
       />
     </View>
   );

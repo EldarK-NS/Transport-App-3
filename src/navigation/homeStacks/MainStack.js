@@ -5,12 +5,16 @@ import CargoStack from './CargoStack';
 import SpecEquipmentStack from './SpecEquipmentStack';
 import {MyTheme} from '../../components/layout/theme';
 import StorageStack from './StorageStack';
+import AuctionsStack from './AuctionsStack';
+import TransportStack from './TransportStack';
+import WidgetsStack from './WidgetsStack';
 
 const Stack = createStackNavigator();
 
 export default function MainStack() {
   return (
     <Stack.Navigator
+      initialRouteName="Main"
       screenOptions={{
         headerStyle: {
           backgroundColor: MyTheme.blue,
@@ -34,6 +38,21 @@ export default function MainStack() {
       <Stack.Screen
         name="Storage"
         component={StorageStack}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Auctions"
+        component={AuctionsStack}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Transport"
+        component={TransportStack}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Widgets"
+        component={WidgetsStack}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

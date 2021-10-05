@@ -11,6 +11,7 @@ const Stack = createStackNavigator();
 export default function AuthNavigator() {
   return (
     <Stack.Navigator
+      initialRouteName="Login"
       screenOptions={{
         headerStyle: {
           backgroundColor: MyTheme.blue,

@@ -16,6 +16,7 @@ export default function StorageStack() {
 
   return (
     <Stack.Navigator
+      initialRouteName="StorageFilter"
       screenOptions={{
         headerStyle: {
           backgroundColor: MyTheme.blue,

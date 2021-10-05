@@ -1,24 +1,22 @@
 import React from 'react';
 import {Pressable, StyleSheet, Text} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
-import CargoFilterScreen from '../../screens/homeScreen/cargoScreens/CargoFilterScreen';
-import CargoResults from '../../screens/homeScreen/cargoScreens/CargoResults';
-import CargoCardScreen from '../../screens/homeScreen/cargoScreens/CargoCardScreen';
 import {MyTheme} from '../../components/layout/theme';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import PlaceAutocomplite from '../../screens/homeScreen/cargoScreens/PlaceAutocomplite';
-import MapCargoScreen from '../../screens/homeScreen/cargoScreens/MapCargoScreen';
 import {useSelector} from 'react-redux';
+import CalculateDistance from '../../screens/homeScreen/widgets/calculateDistance/CalculateDistance';
+import WidgetAutocomplite from '../../screens/homeScreen/widgets/calculateDistance/WidgetAutocomplite';
+import CheckCompany from '../../screens/homeScreen/widgets/checkCompany/CheckCompany';
+import WebScreen from '../../screens/homeScreen/widgets/checkCompany/WebScreen';
 
 const Stack = createStackNavigator();
 
-export default function CargoStack() {
+export default function WidgetsStack() {
   const transitData = useSelector(state => state.transitData);
 
   return (
     <Stack.Navigator
-      initialRouteName="CargoFilter"
+      initialRouteName="CalculateDistance"
       screenOptions={{
         headerStyle: {
           backgroundColor: MyTheme.blue,
@@ -29,10 +27,10 @@ export default function CargoStack() {
         headerTitleAlign: 'center',
       }}>
       <Stack.Screen
-        name="CargoFilter"
-        component={CargoFilterScreen}
+        name="CalculateDistance"
+        component={CalculateDistance}
         options={({navigation, route}) => ({
-          headerTitle: 'Поиск грузов',
+          headerTitle: 'Расчет расстояния',
           headerTitleStyle: {
             fontSize: 17,
             fontWeight: 'bold',
@@ -49,8 +47,8 @@ export default function CargoStack() {
         })}
       />
       <Stack.Screen
-        name="GooglePlaces"
-        component={PlaceAutocomplite}
+        name="WidgetAutocomplite"
+        component={WidgetAutocomplite}
         options={({navigation, route}) => ({
           headerTitle: 'Откуда-Куда',
           headerTitleStyle: {
@@ -69,10 +67,10 @@ export default function CargoStack() {
         })}
       />
       <Stack.Screen
-        name="CargoResults"
-        component={CargoResults}
+        name="CheckCompany"
+        component={CheckCompany}
         options={({navigation, route}) => ({
-          headerTitle: transitData.itemsQuantity + ' объявлений',
+          headerTitle: 'Проверка компании',
           headerTitleStyle: {
             fontSize: 17,
             fontWeight: 'bold',
@@ -83,67 +81,27 @@ export default function CargoStack() {
               style={styles.leftButton}
               onPress={() => navigation.goBack()}>
               <AntDesign name="left" size={24} color="white" />
-              <Text style={styles.buttonText}>Поиск</Text>
-            </Pressable>
-          ),
-          headerRight: () => (
-            <Pressable
-              style={[styles.leftButton, {marginRight: 10}]}
-              onPress={() => navigation.goBack()}>
-              <Text style={styles.buttonText}>Фильтр</Text>
-              <MaterialCommunityIcons
-                name="filter-variant"
-                size={24}
-                color="white"
-              />
+              <Text style={styles.buttonText}>Назад</Text>
             </Pressable>
           ),
         })}
       />
       <Stack.Screen
-        name="CargoCard"
-        component={CargoCardScreen}
+        name="WebScreen"
+        component={WebScreen}
         options={({navigation, route}) => ({
-          headerTitle: 'Описание',
-          // headerLeft: () => (
-          //   <Pressable
-          //     style={styles.leftButton}
-          //     onPress={() => navigation.goBack()}>
-          //     <AntDesign name="left" size={24} color="white" />
-          //     <Text style={styles.buttonText}>Назад</Text>
-          //   </Pressable>
-          // ),
-          headerRight: () => (
-            <Pressable
-              style={[styles.leftButton, {marginRight: 10}]}
-              onPress={() => navigation.goBack()}>
-              <AntDesign
-                name="staro"
-                size={20}
-                color="white"
-                style={styles.icon}
-              />
-              <AntDesign
-                name="upload"
-                size={20}
-                color="white"
-                style={styles.icon}
-              />
-            </Pressable>
-          ),
-        })}
-      />
-      <Stack.Screen
-        name="CargoCardMap"
-        component={MapCargoScreen}
-        options={({navigation, route}) => ({
-          headerTitle: 'Маршрут',
+          headerTitle: ' ',
+          headerTitleStyle: {
+            fontSize: 17,
+            fontWeight: 'bold',
+            color: 'white',
+          },
           headerLeft: () => (
             <Pressable
               style={styles.leftButton}
               onPress={() => navigation.goBack()}>
               <AntDesign name="left" size={24} color="white" />
-              <Text style={styles.buttonText}>Назад</Text>
+              <Text style={styles.buttonText}>К списку</Text>
             </Pressable>
           ),
         })}

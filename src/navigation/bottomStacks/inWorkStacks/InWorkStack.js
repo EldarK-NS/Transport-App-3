@@ -18,6 +18,7 @@ const Stack = createStackNavigator();
 export default function InWorkStack() {
   return (
     <Stack.Navigator
+      initialRouteName="InWorkMain"
       screenOptions={{
         headerStyle: {
           backgroundColor: MyTheme.blue,

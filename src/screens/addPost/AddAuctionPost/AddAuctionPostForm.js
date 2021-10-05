@@ -29,8 +29,10 @@ import EntypoIcon from 'react-native-vector-icons/Entypo';
 import {removeDataForCargoPost} from '../../../redux/actions/transitStore';
 import axios from 'axios';
 import {SimpleInput} from '../../../components/SearchElements/SimpleInput';
+import InputShort from '../../../components/SearchElements/InputShort';
+import CheckBox from '@react-native-community/checkbox';
 
-export default function AddCargoPostForm() {
+export default function AddAuctionPostForm() {
   const [modalShow, setModalShow] = useState(false);
   const [token, setToken] = useState(null);
 
@@ -71,8 +73,41 @@ export default function AddCargoPostForm() {
       setDestinString(transitData.endPlaceCargo.string);
     }
   }, [transitData.endPlaceCargo]);
+  //?---------------------------------------//
+  //! get and set distance and duration
+  const [distance, setDistance] = useState(null);
+  const [duration, setDuration] = useState(null);
+  const getDistance = async () => {
+    try {
+      const res = await axios(
+        `https://test.money-men.kz/api/distance?from=${fromCoord}&to=${destinCoord}`,
+      );
+      setDistance(res.data.distance);
+      setDuration(res.data.duration);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (fromCoord !== null && destinCoord !== null) {
+      getDistance();
+    }
+  }, [fromCoord, destinCoord]);
 
   //?---------------------------------------//
+
+  //! Set End Auction Date+++
+  const [isEndDateVisible, setIsEndDateVisibility] = useState(false);
+  const [endDate, setEndDate] = useState(null);
+  const [endDatePlaceholder, setEndDatePlaceholder] =
+    useState('Установите дату');
+
+  //! Set End Time Auction +++
+  const [isEndTimeVisible, setIsEndTimeVisibility] = useState(false);
+  const [endTime, setEndTime] = useState(null);
+  const [endTimePlaceholder, setEndTimePlaceholder] =
+    useState('Установите время');
 
   //! Set Loading Date+++
   const [isLoadingDateVisible, setIsLoadingDateVisibility] = useState(false);
@@ -93,23 +128,15 @@ export default function AddCargoPostForm() {
   //?---------------------------------------//
 
   //! Net and Volume+++
-  const [netStart, setNetStart] = useState(null);
-  const [netEnd, setNetEnd] = useState(null);
-  const [volumeStart, setVolumeStart] = useState(null);
-  const [volumeEnd, setVolumeEnd] = useState(null);
-
+  const [net, setNet] = useState(null);
+  const [volume, setVolume] = useState(null);
   //?---------------------------------------//
 
   //! set Height, Width, Length+++
 
-  const [widthStart, setWidthStart] = useState(null);
-  const [widthtEnd, setWidthEnd] = useState(null);
-
-  const [lengthStart, setLengthStart] = useState(null);
-  const [lengthEnd, setLengthEnd] = useState(null);
-
-  const [heightStart, setHeightStart] = useState(null);
-  const [heightEnd, setHeightEnd] = useState(null);
+  const [width, setWidth] = useState(null);
+  const [length, setLength] = useState(null);
+  const [height, setHeight] = useState(null);
   //?---------------------------------------//
 
   //!Quantity+++
@@ -161,7 +188,7 @@ export default function AddCargoPostForm() {
   //!Additional params+++
 
   const additionalParams = () => {
-    navigation.navigate('AdditionalParams');
+    navigation.navigate('AuctionAdditionalParams');
   };
 
   const [documents, setDocuments] = useState(null);
@@ -185,13 +212,58 @@ export default function AddCargoPostForm() {
     }
   }, [transitData.additionalCargoPost]);
   //?---------------------------------------//
+
+  //!Set auction params
+  const [negotiablePrice, setNegotiablePrice] = useState(false);
+  const [nds, setNds] = useState(false);
+  const [whenLoading, setWhenLoading] = useState(false);
+  const [atUnloading, setAtUnloading] = useState(false);
+  const [prepayment, setPrepayment] = useState(false);
+  const [bargain, setBargain] = useState(false);
+  const [priceRequest, setPriceRequest] = useState(false);
+
   const AddPost = async () => {
+    const finishDate = `${endDate} ${endTime}`;
     try {
       const res = await axios({
-        method: 'GET',
-        url: `https://test.money-men.kz/api/newAddPost?token=${token}&category_id=1&sub_id=1&title=${description}&from=${fromCoord}&to=${destinCoord}&volume=${volumeStart}&net=${netStart}&start_date=${loadingDate}&end_date=${unloadingDate}&documents[]=${documents}&price=${price}&price_type=${currencyId}&payment_type=${paymentId}&type_transport=${transportTypeId}&type_sub_transport[]=${transportSubTypeId}&from_string=${fromString}&to_string=${destinString}&loading[]=${loadingConditions}&condition[]=${transportationConditions}&addition[]=${freightConditions}`,
+        method: 'POST',
+        url: 'https://test.money-men.kz/api/addAuction',
+        data: {
+          token,
+          date_finish: finishDate,
+          from_city: fromCoord,
+          to_city: destinCoord,
+          date_start: loadingDate,
+          date_end: unloadingDate,
+          title: description,
+          type_transport: transportTypeId,
+          quantity,
+          volume,
+          net,
+          width,
+          height,
+          length,
+          price,
+          currency: currencyId,
+          payment_type: paymentId,
+          documents,
+          loading: loadingConditions,
+          condition: freightConditions,
+          addition: transportationConditions,
+          at_unloading: !atUnloading ? 0 : 1,
+          negotiable_price: !negotiablePrice ? 0 : 1,
+          nds: !nds ? 0 : 1,
+          when_loading: !whenLoading ? 0 : 1,
+          prepayment: !prepayment ? 0 : 1,
+          bargain: !bargain ? 0 : 1,
+          price_request: !priceRequest ? 0 : 1,
+          from_string: fromString,
+          to_string: destinString,
+          distance,
+          duration,
+        },
       });
-      console.log(res);
+      console.log('RES', res);
       if (res.data.message) {
         Alert.alert('Внимание', res.data.message, [
           {
@@ -242,10 +314,10 @@ export default function AddCargoPostForm() {
                 source={require('../../../../assets/images/Bitmap.png')}
                 style={styles.modalImage}
               />
-              <Text style={styles.modalTitle}>Объявление опубликованно!</Text>
+              <Text style={styles.modalTitle}>Аукцион объявлен!</Text>
               <Text style={styles.modalSubTitle}>
-                Теперь, другие участники сервиса видят ваше объявление и ваши
-                контактные данные.
+                Теперь, другие участники сервиса видят Ваш объявленый аукцион и
+                ваши контактные данные.
               </Text>
               <TouchableOpacity
                 style={styles.modalButton}
@@ -261,9 +333,35 @@ export default function AddCargoPostForm() {
             </View>
           </View>
         </Modal>
+        <View style={styles.sectionGrey}>
+          <Text style={styles.label}>Дата и время окончания аукциона</Text>
+        </View>
+        <View style={styles.formBlock}>
+          <MyDatePicker
+            visibility={isEndDateVisible}
+            setVisible={setIsEndDateVisibility}
+            setDate={setEndDate}
+            setTitle={setEndDatePlaceholder}
+            placeholder={endDatePlaceholder}
+            title={'Дата окончания аукциона'}
+            type={'date'}
+          />
+          <MyDatePicker
+            visibility={isEndTimeVisible}
+            setVisible={setIsEndTimeVisibility}
+            setDate={setEndTime}
+            setTitle={setEndTimePlaceholder}
+            placeholder={endTimePlaceholder}
+            title={'Время окончания аукциона'}
+            type={'time'}
+          />
+        </View>
+        <View style={styles.sectionGrey}>
+          <Text style={styles.label}>Направление и дата</Text>
+        </View>
         <Pressable
           style={styles.formBlock}
-          onPress={() => navigation.navigate('PlaceAutocomplite2')}>
+          onPress={() => navigation.navigate('AuctionAutocomplite')}>
           <View style={styles.visibleContainer}>
             <View>
               <Text style={styles.placeholderLabel}>Откуда</Text>
@@ -325,19 +423,12 @@ export default function AddCargoPostForm() {
                 inputText={description}
               />
             </View>
-            <View style={styles.inputBlock}>
-              <InputDouble
-                inputFrom={netStart}
-                inputTo={netEnd}
-                setInputFrom={setNetStart}
-                setInputTo={setNetEnd}
-                label="Вес, тн"
-              />
-              <InputDouble
-                inputFrom={volumeStart}
-                inputTo={volumeEnd}
-                setInputFrom={setVolumeStart}
-                setInputTo={setVolumeEnd}
+
+            <View style={styles.inputBlock1}>
+              <InputShort input={net} setInput={setNet} label="Вес, тн" />
+              <InputShort
+                input={volume}
+                setInput={setVolume}
                 label="Объем, м3"
               />
             </View>
@@ -345,34 +436,16 @@ export default function AddCargoPostForm() {
         </View>
 
         <View style={styles.formBlock}>
-          <View style={styles.inputBlock}>
-            <InputDouble
-              inputFrom={widthStart}
-              inputTo={widthtEnd}
-              setInputFrom={setWidthStart}
-              setInputTo={setWidthEnd}
-              label="Ширина, м"
-            />
-            <InputDouble
-              inputFrom={lengthStart}
-              inputTo={lengthEnd}
-              setInputFrom={setLengthStart}
-              setInputTo={setLengthEnd}
-              label="Длина, м"
-            />
-            <InputDouble
-              inputFrom={heightStart}
-              inputTo={heightEnd}
-              setInputFrom={setHeightStart}
-              setInputTo={setHeightEnd}
-              label="Высота, м"
-            />
-            <CustomInput
+          <View style={styles.inputBlock1}>
+            <InputShort input={width} setInput={setWidth} label="Ширина, м" />
+            <InputShort input={length} setInput={setLength} label="Длина, м" />
+          </View>
+          <View style={styles.inputBlock1}>
+            <InputShort input={height} setInput={setHeight} label="Высота, м" />
+            <InputShort
               input={quantity}
               setInput={setQuantity}
               label="Количество мест"
-              placeholder={'0'}
-              type={'number'}
             />
           </View>
         </View>
@@ -404,6 +477,17 @@ export default function AddCargoPostForm() {
             placeholder="Тип транспорта"
           />
         </View>
+        <View style={styles.sectionGrey}>
+          <Text style={styles.label}>Дополнительные параметры:</Text>
+        </View>
+        <Pressable style={styles.formBlock} onPress={additionalParams}>
+          <View style={styles.additParams}>
+            <Text style={styles.additParamsText}>
+              Документы, Способ погрузки, Условия перевозки
+            </Text>
+            <EntypoIcon name="chevron-right" size={18} color={MyTheme.grey} />
+          </View>
+        </Pressable>
         <View style={styles.sectionGrey}>
           <Text style={styles.label}>Стоимость первозки:</Text>
         </View>
@@ -442,19 +526,157 @@ export default function AddCargoPostForm() {
             ]}
           />
         </View>
-        <View style={styles.sectionGrey}>
-          <Text style={styles.label}>Дополнительные параметры:</Text>
-        </View>
-        <Pressable style={styles.formBlock} onPress={additionalParams}>
-          <View style={styles.additParams}>
-            <Text style={styles.additParamsText}>
-              Документы, Способ погрузки, Условия перевозки
-            </Text>
-            <EntypoIcon name="chevron-right" size={18} color={MyTheme.grey} />
+
+        <View style={styles.formBlock}>
+          <View style={{flexDirection: 'row', marginVertical: 10}}>
+            <View style={styles.checkBlock}>
+              <CheckBox
+                boxType="square"
+                disabled={false}
+                value={negotiablePrice}
+                onValueChange={newValue => setNegotiablePrice(newValue)}
+              />
+              <Text style={styles.checkText}>Цена договорная</Text>
+            </View>
+            <View style={styles.checkBlock}>
+              <CheckBox
+                boxType="square"
+                disabled={false}
+                value={nds}
+                onValueChange={newValue => setNds(newValue)}
+              />
+              <Text style={styles.checkText}>НДС</Text>
+            </View>
+            <View style={styles.checkBlock}>
+              <CheckBox
+                boxType="square"
+                disabled={false}
+                value={bargain}
+                onValueChange={newValue => setBargain(newValue)}
+              />
+              <Text style={styles.checkText}>Торг</Text>
+            </View>
           </View>
-        </Pressable>
+          <View style={{flexDirection: 'row', marginVertical: 10}}>
+            <View style={styles.checkBlock}>
+              <CheckBox
+                boxType="square"
+                disabled={
+                  atUnloading === false &&
+                  prepayment === false &&
+                  priceRequest === false
+                    ? false
+                    : true
+                }
+                value={whenLoading}
+                onValueChange={newValue => setWhenLoading(newValue)}
+              />
+              <Text
+                style={[
+                  styles.checkText,
+                  {
+                    textDecorationLine:
+                      atUnloading === false &&
+                      prepayment === false &&
+                      priceRequest === false
+                        ? 'none'
+                        : 'line-through',
+                  },
+                ]}>
+                При погрузке
+              </Text>
+            </View>
+            <View style={styles.checkBlock}>
+              <CheckBox
+                boxType="square"
+                disabled={
+                  whenLoading === false &&
+                  prepayment === false &&
+                  priceRequest === false
+                    ? false
+                    : true
+                }
+                value={atUnloading}
+                onValueChange={newValue => setAtUnloading(newValue)}
+              />
+              <Text
+                style={[
+                  styles.checkText,
+                  {
+                    textDecorationLine:
+                      whenLoading === false &&
+                      prepayment === false &&
+                      priceRequest === false
+                        ? 'none'
+                        : 'line-through',
+                  },
+                ]}>
+                На выгрузке
+              </Text>
+            </View>
+          </View>
+          <View style={{flexDirection: 'row', marginVertical: 10}}>
+            <View style={[styles.checkBlock, {marginRight: 7}]}>
+              <CheckBox
+                boxType="square"
+                disabled={
+                  whenLoading === false &&
+                  atUnloading === false &&
+                  priceRequest === false
+                    ? false
+                    : true
+                }
+                value={prepayment}
+                onValueChange={newValue => setPrepayment(newValue)}
+              />
+              <Text
+                style={[
+                  styles.checkText,
+                  {
+                    textDecorationLine:
+                      whenLoading === false &&
+                      atUnloading === false &&
+                      priceRequest === false
+                        ? 'none'
+                        : 'line-through',
+                  },
+                ]}>
+                Предоплата
+              </Text>
+            </View>
+
+            <View style={styles.checkBlock}>
+              <CheckBox
+                boxType="square"
+                disabled={
+                  whenLoading === false &&
+                  atUnloading === false &&
+                  prepayment === false
+                    ? false
+                    : true
+                }
+                value={priceRequest}
+                onValueChange={newValue => setPriceRequest(newValue)}
+              />
+              <Text
+                style={[
+                  styles.checkText,
+                  {
+                    textDecorationLine:
+                      whenLoading === false &&
+                      atUnloading === false &&
+                      prepayment === false
+                        ? 'none'
+                        : 'line-through',
+                  },
+                ]}>
+                Запрос цены
+              </Text>
+            </View>
+          </View>
+        </View>
         <TouchableOpacity style={styles.button} onPress={AddPost}>
-          <Text style={styles.buttonText}>ДОБАВИТЬ ОБЪЯВЛЕНИЕ</Text>
+          <Text style={styles.buttonText}>ДОБАВИТЬ АУКЦИОН</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAwareScrollView>
@@ -477,6 +699,10 @@ const styles = StyleSheet.create({
   },
   inputBlock: {
     marginTop: 10,
+  },
+  inputBlock1: {
+    marginTop: 10,
+    flexDirection: 'row',
   },
   button: {
     width: '80%',
@@ -598,5 +824,14 @@ const styles = StyleSheet.create({
     width: 84,
     height: 84,
     marginBottom: 30,
+  },
+  checkBlock: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  checkText: {
+    fontFamily: 'IBMPlexSans-Regular',
+    fontSize: 15,
+    marginHorizontal: 10,
   },
 });

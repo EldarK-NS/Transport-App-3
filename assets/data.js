@@ -14,16 +14,16 @@ export const filterItemsList = [
     title: 'Транспорт',
     descr: 'поиск транспорта',
     icon: 'truck-outline',
-    mainPath: 'MainCargo',
-    path: 'CargoFilter',
+    mainPath: 'Transport',
+    path: 'TransportFilter',
   },
   {
     id: '3',
     title: 'Аукцион',
     descr: 'торги за грузы',
     icon: 'resistor',
-    mainPath: 'MainCargo',
-    path: 'CargoFilter',
+    mainPath: 'Auctions',
+    path: 'AuctionsFilter',
   },
   {
     id: '4',
@@ -62,7 +62,7 @@ export const addPostList = [
     title: 'Аукцион',
     icon: 'resistor',
     mainPath: 'AddPost',
-    path: 'AddCargoPost',
+    path: 'AddAuctionPost',
   },
   {
     id: '4',
@@ -85,12 +85,16 @@ export const usefulWidgets = [
     title: 'Расчет расстояний',
     descr: 'длина маршрута и время в пути',
     icon: 'package-variant-closed',
+    mainPath: 'Widgets',
+    path: 'CalculateDistance',
   },
   {
     id: '2',
     title: 'Проверка компаний',
     descr: 'проверка юр.лиц по всему миру',
     icon: 'package-variant-closed',
+    mainPath: 'Widgets',
+    path: 'CheckCompany',
   },
 ];
 

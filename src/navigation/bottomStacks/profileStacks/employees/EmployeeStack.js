@@ -11,6 +11,7 @@ const Stack = createStackNavigator();
 export default function EmployeeStack() {
   return (
     <Stack.Navigator
+      initialRouteName="AllEmployees"
       screenOptions={{
         headerStyle: {
           backgroundColor: MyTheme.blue,
