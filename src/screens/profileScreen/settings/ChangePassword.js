@@ -16,14 +16,14 @@ import {useNavigation} from '@react-navigation/core';
 import axios from 'axios';
 import Entypo from 'react-native-vector-icons/Entypo';
 
-//FIXME: нет апишки на смену пароля
+//TODO: DONE!!!!
 
 export default function ChangePassword() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [hidePassword, setHidePassword] = useState(true);
   const [hideConfirm, setHideConfirm] = useState(true);
-  const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
   const [password, setPassword] = useState(null);
   const [confirm, setConfirm] = useState(null);
 
@@ -36,20 +36,42 @@ export default function ChangePassword() {
   const showConfirm = () => {
     setHideConfirm(!hideConfirm);
   };
-
-  const changePassword = () => {
-    if (password.trim() < 6) {
-      return setError('Минимальная длина пароля 6 символов');
-    } else if (confirm.trim() !== password2.trim()) {
-      return setError('Пароли не совпадают!');
+  console.log(auth.token);
+  const changePassword = async () => {
+    if (password.trim().length < 6) {
+      return setMessage({
+        title: 'Ошибка',
+        text: 'Минимальная длина пароля 6 символов',
+      });
+    } else if (confirm.trim() !== password.trim()) {
+      return setMessage({
+        title: 'Ошибка',
+        text: 'Пароли не совпадают!',
+      });
+    }
+    try {
+      const res = await axios(
+        `https://test.money-men.kz/api/changePassword?token=${auth.token}&password=${password}`,
+      );
+      if (res.data.success == true) {
+        setMessage({
+          title: 'Успех',
+          text: 'Ваш пароль изменен!',
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  if (error) {
-    Alert.alert('Ошибка', error, [
+  if (message) {
+    Alert.alert(message.title, message.text, [
       {
         text: 'OK',
-        onPress: () => setError(null),
+        onPress: () => {
+          setMessage(null);
+          navigation.navigate('MainSettings');
+        },
         style: 'cancel',
       },
     ]);
