@@ -100,14 +100,13 @@ export default function AddAuctionPostForm() {
   //! Set End Auction Date+++
   const [isEndDateVisible, setIsEndDateVisibility] = useState(false);
   const [endDate, setEndDate] = useState(null);
-  const [endDatePlaceholder, setEndDatePlaceholder] =
-    useState('Установите дату');
+  const [endDatePlaceholder, setEndDatePlaceholder] = useState('Выберите дату');
 
   //! Set End Time Auction +++
   const [isEndTimeVisible, setIsEndTimeVisibility] = useState(false);
   const [endTime, setEndTime] = useState(null);
   const [endTimePlaceholder, setEndTimePlaceholder] =
-    useState('Установите время');
+    useState('Выберите время');
 
   //! Set Loading Date+++
   const [isLoadingDateVisible, setIsLoadingDateVisibility] = useState(false);
@@ -337,24 +336,26 @@ export default function AddAuctionPostForm() {
           <Text style={styles.label}>Дата и время окончания аукциона</Text>
         </View>
         <View style={styles.formBlock}>
-          <MyDatePicker
-            visibility={isEndDateVisible}
-            setVisible={setIsEndDateVisibility}
-            setDate={setEndDate}
-            setTitle={setEndDatePlaceholder}
-            placeholder={endDatePlaceholder}
-            title={'Дата окончания аукциона'}
-            type={'date'}
-          />
-          <MyDatePicker
-            visibility={isEndTimeVisible}
-            setVisible={setIsEndTimeVisibility}
-            setDate={setEndTime}
-            setTitle={setEndTimePlaceholder}
-            placeholder={endTimePlaceholder}
-            title={'Время окончания аукциона'}
-            type={'time'}
-          />
+          <View style={styles.inputBlock1}>
+            <MyDatePicker
+              visibility={isEndDateVisible}
+              setVisible={setIsEndDateVisibility}
+              setDate={setEndDate}
+              setTitle={setEndDatePlaceholder}
+              placeholder={endDatePlaceholder}
+              title={'Дата окончания'}
+              type={'date'}
+            />
+            <MyDatePicker
+              visibility={isEndTimeVisible}
+              setVisible={setIsEndTimeVisibility}
+              setDate={setEndTime}
+              setTitle={setEndTimePlaceholder}
+              placeholder={endTimePlaceholder}
+              title={'Время окончания '}
+              type={'time'}
+            />
+          </View>
         </View>
         <View style={styles.sectionGrey}>
           <Text style={styles.label}>Направление и дата</Text>
@@ -365,7 +366,15 @@ export default function AddAuctionPostForm() {
           <View style={styles.visibleContainer}>
             <View>
               <Text style={styles.placeholderLabel}>Откуда</Text>
-              <Text style={styles.placeText}>{fromString}</Text>
+              <Text
+                style={[
+                  styles.placeText,
+                  {
+                    color: !fromCoord ? '#f2775c' : MyTheme.black,
+                  },
+                ]}>
+                {fromString}
+              </Text>
             </View>
             <AntDesignIcon
               name="caretdown"
@@ -377,7 +386,15 @@ export default function AddAuctionPostForm() {
           <View style={styles.visibleContainer}>
             <View>
               <Text style={styles.placeholderLabel}>Куда</Text>
-              <Text style={styles.placeText}>{destinString}</Text>
+              <Text
+                style={[
+                  styles.placeText,
+                  {
+                    color: !destinCoord ? '#f2775c' : MyTheme.black,
+                  },
+                ]}>
+                {destinString}
+              </Text>
             </View>
             <AntDesignIcon
               name="caretdown"
@@ -388,7 +405,7 @@ export default function AddAuctionPostForm() {
           </View>
         </Pressable>
         <View style={styles.formBlock}>
-          <View>
+          <View style={styles.inputBlock1}>
             <MyDatePicker
               visibility={isLoadingDateVisible}
               setVisible={setIsLoadingDateVisibility}
@@ -398,8 +415,7 @@ export default function AddAuctionPostForm() {
               title={'Дата погрузки'}
               type={'date'}
             />
-          </View>
-          <View>
+
             <MyDatePicker
               visibility={isUnloadingDateVisible}
               setVisible={setIsUnloadingDateVisibility}

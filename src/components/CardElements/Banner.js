@@ -1,65 +1,71 @@
-import React from "react";
-import {
-    StyleSheet,
-    View,
-    Image,
-    ScrollView,
-} from "react-native";
-import Swiper from "react-native-swiper";
+import React, {useState} from 'react';
+import {StyleSheet, View, Image, Pressable} from 'react-native';
+import Swiper from 'react-native-swiper';
+import EntypoIcon from 'react-native-vector-icons/Entypo';
+import {MyTheme} from '../layout/theme';
 
+export default function Banner({data, remove, handleRemove}) {
+  console.log(data);
 
-export default function Banner({ data }) {
-    // const [bannerData, setBannerData] = useState([]);
-    // useEffect(() => {
-    //     setBannerData([
-    //         "https://images.vexels.com/media/users/3/126443/preview2/ff9af1e1edfa2c4a46c43b0c2040ce52-macbook-pro-touch-bar-banner.jpg",
-    //         "https://pbs.twimg.com/media/D7P_yLdX4AAvJWO.jpg",
-    //         "https://www.yardproduct.com/blog/wp-content/uploads/2016/01/gardening-banner.jpg",
-    //     ]);
-    //     return () => {
-    //         setBannerData([]);
-    //     };
-    // }, []);
-
-    return (
-        <ScrollView>
-            <View style={styles.container}>
-                <View style={styles.swiper}>
-                    <Swiper
-                        showButtons={false}
-                        autoplay={true}
-                        autoplayTimeout={10}
-                    >
-                        {data.map((item) => {
-                            return (
-                                <Image
-                                    key={item}
-                                    style={styles.image}
-                                    resizeMode="cover"
-                                    source={{ uri: item }}
-                                />
-                            );
-                        })}
-                    </Swiper>
+  return (
+    <View style={styles.container}>
+      <View style={styles.swiper}>
+        <Swiper horizontal={true} loop={true} showsPagination={false}>
+          {data.length > 0 ? (
+            data.map((item, idx) => {
+              return (
+                <View key={idx}>
+                  <Image
+                    key={item.uri}
+                    style={styles.image}
+                    resizeMode="cover"
+                    source={{uri: item}}
+                  />
+                  {remove ? (
+                    <Pressable
+                      style={styles.removeButton}
+                      onPress={handleRemove}>
+                      <EntypoIcon
+                        name="circle-with-cross"
+                        size={20}
+                        color={MyTheme.black}
+                      />
+                    </Pressable>
+                  ) : null}
                 </View>
-            </View>
-        </ScrollView>
-    );
+              );
+            })
+          ) : (
+            <Image
+              style={styles.image}
+              resizeMode="cover"
+              source={require('../../../assets/images/no_image.jpeg')}
+            />
+          )}
+        </Swiper>
+      </View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    swiper: {
-        width: '100%',
-        alignItems: "center",
-        height: 270
-    },
-    image: {
-        height: '100%',
-        width: '100%',
-    },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  swiper: {
+    width: '100%',
+    alignItems: 'center',
+    height: 230,
+  },
+  image: {
+    height: '100%',
+    width: '100%',
+  },
+  removeButton: {
+    position: 'absolute',
+    right: 10,
+    top: 10,
+  },
 });

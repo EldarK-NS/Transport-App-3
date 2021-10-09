@@ -72,6 +72,8 @@ export default function CargoResults() {
     }
   };
 
+  console.log(newData);
+
   useEffect(() => {
     getData();
     return () => {};

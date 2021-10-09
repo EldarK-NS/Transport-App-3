@@ -69,7 +69,7 @@ export const addPostList = [
     title: 'Склады',
     icon: 'dolly',
     mainPath: 'AddPost',
-    path: 'AddCargoPost',
+    path: 'AddStoragePost',
   },
   {
     id: '5',

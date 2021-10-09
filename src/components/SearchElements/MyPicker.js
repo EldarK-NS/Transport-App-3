@@ -42,7 +42,13 @@ export default function MyPicker({
             <View style={styles.iosButton}>
               <View>
                 <Text style={styles.placeholderLabel}>{placeholder}</Text>
-                <Text style={styles.title}>{valueString}</Text>
+                <Text
+                  style={[
+                    styles.title,
+                    {color: !value ? '#f2775c' : MyTheme.black},
+                  ]}>
+                  {valueString}
+                </Text>
               </View>
               <AntDesignIcon
                 name="caretdown"

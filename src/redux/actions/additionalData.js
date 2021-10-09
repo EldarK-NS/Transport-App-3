@@ -19,6 +19,10 @@ import {
   GET_FREIGHT_CONDITIONS_FAIL,
   GET_ALL_COUNTRIES_SUCCESS,
   GET_ALL_COUNTRIES_FAIL,
+  GET_FIRE_SISTEM_SUCCESS,
+  GET_FIRE_SISTEM_FAIL,
+  GET_VENTILATION_SUCCESS,
+  GET_VENTILATION_FAIL,
 } from '../types';
 import axios from 'axios';
 
@@ -203,6 +207,44 @@ export function getAllCountries() {
       console.log(error);
       dispatch({
         type: GET_ALL_COUNTRIES_FAIL,
+      });
+    }
+  };
+}
+//! Get FireSistem
+export function getFireSystem() {
+  return async dispatch => {
+    try {
+      const res = await axios.get(
+        'https://test.money-men.kz/api/getFireSystem',
+      );
+      dispatch({
+        type: GET_FIRE_SISTEM_SUCCESS,
+        payload: res.data,
+      });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: GET_FIRE_SISTEM_FAIL,
+      });
+    }
+  };
+}
+//! Get Ventilation
+export function getVentilation() {
+  return async dispatch => {
+    try {
+      const res = await axios.get(
+        'https://test.money-men.kz/api/getVentilation',
+      );
+      dispatch({
+        type: GET_VENTILATION_SUCCESS,
+        payload: res.data,
+      });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: GET_VENTILATION_FAIL,
       });
     }
   };

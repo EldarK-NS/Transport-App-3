@@ -4,6 +4,7 @@ import AddPostScreen from '../../../screens/addPost/AddPostScreen';
 import CargoPostStack from './CargoPostStack';
 import {MyTheme} from '../../../components/layout/theme';
 import AuctionPostStack from './AuctionPostStack';
+import StoragePostStack from './StoragePostStack';
 
 const Stack = createStackNavigator();
 
@@ -36,6 +37,11 @@ export default function MainAddPostStack() {
       <Stack.Screen
         name="AddAuctionPost"
         component={AuctionPostStack}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="AddStoragePost"
+        component={StoragePostStack}
         options={{headerShown: false}}
       />
       {/* <Stack.Screen name="MainSpecEquipment" component={SpecEquipmentStack} options={{ headerShown: false }} /> */}

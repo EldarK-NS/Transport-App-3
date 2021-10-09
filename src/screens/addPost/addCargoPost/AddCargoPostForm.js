@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import {MyTheme} from '../../../components/layout/theme';
 import InputDouble from '../../../components/SearchElements/InputDouble';
+import InputShort from '../../../components/SearchElements/InputShort';
 import MyPicker from '../../../components/SearchElements/MyPicker';
 import MyDatePicker from '../../../components/SearchElements/MyDatePicker';
 import {useNavigation} from '@react-navigation/core';
@@ -93,23 +94,15 @@ export default function AddCargoPostForm() {
   //?---------------------------------------//
 
   //! Net and Volume+++
-  const [netStart, setNetStart] = useState(null);
-  const [netEnd, setNetEnd] = useState(null);
-  const [volumeStart, setVolumeStart] = useState(null);
-  const [volumeEnd, setVolumeEnd] = useState(null);
-
+  const [net, setNet] = useState(null);
+  const [volume, setVolume] = useState(null);
   //?---------------------------------------//
 
   //! set Height, Width, Length+++
 
-  const [widthStart, setWidthStart] = useState(null);
-  const [widthtEnd, setWidthEnd] = useState(null);
-
-  const [lengthStart, setLengthStart] = useState(null);
-  const [lengthEnd, setLengthEnd] = useState(null);
-
-  const [heightStart, setHeightStart] = useState(null);
-  const [heightEnd, setHeightEnd] = useState(null);
+  const [width, setWidth] = useState(null);
+  const [length, setLength] = useState(null);
+  const [height, setHeight] = useState(null);
   //?---------------------------------------//
 
   //!Quantity+++
@@ -189,7 +182,7 @@ export default function AddCargoPostForm() {
     try {
       const res = await axios({
         method: 'GET',
-        url: `https://test.money-men.kz/api/newAddPost?token=${token}&category_id=1&sub_id=1&title=${description}&from=${fromCoord}&to=${destinCoord}&volume=${volumeStart}&net=${netStart}&start_date=${loadingDate}&end_date=${unloadingDate}&documents[]=${documents}&price=${price}&price_type=${currencyId}&payment_type=${paymentId}&type_transport=${transportTypeId}&type_sub_transport[]=${transportSubTypeId}&from_string=${fromString}&to_string=${destinString}&loading[]=${loadingConditions}&condition[]=${transportationConditions}&addition[]=${freightConditions}`,
+        url: `https://test.money-men.kz/api/newAddPost?token=${token}&category_id=1&sub_id=1&title=${description}&from=${fromCoord}&to=${destinCoord}&volume=${volume}&net=${net}&start_date=${loadingDate}&end_date=${unloadingDate}&documents[]=${documents}&price=${price}&price_type=${currencyId}&payment_type=${paymentId}&type_transport=${transportTypeId}&type_sub_transport[]=${transportSubTypeId}&from_string=${fromString}&to_string=${destinString}&loading[]=${loadingConditions}&condition[]=${transportationConditions}&addition[]=${freightConditions}`,
       });
       console.log(res);
       if (res.data.message) {
@@ -267,7 +260,15 @@ export default function AddCargoPostForm() {
           <View style={styles.visibleContainer}>
             <View>
               <Text style={styles.placeholderLabel}>Откуда</Text>
-              <Text style={styles.placeText}>{fromString}</Text>
+              <Text
+                style={[
+                  styles.placeText,
+                  {
+                    color: !fromCoord ? '#f2775c' : MyTheme.black,
+                  },
+                ]}>
+                {fromString}
+              </Text>
             </View>
             <AntDesignIcon
               name="caretdown"
@@ -279,7 +280,15 @@ export default function AddCargoPostForm() {
           <View style={styles.visibleContainer}>
             <View>
               <Text style={styles.placeholderLabel}>Куда</Text>
-              <Text style={styles.placeText}>{destinString}</Text>
+              <Text
+                style={[
+                  styles.placeText,
+                  {
+                    color: !destinCoord ? '#f2775c' : MyTheme.black,
+                  },
+                ]}>
+                {destinString}
+              </Text>
             </View>
             <AntDesignIcon
               name="caretdown"
@@ -290,7 +299,7 @@ export default function AddCargoPostForm() {
           </View>
         </Pressable>
         <View style={styles.formBlock}>
-          <View>
+          <View style={styles.inputBlock1}>
             <MyDatePicker
               visibility={isLoadingDateVisible}
               setVisible={setIsLoadingDateVisibility}
@@ -300,8 +309,7 @@ export default function AddCargoPostForm() {
               title={'Дата погрузки'}
               type={'date'}
             />
-          </View>
-          <View>
+
             <MyDatePicker
               visibility={isUnloadingDateVisible}
               setVisible={setIsUnloadingDateVisibility}
@@ -325,19 +333,11 @@ export default function AddCargoPostForm() {
                 inputText={description}
               />
             </View>
-            <View style={styles.inputBlock}>
-              <InputDouble
-                inputFrom={netStart}
-                inputTo={netEnd}
-                setInputFrom={setNetStart}
-                setInputTo={setNetEnd}
-                label="Вес, тн"
-              />
-              <InputDouble
-                inputFrom={volumeStart}
-                inputTo={volumeEnd}
-                setInputFrom={setVolumeStart}
-                setInputTo={setVolumeEnd}
+            <View style={styles.inputBlock1}>
+              <InputShort input={net} setInput={setNet} label="Вес, тн" />
+              <InputShort
+                input={volume}
+                setInput={setVolume}
                 label="Объем, м3"
               />
             </View>
@@ -345,35 +345,27 @@ export default function AddCargoPostForm() {
         </View>
 
         <View style={styles.formBlock}>
-          <View style={styles.inputBlock}>
-            <InputDouble
-              inputFrom={widthStart}
-              inputTo={widthtEnd}
-              setInputFrom={setWidthStart}
-              setInputTo={setWidthEnd}
-              label="Ширина, м"
-            />
-            <InputDouble
-              inputFrom={lengthStart}
-              inputTo={lengthEnd}
-              setInputFrom={setLengthStart}
-              setInputTo={setLengthEnd}
-              label="Длина, м"
-            />
-            <InputDouble
-              inputFrom={heightStart}
-              inputTo={heightEnd}
-              setInputFrom={setHeightStart}
-              setInputTo={setHeightEnd}
-              label="Высота, м"
-            />
-            <CustomInput
-              input={quantity}
-              setInput={setQuantity}
-              label="Количество мест"
-              placeholder={'0'}
-              type={'number'}
-            />
+          <View style={styles.formBlock}>
+            <View style={styles.inputBlock1}>
+              <InputShort input={width} setInput={setWidth} label="Ширина, м" />
+              <InputShort
+                input={length}
+                setInput={setLength}
+                label="Длина, м"
+              />
+            </View>
+            <View style={styles.inputBlock1}>
+              <InputShort
+                input={height}
+                setInput={setHeight}
+                label="Высота, м"
+              />
+              <InputShort
+                input={quantity}
+                setInput={setQuantity}
+                label="Количество мест"
+              />
+            </View>
           </View>
         </View>
         <View style={styles.sectionGrey}>
@@ -477,6 +469,11 @@ const styles = StyleSheet.create({
   },
   inputBlock: {
     marginTop: 10,
+  },
+  inputBlock1: {
+    // marginTop: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   button: {
     width: '80%',
@@ -598,5 +595,8 @@ const styles = StyleSheet.create({
     width: 84,
     height: 84,
     marginBottom: 30,
+  },
+  textInputBlock: {
+    marginBottom: 10,
   },
 });

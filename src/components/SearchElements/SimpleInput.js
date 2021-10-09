@@ -10,6 +10,7 @@ export const SimpleInput = ({label, setInputText, inputText}) => {
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Краткое описание груза"
+          placeholderTextColor="#f2775c"
           style={styles.input}
           onChangeText={setInputText}
           value={inputText}

@@ -33,20 +33,39 @@ export default MyDatePicker = ({
     hideDatePicker();
   };
 
+  console.log(placeholder.length);
   return (
     <View>
       <Pressable style={styles.visibleContainer} onPress={showDatePicker}>
         <View style={styles.button}>
           <View>
-            <Text style={styles.title}>{title}</Text>
-            <Text style={styles.placeholderLabel}>{placeholder}</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                width: '100%',
+              }}>
+              <Text style={styles.title}>{title}</Text>
+              <AntDesignIcon
+                name={type === 'date' ? 'calendar' : 'clockcircleo'}
+                size={20}
+                color={MyTheme.blue}
+              />
+            </View>
+            <Text
+              style={[
+                styles.placeholderLabel,
+                {
+                  color:
+                    placeholder == 'Выберите дату' ||
+                    placeholder == 'Выберите время'
+                      ? '#f2775c'
+                      : MyTheme.black,
+                },
+              ]}>
+              {placeholder}
+            </Text>
           </View>
-          <AntDesignIcon
-            name={type === 'date' ? 'calendar' : 'clockcircleo'}
-            size={17}
-            color={MyTheme.blue}
-            style={{marginRight: 10}}
-          />
         </View>
       </Pressable>
       <DateTimePickerModal
@@ -62,28 +81,23 @@ export default MyDatePicker = ({
 
 const styles = StyleSheet.create({
   visibleContainer: {
-    width: Dimensions.get('window').width - 30,
+    width: Dimensions.get('window').width / 2 - 20,
     height: 60,
     alignItems: 'center',
     justifyContent: 'center',
     borderBottomColor: MyTheme.grey,
     borderBottomWidth: 0.5,
-    // marginVertical: 10
+    marginHorizontal: 5,
   },
-
   button: {
     width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
   },
   placeholderLabel: {
     alignSelf: 'flex-start',
-    marginLeft: 10,
     fontFamily: 'IBMPlexSans-Regular',
     fontSize: 17,
     lineHeight: 24,
-    color: MyTheme.black,
+    marginLeft: 10,
   },
   title: {
     alignSelf: 'flex-start',

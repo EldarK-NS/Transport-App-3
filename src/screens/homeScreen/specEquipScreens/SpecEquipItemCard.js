@@ -17,7 +17,7 @@ export default function SpecEquipItemCard() {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Banner data={bannerData} />
+        {/* <Banner data={bannerData} remove={false} /> */}
         <View style={styles.block}>
           <Text style={styles.title}>Экскаватор-погрузчик JCB</Text>
           <Text style={styles.price}>15 000 &#8376;/в час</Text>
