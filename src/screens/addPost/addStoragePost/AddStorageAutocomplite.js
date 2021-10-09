@@ -12,6 +12,7 @@ import {useNavigation} from '@react-navigation/core';
 import {useDispatch} from 'react-redux';
 import {saveStartEndPlaces} from '../../../redux/actions/transitStore';
 
+//TODO: вопрос по поводу определения адреса, нужно понять какие данные нужно передавать. id города или id конретного места
 export default function AddStorageAutocomplite() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -87,6 +88,8 @@ export default function AddStorageAutocomplite() {
             );
           }
           setFinishPlace(data.place_id);
+          console.log(data);
+          console.log(details);
         }}
         styles={{
           textInput: styles.visibleContainer,
@@ -102,6 +105,7 @@ export default function AddStorageAutocomplite() {
         query={{
           key: 'AIzaSyD-kk951XgVXsv3b0yqJntwbxDslSP2Oxo',
           language: 'ru',
+          type: 'address',
         }}
       />
       <TouchableOpacity onPress={GoBack} style={styles.confirm}>

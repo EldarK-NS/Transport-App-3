@@ -92,6 +92,8 @@ export default function AddStorageForm() {
     setImageData(newData);
   };
 
+  console.log('ID', imageData);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -362,10 +364,27 @@ export default function AddStorageForm() {
               style={{marginRight: 10}}
             />
           </View>
+          <View style={styles.visibleContainer}>
+            <View>
+              <Text style={styles.placeholderLabel}>Адрес</Text>
+              <Text
+                style={[
+                  styles.placeText,
+                  {
+                    color: !destinCoord ? '#f2775c' : MyTheme.black,
+                  },
+                ]}>
+                {destinString}
+              </Text>
+            </View>
+            <AntDesignIcon
+              name="caretdown"
+              size={10}
+              color={MyTheme.black}
+              style={{marginRight: 10}}
+            />
+          </View>
         </Pressable>
-        <View style={styles.formBlock}>
-          <Text>Hello</Text>
-        </View>
         <View style={styles.sectionGrey}>
           <Text style={styles.label}>Характеристики склада:</Text>
         </View>
